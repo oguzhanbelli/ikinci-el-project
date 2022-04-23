@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components{
+    .textlayer{
+        @apply text-3xl font-bold underline;
+    }
+}
