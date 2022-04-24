@@ -2,9 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer components{
-    .textlayer{
-        @apply text-3xl font-bold underline;
-    }
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap");
+body {
+  font-family: "Nunito", sans-serif;
+  overflow: hidden;
+}
+@layer components {
+  .textlayer {
+    @apply text-3xl font-bold underline;
+  }
+  .appContainer {
+    @apply overflow-hidden bg-gray-50;
+  }
+  .loginContainer {
+    @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen;
+  }
+  .bannerLogin {
+    @apply hidden md:flex md:w-[52.1879em] lg:w-[52.1879em] min-h-screen  xl:w-[52.1879em]   bg-login-banner bg-cover bg-center;
+  }
 }
