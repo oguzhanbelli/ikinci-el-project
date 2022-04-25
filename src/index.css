@@ -5,83 +5,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap");
 body {
   font-family: "Nunito", sans-serif;
-  overflow: hidden;
+ 
 }
 @layer components {
+    body{
+        @apply  overflow-x-hidden lg:overflow-x-auto xl:overflow-hidden;
+    }
   .textlayer {
     @apply text-3xl font-bold underline;
   }
 
- 
   .appContainer {
-    @apply overflow-hidden lg:overflow-scroll bg-gray-50;
+    @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll xl:overflow-hidden bg-gray-50;
   }
   /* login */
   .loginContainer {
     @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen;
-  } .loginMain{
-   @apply lg:w-[67.813em] xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
   }
-  .loginLogoContainer{
-   @apply mt-[28.54px] w-[148.63px] h-[48.46px] mx-auto inset-x-0 lg:mt-[133px] lg:w-[225px] lg:h-[74px];
+  .loginMain {
+    @apply lg:w-[67.813em] xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
+  }
+  .loginLogoContainer {
+    @apply mt-[28.54px] w-[148.63px] h-[48.46px] mx-auto inset-x-0 lg:mt-[133px] lg:w-[225px] lg:h-[74px];
   }
   .bannerLogin {
     @apply hidden md:flex md:w-[52.1879em] lg:w-[52.1879em] min-h-screen  xl:w-[52.1879em]   bg-login-banner bg-cover bg-center;
   }
-  .formLoginContainer{
-  @apply  bg-[#FBFBFB] rounded-[8px] w-[355px] h-[435px] lg:w-[35.563em] lg:h-[34.625em] items-center   text-black  shadow-lg shadow-[#1E36480A] lg:mt-14 mt-7;
+  .formLoginContainer {
+    @apply bg-[#FBFBFB] rounded-[8px] w-[355px] h-[435px] lg:w-[35.563em] lg:h-[34.625em] items-center   text-black  shadow-lg shadow-[#1E36480A] lg:mt-14 mt-7;
   }
 
-  .formLoginInputs{
-      @apply flex flex-col  lg:items-center  lg:pt-[4.375em] lg:pb-[4.375em] w-full h-full;
+  .formLoginInputs {
+    @apply flex flex-col  lg:items-center  lg:pt-[4.375em] lg:pb-[4.375em] w-full h-full;
   }
-  .loginForm{
-      @apply mt-[3.125em] w-[315px] h-[130px] mx-auto lg:w-[389px] lg:h-[176px];
+  .loginForm {
+    @apply mt-[3.125em] w-[315px] h-[130px] mx-auto lg:w-[389px] lg:h-[176px];
   }
-  .loginEmailInput{
-   @apply flex flex-col mx-auto;
+  .loginEmailInput {
+    @apply flex flex-col mx-auto;
   }
-  .loginPasswordInput{
-      @apply flex flex-col mx-auto mt-[15px] ;
+  .loginPasswordInput {
+    @apply flex flex-col mx-auto mt-[15px];
   }
-  .forgetPasswordContainer{
-      @apply flex  w-full  flex-col ;
+  .forgetPasswordContainer {
+    @apply flex  w-full  flex-col;
   }
-  .loginContainerButton{
-      @apply w-full mb-[20px] bg-[#4B9CE2] rounded-[8px] leading-6 h-[45px] mt-[30px] text-white text-[1.125em] font-bold cursor-pointer;
+  .loginContainerButton {
+    @apply w-full mb-[20px] bg-[#4B9CE2] rounded-[8px] leading-6 h-[45px] mt-[30px] text-white text-[1.125em] font-bold cursor-pointer;
   }
 
   /* register */
-
-  .registerContainer {
-    @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen;
-  } .registerMain{
-   @apply lg:w-[67.813em] xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
-  }
-  .registerLogoContainer{
-   @apply mt-[133px] w-[225px] h-[74px];
-  }
-  .bannerRegister {
-    @apply hidden md:flex md:w-[52.1879em] lg:w-[52.1879em] min-h-screen  xl:w-[52.1879em]   bg-login-banner bg-cover bg-center;
-  }
-  .formRegisterContainer{
-  @apply  bg-[#FBFBFB] rounded-[8px] w-[35.563em] h-[34.625em] items-center   text-black  shadow-lg shadow-[#1E36480A] mt-14;
-  }
-
-  .formRegisterInputs{
-      @apply flex flex-col  items-center  pt-[4.375em] pb-[4.375em] w-full h-full;
-  }
-  .registerForm{
-      @apply mt-[3.125em] w-[389px] h-[176px];
-  }
-  .registerEmailInput{
-   @apply flex flex-col mx-auto;
-  }
-  .registerPasswordInput{
-      @apply flex flex-col mx-auto mt-[15px];
-  }
-
-  .registerContainerButton{
-      @apply w-full mb-[20px] bg-[#4B9CE2] rounded-[8px] leading-6 h-[45px] mt-[30px] text-white text-[1.125em] font-bold cursor-pointer;
-  }
 }
