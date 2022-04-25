@@ -21,12 +21,13 @@ import axios from 'axios';
 //     return Promise.reject(error);
 //   }
 // );
-export const fetchRegister = async (input) => {
+export const fetchRegister = async ({email,password}) => {
   const { data } = await axios.post(
-    `${process.env.REACT_APP_BASE_ENDPOINT}/auth/local/register`,
-    input
+    `${process.env.REACT_APP_BASE_ENDPOINT}/auth/local/register`,{
+      username:email,
+      email:email,
+      password:password}
   );
-
   return data;
 };
 
