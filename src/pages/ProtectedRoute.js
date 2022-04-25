@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 function ProtectedRoute({children}) {
   const { loggedIn,user } = useAuth();
  
-  return user && loggedIn ? children : <Navigate to={'/'} replace/>; 
+  return user && loggedIn ? <Navigate to={'/'} replace/> : children; 
    
 
 }

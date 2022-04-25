@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/login" element={<React.Suspense fallback={<>...</>}><ProtectedRoute><Login /></ProtectedRoute></React.Suspense>} />
-        <Route path="/register" element={<React.Suspense fallback={<>...</>}><Register /></React.Suspense>} />
+        <Route path="/register" element={<React.Suspense fallback={<>...</>}><ProtectedRoute><Register /></ProtectedRoute></React.Suspense>} />
       </Routes>
     </div>
   );

@@ -1,85 +1,204 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../constants/Logo';
+import { useAuth } from '../../contexts/AuthContext';
 function NavBar() {
-//   const { loggedIn, user } = useAuth();
-//   console.log(loggedIn);
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { loggedIn } = useAuth();
   // eslint-disable-next-line no-unused-vars
-  const [loggedIn,setLoggedIn] = React.useState(false); 
   // eslint-disable-next-line no-unused-vars
-  const [user,setUser] = React.useState({});
   return (
     <div>
-      <nav className="relative px-[220px] py-4 flex justify-between items-center bg-white dark:bg-slate-700 dark:text-white">
+      <nav className="relative px-[10px] lg:px-[220px] py-4 flex justify-between items-center bg-white dark:bg-slate-700 dark:text-white">
         <Link
           to={'/'}
           className="text-2xl  font-medium leading-none text-indigo-400 flex justify-between items-center"
         >
-          <div className='w-[120px] '>
-            <Logo/>
+          <div className="w-[120px] ">
+            <Logo />
           </div>
-       
-        
         </Link>
 
         <div className="lg:hidden flex  flex-row  justify-center">
-
-          <button
-            onClick={() => setNavbarOpen(!navbarOpen)}
-            className="navbar-burger flex items-center text-indigo-500 p-2"
-          >
-            <svg
-              className="block h-4 w-4 fill-current"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Mobile menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-            </svg>
-          </button>
-        </div>
-
-    
-
-        {loggedIn ? (
-          <div className="hidden lg:flex justify-between">
+          <>
             <Link
-              to="/profile"
-              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+              to="/signup"
+              className=" flex  gap-1 items-center justify-center mx-auto w-[40px] mr-[10px] h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
             >
-              Profil
-            </Link>
-            {user?.role === 'admin' ? (
-              <Link
-                to="/admin"
-                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6  bg-indigo-400 hover:bg-indigo-300 text-sm text-white font-bold  rounded-xl transition duration-200"
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Admin
+                <path
+                  d="M6.47201 12.945C6.23331 12.945 6.00439 12.8502 5.83561 12.6814C5.66683 12.5126 5.57201 12.2837 5.57201 12.045V0.9C5.57201 0.661305 5.66683 0.432387 5.83561 0.263604C6.00439 0.0948211 6.23331 0 6.47201 0C6.7107 0 6.93962 0.0948211 7.1084 0.263604C7.27718 0.432387 7.37201 0.661305 7.37201 0.9V12.045C7.37201 12.2837 7.27718 12.5126 7.1084 12.6814C6.93962 12.8502 6.7107 12.945 6.47201 12.945V12.945Z"
+                  fill="#4B9CE2"
+                />
+                <path
+                  d="M12.045 7.37201H0.9C0.661305 7.37201 0.432387 7.27718 0.263604 7.1084C0.0948211 6.93962 0 6.7107 0 6.47201C0 6.23331 0.0948211 6.00439 0.263604 5.83561C0.432387 5.66683 0.661305 5.57201 0.9 5.57201H12.045C12.2837 5.57201 12.5126 5.66683 12.6814 5.83561C12.8502 6.00439 12.945 6.23331 12.945 6.47201C12.945 6.7107 12.8502 6.93962 12.6814 7.1084C12.5126 7.27718 12.2837 7.37201 12.045 7.37201Z"
+                  fill="#4B9CE2"
+                />
+
+                <defs>
+                  <clipPath id="clip0_1_7">
+                    <rect width="12.945" height="12.945" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Link>
+            {loggedIn ? (
+              <Link
+                to="/login"
+                className=" flex  gap-1 items-center justify-center w-[116px]  lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
+              >
+                <svg
+                  width="13"
+                  height="14"
+                  viewBox="0 0 13 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.20701 0C6.97835 0 7.73238 0.228731 8.37373 0.657269C9.01508 1.08581 9.51496 1.6949 9.81014 2.40753C10.1053 3.12017 10.1826 3.90433 10.0321 4.66085C9.88159 5.41738 9.51015 6.11229 8.96472 6.65772C8.4193 7.20314 7.72439 7.57458 6.96786 7.72506C6.21133 7.87555 5.42717 7.79831 4.71454 7.50313C4.00191 7.20795 3.39281 6.70808 2.96428 6.06672C2.53574 5.42537 2.30701 4.67135 2.30701 3.9C2.30859 2.86614 2.71999 1.87508 3.45104 1.14404C4.18209 0.412988 5.17315 0.00158689 6.20701 0V0ZM6.20701 6C6.62235 6 7.02836 5.87684 7.3737 5.64609C7.71905 5.41534 7.98821 5.08736 8.14715 4.70364C8.3061 4.31991 8.34768 3.89767 8.26666 3.49031C8.18563 3.08295 7.98562 2.70877 7.69193 2.41508C7.39824 2.12139 7.02406 1.92138 6.6167 1.84035C6.20934 1.75932 5.7871 1.80091 5.40337 1.95985C5.01965 2.1188 4.69167 2.38796 4.46092 2.7333C4.23017 3.07865 4.10701 3.48466 4.10701 3.9C4.10701 4.45695 4.32826 4.9911 4.72208 5.38492C5.11591 5.77875 5.65005 6 6.20701 6V6Z"
+                    fill="#4B9CE2"
+                  />
+                  <path
+                    d="M11.517 13.112C11.2783 13.112 11.0493 13.0172 10.8806 12.8484C10.7118 12.6796 10.617 12.4507 10.617 12.212C10.6258 11.6275 10.5183 11.047 10.3007 10.5045C10.0831 9.96188 9.75973 9.46798 9.34949 9.05151C8.93925 8.63505 8.45031 8.30433 7.91107 8.07858C7.37183 7.85284 6.79308 7.73657 6.2085 7.73657C5.62391 7.73657 5.04516 7.85284 4.50592 8.07858C3.96668 8.30433 3.47768 8.63505 3.06744 9.05151C2.6572 9.46798 2.33387 9.96188 2.11627 10.5045C1.89868 11.047 1.79118 11.6275 1.79999 12.212C1.79999 12.4507 1.70516 12.6796 1.53638 12.8484C1.36759 13.0172 1.13866 13.112 0.899963 13.112C0.661269 13.112 0.432394 13.0172 0.263611 12.8484C0.0948281 12.6796 0 12.4507 0 12.212C0.0207247 10.579 0.683941 9.02 1.84601 7.87259C3.00808 6.72518 4.57542 6.08179 6.2085 6.08179C7.84158 6.08179 9.40892 6.72518 10.571 7.87259C11.7331 9.02 12.3963 10.579 12.417 12.212C12.417 12.4507 12.3222 12.6796 12.1534 12.8484C11.9846 13.0172 11.7557 13.112 11.517 13.112Z"
+                    fill="#4B9CE2"
+                  />
+
+                  <defs>
+                    <clipPath id="clip0_2_11">
+                      <rect width="12.417" height="13.112" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Hesabım
               </Link>
             ) : (
-              ''
+              <Link
+                to="/login"
+                className=" flex  gap-1 items-center justify-center w-[116px]  lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
+              >
+                <svg
+                  width="13"
+                  height="14"
+                  viewBox="0 0 13 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.20701 0C6.97835 0 7.73238 0.228731 8.37373 0.657269C9.01508 1.08581 9.51496 1.6949 9.81014 2.40753C10.1053 3.12017 10.1826 3.90433 10.0321 4.66085C9.88159 5.41738 9.51015 6.11229 8.96472 6.65772C8.4193 7.20314 7.72439 7.57458 6.96786 7.72506C6.21133 7.87555 5.42717 7.79831 4.71454 7.50313C4.00191 7.20795 3.39281 6.70808 2.96428 6.06672C2.53574 5.42537 2.30701 4.67135 2.30701 3.9C2.30859 2.86614 2.71999 1.87508 3.45104 1.14404C4.18209 0.412988 5.17315 0.00158689 6.20701 0V0ZM6.20701 6C6.62235 6 7.02836 5.87684 7.3737 5.64609C7.71905 5.41534 7.98821 5.08736 8.14715 4.70364C8.3061 4.31991 8.34768 3.89767 8.26666 3.49031C8.18563 3.08295 7.98562 2.70877 7.69193 2.41508C7.39824 2.12139 7.02406 1.92138 6.6167 1.84035C6.20934 1.75932 5.7871 1.80091 5.40337 1.95985C5.01965 2.1188 4.69167 2.38796 4.46092 2.7333C4.23017 3.07865 4.10701 3.48466 4.10701 3.9C4.10701 4.45695 4.32826 4.9911 4.72208 5.38492C5.11591 5.77875 5.65005 6 6.20701 6V6Z"
+                    fill="#4B9CE2"
+                  />
+                  <path
+                    d="M11.517 13.112C11.2783 13.112 11.0493 13.0172 10.8806 12.8484C10.7118 12.6796 10.617 12.4507 10.617 12.212C10.6258 11.6275 10.5183 11.047 10.3007 10.5045C10.0831 9.96188 9.75973 9.46798 9.34949 9.05151C8.93925 8.63505 8.45031 8.30433 7.91107 8.07858C7.37183 7.85284 6.79308 7.73657 6.2085 7.73657C5.62391 7.73657 5.04516 7.85284 4.50592 8.07858C3.96668 8.30433 3.47768 8.63505 3.06744 9.05151C2.6572 9.46798 2.33387 9.96188 2.11627 10.5045C1.89868 11.047 1.79118 11.6275 1.79999 12.212C1.79999 12.4507 1.70516 12.6796 1.53638 12.8484C1.36759 13.0172 1.13866 13.112 0.899963 13.112C0.661269 13.112 0.432394 13.0172 0.263611 12.8484C0.0948281 12.6796 0 12.4507 0 12.212C0.0207247 10.579 0.683941 9.02 1.84601 7.87259C3.00808 6.72518 4.57542 6.08179 6.2085 6.08179C7.84158 6.08179 9.40892 6.72518 10.571 7.87259C11.7331 9.02 12.3963 10.579 12.417 12.212C12.417 12.4507 12.3222 12.6796 12.1534 12.8484C11.9846 13.0172 11.7557 13.112 11.517 13.112Z"
+                    fill="#4B9CE2"
+                  />
+
+                  <defs>
+                    <clipPath id="clip0_2_11">
+                      <rect width="12.417" height="13.112" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                Giriş Yap
+              </Link>
             )}
-          </div>
+          </>
+        </div>
+
+        {loggedIn ? (
+          <>
+            <Link
+              to="/signup"
+              className="hidden lg:flex  gap-1 items-center justify-center mx-auto w-[125px] lg:ml-auto lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.47201 12.945C6.23331 12.945 6.00439 12.8502 5.83561 12.6814C5.66683 12.5126 5.57201 12.2837 5.57201 12.045V0.9C5.57201 0.661305 5.66683 0.432387 5.83561 0.263604C6.00439 0.0948211 6.23331 0 6.47201 0C6.7107 0 6.93962 0.0948211 7.1084 0.263604C7.27718 0.432387 7.37201 0.661305 7.37201 0.9V12.045C7.37201 12.2837 7.27718 12.5126 7.1084 12.6814C6.93962 12.8502 6.7107 12.945 6.47201 12.945V12.945Z"
+                  fill="#4B9CE2"
+                />
+                <path
+                  d="M12.045 7.37201H0.9C0.661305 7.37201 0.432387 7.27718 0.263604 7.1084C0.0948211 6.93962 0 6.7107 0 6.47201C0 6.23331 0.0948211 6.00439 0.263604 5.83561C0.432387 5.66683 0.661305 5.57201 0.9 5.57201H12.045C12.2837 5.57201 12.5126 5.66683 12.6814 5.83561C12.8502 6.00439 12.945 6.23331 12.945 6.47201C12.945 6.7107 12.8502 6.93962 12.6814 7.1084C12.5126 7.27718 12.2837 7.37201 12.045 7.37201Z"
+                  fill="#4B9CE2"
+                />
+
+                <defs>
+                  <clipPath id="clip0_1_7">
+                    <rect width="12.945" height="12.945" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+
+              <p className="mt-0.5 "> Ürün Ekle</p>
+            </Link>
+            <Link
+              to="/login"
+              className="hidden lg:flex  gap-1 items-center justify-center w-[125px]  lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
+            >
+              <svg
+                width="13"
+                height="14"
+                viewBox="0 0 13 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.20701 0C6.97835 0 7.73238 0.228731 8.37373 0.657269C9.01508 1.08581 9.51496 1.6949 9.81014 2.40753C10.1053 3.12017 10.1826 3.90433 10.0321 4.66085C9.88159 5.41738 9.51015 6.11229 8.96472 6.65772C8.4193 7.20314 7.72439 7.57458 6.96786 7.72506C6.21133 7.87555 5.42717 7.79831 4.71454 7.50313C4.00191 7.20795 3.39281 6.70808 2.96428 6.06672C2.53574 5.42537 2.30701 4.67135 2.30701 3.9C2.30859 2.86614 2.71999 1.87508 3.45104 1.14404C4.18209 0.412988 5.17315 0.00158689 6.20701 0V0ZM6.20701 6C6.62235 6 7.02836 5.87684 7.3737 5.64609C7.71905 5.41534 7.98821 5.08736 8.14715 4.70364C8.3061 4.31991 8.34768 3.89767 8.26666 3.49031C8.18563 3.08295 7.98562 2.70877 7.69193 2.41508C7.39824 2.12139 7.02406 1.92138 6.6167 1.84035C6.20934 1.75932 5.7871 1.80091 5.40337 1.95985C5.01965 2.1188 4.69167 2.38796 4.46092 2.7333C4.23017 3.07865 4.10701 3.48466 4.10701 3.9C4.10701 4.45695 4.32826 4.9911 4.72208 5.38492C5.11591 5.77875 5.65005 6 6.20701 6V6Z"
+                  fill="#4B9CE2"
+                />
+                <path
+                  d="M11.517 13.112C11.2783 13.112 11.0493 13.0172 10.8806 12.8484C10.7118 12.6796 10.617 12.4507 10.617 12.212C10.6258 11.6275 10.5183 11.047 10.3007 10.5045C10.0831 9.96188 9.75973 9.46798 9.34949 9.05151C8.93925 8.63505 8.45031 8.30433 7.91107 8.07858C7.37183 7.85284 6.79308 7.73657 6.2085 7.73657C5.62391 7.73657 5.04516 7.85284 4.50592 8.07858C3.96668 8.30433 3.47768 8.63505 3.06744 9.05151C2.6572 9.46798 2.33387 9.96188 2.11627 10.5045C1.89868 11.047 1.79118 11.6275 1.79999 12.212C1.79999 12.4507 1.70516 12.6796 1.53638 12.8484C1.36759 13.0172 1.13866 13.112 0.899963 13.112C0.661269 13.112 0.432394 13.0172 0.263611 12.8484C0.0948281 12.6796 0 12.4507 0 12.212C0.0207247 10.579 0.683941 9.02 1.84601 7.87259C3.00808 6.72518 4.57542 6.08179 6.2085 6.08179C7.84158 6.08179 9.40892 6.72518 10.571 7.87259C11.7331 9.02 12.3963 10.579 12.417 12.212C12.417 12.4507 12.3222 12.6796 12.1534 12.8484C11.9846 13.0172 11.7557 13.112 11.517 13.112Z"
+                  fill="#4B9CE2"
+                />
+
+                <defs>
+                  <clipPath id="clip0_2_11">
+                    <rect width="12.417" height="13.112" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Giriş Yap
+            </Link>
+          </>
         ) : (
           <>
             <Link
               to="/signup"
               className="hidden lg:flex  gap-1 items-center justify-center mx-auto w-[125px] lg:ml-auto lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
             >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-          
-                <path d="M6.47201 12.945C6.23331 12.945 6.00439 12.8502 5.83561 12.6814C5.66683 12.5126 5.57201 12.2837 5.57201 12.045V0.9C5.57201 0.661305 5.66683 0.432387 5.83561 0.263604C6.00439 0.0948211 6.23331 0 6.47201 0C6.7107 0 6.93962 0.0948211 7.1084 0.263604C7.27718 0.432387 7.37201 0.661305 7.37201 0.9V12.045C7.37201 12.2837 7.27718 12.5126 7.1084 12.6814C6.93962 12.8502 6.7107 12.945 6.47201 12.945V12.945Z" fill="#4B9CE2"/>
-                <path d="M12.045 7.37201H0.9C0.661305 7.37201 0.432387 7.27718 0.263604 7.1084C0.0948211 6.93962 0 6.7107 0 6.47201C0 6.23331 0.0948211 6.00439 0.263604 5.83561C0.432387 5.66683 0.661305 5.57201 0.9 5.57201H12.045C12.2837 5.57201 12.5126 5.66683 12.6814 5.83561C12.8502 6.00439 12.945 6.23331 12.945 6.47201C12.945 6.7107 12.8502 6.93962 12.6814 7.1084C12.5126 7.27718 12.2837 7.37201 12.045 7.37201Z" fill="#4B9CE2"/>
-             
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 13 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.47201 12.945C6.23331 12.945 6.00439 12.8502 5.83561 12.6814C5.66683 12.5126 5.57201 12.2837 5.57201 12.045V0.9C5.57201 0.661305 5.66683 0.432387 5.83561 0.263604C6.00439 0.0948211 6.23331 0 6.47201 0C6.7107 0 6.93962 0.0948211 7.1084 0.263604C7.27718 0.432387 7.37201 0.661305 7.37201 0.9V12.045C7.37201 12.2837 7.27718 12.5126 7.1084 12.6814C6.93962 12.8502 6.7107 12.945 6.47201 12.945V12.945Z"
+                  fill="#4B9CE2"
+                />
+                <path
+                  d="M12.045 7.37201H0.9C0.661305 7.37201 0.432387 7.27718 0.263604 7.1084C0.0948211 6.93962 0 6.7107 0 6.47201C0 6.23331 0.0948211 6.00439 0.263604 5.83561C0.432387 5.66683 0.661305 5.57201 0.9 5.57201H12.045C12.2837 5.57201 12.5126 5.66683 12.6814 5.83561C12.8502 6.00439 12.945 6.23331 12.945 6.47201C12.945 6.7107 12.8502 6.93962 12.6814 7.1084C12.5126 7.27718 12.2837 7.37201 12.045 7.37201Z"
+                  fill="#4B9CE2"
+                />
+
                 <defs>
                   <clipPath id="clip0_1_7">
-                    <rect width="12.945" height="12.945" fill="white"/>
+                    <rect width="12.945" height="12.945" fill="white" />
                   </clipPath>
                 </defs>
               </svg>
 
-              <p className='mt-0.5 '>     Ürün Ekle</p>
+              <p className="mt-0.5 "> Ürün Ekle</p>
             </Link>
             <Link
               to="/signin"
@@ -91,88 +210,7 @@ function NavBar() {
         )}
       </nav>
       <hr className="dark:border-slate-600"></hr>
-      <div
-        className={
-          'lg:hidden flex-grow items-center ' +
-          (navbarOpen ? ' flex' : ' hidden')
-        }
-        id="example-navbar-danger"
-      >
-        <ul className="flex dark:bg-slate-700 bg-gray-100  flex-col w-screen h-full lg:flex-row list-none lg:ml-auto">
-          {loggedIn ? (
-            <div>
-              <li className="nav-item hover:bg-slate-400 ">
-                <Link
-                  onClick={() => setNavbarOpen(!navbarOpen)}
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  to={'/'}
-                >
-                  <i className="fab fa-facebook-square text-lg leading-lg  opacity-75"></i>
-                  <span className="ml-2 dark:text-white text-slate-700  ">
-                    Ana Sayfa
-                  </span>
-                </Link>
-              </li>
 
-              <li className="nav-item hover:bg-slate-400">
-                <Link
-                  onClick={() => setNavbarOpen(!navbarOpen)}
-                  to={'/profile'}
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                >
-                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2 dark:text-white text-slate-700 ">
-                    Profil
-                  </span>
-                </Link>
-              </li>
-            </div>
-          ) : (
-            <div>
-              <li className="nav-item hover:bg-slate-400">
-                <Link
-                  onClick={() => setNavbarOpen(!navbarOpen)} 
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                  to={'/signup'}
-                >
-                  <i className="fab fa-facebook-square text-lg leading-lg  opacity-75"></i>
-                  <span className="ml-2 dark:text-white text-slate-700 ">
-                    Kayıt Ol
-                  </span>
-                </Link>
-              </li>
-              <li className="nav-item hover:bg-slate-400">
-                <Link
-                  onClick={() => setNavbarOpen(!navbarOpen)}
-                  to={'/signin'}
-                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                >
-                  <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
-                  <span className="ml-2 dark:text-white text-slate-700 ">
-                    Giriş Yap
-                  </span>
-                </Link>
-              </li>
-            </div>
-          )}
-          {user?.role === 'admin' ? (
-            <li className="nav-item hover:bg-slate-400">
-              <Link
-                onClick={() => setNavbarOpen(!navbarOpen)}
-                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                to={'/admin'}
-              >
-                <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
-                <span className="ml-2 dark:text-white text-slate-700 ">
-                  Admin
-                </span>
-              </Link>
-            </li>
-          ) : (
-            ''
-          )}
-        </ul>
-      </div>
     </div>
   );
 }

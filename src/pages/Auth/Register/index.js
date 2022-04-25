@@ -3,9 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { fetchRegister } from '../../../api';
 import Logo from '../../../constants/Logo';
+import { useAuth } from '../../../contexts/AuthContext';
 import validationSchema from './validations';
 
 function login() {
+  const {login} = useAuth();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -18,15 +20,15 @@ function login() {
       try {
         const registerResponse = await fetchRegister({
           email: values.email,
-          fullName:values.fullName,
           password: values.password,
         });
-        // login(registerResponse);
       
-        console.log(registerResponse);
+      
+        login(registerResponse);
+
 
       } catch (e) {
-        bag.setErrors({ general: e.response.data.message });
+        bag.setErrors({general:e.response.data.data[0].messages[0].message});
       }
     },
   });
@@ -34,7 +36,7 @@ function login() {
     <div className="loginContainer">
       <div className="bannerLogin" />
       <div className="loginMain">
-        {!formik.errors.general && (
+        {formik.errors.general && (
           <div
             className="bg-[#FFE5E5] rounded-[8px] shadow-sm shadow-[#1E36482E] text-[#F77474]  fixed md:top-[10px] md:relative xl:fixed  lg:top-[90px] top-[10px] mx-auto  inset-x-0 lg:inset-auto  w-[321px] h-[60px] lg:right-[11px]  "
             role="alert"
@@ -49,7 +51,7 @@ function login() {
       
               </div>
               <div className='flex justify-center items-center'>
-                <p className="text-[1em] text-red-500 ml-[10px]  ">{formik.errors.general}Emailiniz veya şifreniz hatalı.</p>
+                <p className="text-[1em] text-red-500 ml-[10px]  ">{formik.errors.general}</p>
               </div>
             </div>
           </div>
@@ -114,12 +116,12 @@ function login() {
                 />
               </div>
 
-              <button className="loginContainerButton" type='submit'>Giriş</button>
+              <button className="loginContainerButton" type='submit'>Üye Ol</button>
               <div className="">
                 <p className="text-[0.938em] font-normal leading-5">
                   Hesabın var mı ?{' '}
                   <Link
-                    to={'/register'}
+                    to={'/login'}
                     className="leading-5 text-[#4B9CE2] cursor-pointer"
                   >
                     {' '}
