@@ -14,6 +14,11 @@ body {
   .textlayer {
     @apply text-3xl font-bold underline;
   }
+  .border{
+      padding:7px  0 7px 0;
+      border-bottom:2px solid #4B9CE2;
+    
+  }
 
   .appContainer {
     @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll xl:overflow-hidden bg-gray-50;

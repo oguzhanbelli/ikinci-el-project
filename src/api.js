@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 // Add a request interceptor
 
 // axios.interceptors.request.use(
@@ -32,7 +32,7 @@ export const fetchRegister = async ({email,password}) => {
 };
 
 export const fetchMe = async () => {
-  const token = localStorage.getItem('access-token');
+  const token = Cookies.get('Auth_Token');
   const {data} = await axios.get(
     `${process.env.REACT_APP_BASE_ENDPOINT}/users/me`,{headers:{'Authorization':`Bearer ${token}`}}
   );
@@ -73,3 +73,26 @@ export const fetchLogin = async ({identifier,password}) => {
 
 };
 
+
+export const fetchAllCategories = async () => {
+
+  const {data} = await axios.get(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/categories`,
+   
+  );
+  return data;
+
+  
+};
+export const fetchAllProducts = async () => {
+
+  const {data} = await axios.get(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/products`,
+     
+  );
+  return data;
+  
+    
+};
+  
+  

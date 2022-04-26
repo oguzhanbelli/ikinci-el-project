@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 import { createContext, useState, useEffect, useContext } from 'react';
 import { fetchMe, fetchLogout } from '../api';
-
+import Cookies from 'js-cookie';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(true);
     setUser(data.user);
 
-    localStorage.setItem('access-token', data.jwt);
+    Cookies.set('Auth_Token', data.jwt);
     
   };
   const logout = async (callback) => {
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     await fetchLogout();
 
-    localStorage.removeItem('access-token');
+    Cookies.remove('Auth_Token');
     callback();
   };
 
