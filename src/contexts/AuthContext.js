@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   const logout = async (callback) => {
     setLoggedIn(false);
     setUser(null);
-    await fetchLogout();
+    // await fetchLogout();
 
     Cookies.remove('Auth_Token');
     callback();

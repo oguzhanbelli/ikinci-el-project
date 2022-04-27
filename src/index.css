@@ -7,6 +7,71 @@ body {
   font-family: "Nunito", sans-serif;
 }
 @layer components {
+
+    
+    .option-input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        position: relative;
+       
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        transition: all 0.15s ease-out 0s;
+        background: #fff;
+        border: 1px solid #B1B1B1;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 0.5rem;
+        outline: none;
+        position: relative;
+        z-index: 1000;
+      }
+      .option-input:hover {
+        background: #9faab7;
+        
+      }
+      .option-input:checked {
+        background: #4b9ce2;
+        border:2px solid #b1b1b1;
+      }
+      .option-input:checked::before {
+        width: 17px;
+        height: 18px;
+        display:flex;
+        content: '\2714';
+       
+        font-size: 15px;
+        font-weight:bold;
+     
+     
+        align-items:center;
+        text-align:center;
+       
+        justify-content:center;
+      }
+      .option-input:checked::after {
+        -webkit-animation: click-wave 0.65s;
+        -moz-animation: click-wave 0.65s;
+        animation: click-wave 0.65s;
+        background: #40e0d0;
+        content: '';
+        display: block;
+        position: relative;
+        z-index: 100;
+      }
+      .option-input.radio {
+        border-radius: 50%;
+      }
+      .option-input.radio::after {
+        border-radius: 50%;
+      }
   body {
     @apply overflow-x-hidden lg:overflow-x-auto xl:overflow-x-hidden xl:overflow-y-scroll;
   }

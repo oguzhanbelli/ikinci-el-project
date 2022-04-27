@@ -40,16 +40,6 @@ export const fetchMe = async () => {
   return data;
 };
 
-export const fetchLogout = async () => {
-  const { data } = await axios.post(
-    `${process.env.REACT_APP_BASE_ENDPOINT}/auth/logout`,
-    {
-      refresh_token: localStorage.getItem('refresh-token'),
-    }
-  );
-
-  return data;
-};
 
 export const fetchLogin = async ({identifier,password}) => {
 
@@ -72,6 +62,16 @@ export const fetchLogin = async ({identifier,password}) => {
 
 
 };
+
+export const fetchMyOffers = async (id) => {
+  const token = Cookies.get('Auth_Token');
+  const {data} = await axios.get(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/offers?users_permissions_user=${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+  );
+
+  return data;
+};
+
 
 
 export const fetchAllCategories = async () => {
