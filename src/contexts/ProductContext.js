@@ -11,25 +11,28 @@ const ProductProvider = ({ children }) => {
   const [allProducts, setAllProducts] = useState([]);
 
   let [searchParams] = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState();
+  const [activeCategory, setActiveCategory] = useState('all');
   useEffect(() => {
     if (searchParams.get('category') !== 'all') {
       getProductsWithCategory();
     }
-  });
+  }, []);
 
   useEffect(() => {
-    if (searchParams.get('category') === 'all' ) {
+    if (searchParams.get('category') === 'all' && activeCategory === 'all') {
+      console.log(activeCategory);
       getProducts();
     }
+    if (searchParams.get('category') !== 'all') {
+      getProductsWithCategory();
+    }
   }, [searchParams]);
+  
 
   useEffect(() => {
     (async () => {
       try {
-      
         getCategories();
-      
       } catch (e) {
         setLoading(false);
       }
@@ -42,21 +45,19 @@ const ProductProvider = ({ children }) => {
     setAllCategories(data);
   };
   const getProductsWithCategory = async () => {
-  
     const data = allCategories.filter(
       (item) => item.name === searchParams.get('category')
     );
-    if (searchParams.get('category') === 'all' ||!searchParams.get('category')) {
+    if (searchParams.get('category') === 'all' || activeCategory === 'all') {
       getProducts();
-      setLoading(false);
     } else {
       setAllProducts(data[0]?.products);
-      setLoading(false);
     }
     setLoading(false);
   };
   const getProducts = async () => {
-    
+    setLoading(true);
+
     const data = await fetchAllProducts();
     console.log(data);
     setAllProducts(data);
@@ -73,11 +74,6 @@ const ProductProvider = ({ children }) => {
     getProducts,
     allProducts,
   };
-
-  if (loading) {
-    // eslint-disable-next-line react/react-in-jsx-scope
-    return <div> Loading...</div>;
-  }
 
   return (
     // eslint-disable-next-line react/react-in-jsx-scope

@@ -5,23 +5,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap");
 body {
   font-family: "Nunito", sans-serif;
- 
 }
 @layer components {
-    body{
-        @apply  overflow-x-hidden lg:overflow-x-auto xl:overflow-hidden;
-    }
+  body {
+    @apply overflow-x-hidden lg:overflow-x-auto xl:overflow-x-hidden xl:overflow-y-scroll;
+  }
   .textlayer {
     @apply text-3xl font-bold underline;
   }
-  .border{
-      padding:7px  0 7px 0;
-      border-bottom:2px solid #4B9CE2;
-    
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .border {
+    padding: 7px 0px 14px 0px;
+    border-bottom: 2px solid #4b9ce2;
+
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+
+    color: #4b9ce2;
   }
 
   .appContainer {
-    @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll xl:overflow-hidden bg-gray-50;
+    @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll xl:overflow-x-hidden overflow-y-scroll bg-gray-50;
   }
   /* login */
   .loginContainer {
