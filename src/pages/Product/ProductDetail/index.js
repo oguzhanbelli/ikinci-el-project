@@ -3,21 +3,32 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
-import { useProduct } from '../../contexts/ProductContext';
-import Modal from '../Modal';
+import { useProduct } from '../../../contexts/ProductContext';
+import Modal from '../../../components/Modal';
+import { useAuth } from '../../../contexts/AuthContext';
 
 function ProductDetail() {
   const  location = useLocation();
+  const navigate = useNavigate();
 
   const productId = location.pathname.split('/')[2];
   const [state, setState] = useState({});
   const {myOffers,getMyOffers,getOneProduct} = useProduct();
-  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(null);
 
   let status = myOffers?.findIndex(item => item.product.id === state.id);
   let offer = myOffers?.filter(item => item.product.id === state.id);
 
-  
+  const {user} = useAuth();
+
+  const openModal = () => {
+    if(!user){
+      navigate('/login');
+
+    }
+
+    setShowDetailModal(true);
+  };
   const getProduct = async() => {
     setState(await getOneProduct(productId));
     console.log(state);
@@ -25,15 +36,11 @@ function ProductDetail() {
 
   useEffect(() => {
     getProduct();
-
-  },[status]);
-  useEffect(() => {
-
-   
     getMyOffers();
-    console.log(showDetailModal,"modal");
+   
 
-  },[status]);
+  },[showDetailModal]);
+
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3 overflow-x-hidden overflow-y-auto">
       <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-[500px] xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
@@ -110,9 +117,9 @@ function ProductDetail() {
                     </div>
                   </div> : ''
                 }
-                <div className='fixed bottom-10 opacity-50 lg:opacity-100 bg-[#FFFFFF]  inset-x-0  lg:flex lg:sticky lg:justify-between w-full mt-[30px] h-[45px]'>
+                <div className='fixed bottom-10 opacity-80 lg:opacity-100 bg-[#FFFFFF]  inset-x-0  lg:flex lg:sticky lg:justify-between w-full mt-[30px] h-[45px]'>
                   <button className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
-                  {   state?.isOfferable ?  <button onClick={() => setShowDetailModal(true)} className={` ${status >= 0 ? 'hidden ' : 'block'} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
+                  {   state?.isOfferable ?  <button onClick={() => openModal()} className={` ${status >= 0 ? 'hidden ' : ''} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
                     :<></>}
                   {
                     status >= 0 ? <button className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>

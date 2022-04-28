@@ -4,6 +4,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { fetchMe, fetchLogout } from '../api';
 import Cookies from 'js-cookie';
+import Logo from '../constants/Logo';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -47,7 +48,7 @@ const AuthProvider = ({ children }) => {
   };
 
   if (loading) {
-    return <div> Loading... </div>;
+    return <div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>;
   }
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

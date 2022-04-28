@@ -21,7 +21,7 @@ const ProductProvider = ({ children }) => {
    
     }
     
-  },[]);
+  });
   useEffect(() => {
     if (searchParams.get('category') !== 'all' ) {
       getProductsWithCategory();
@@ -40,8 +40,9 @@ const ProductProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        getMyOffers();
         getCategories();
+     
+      
 
         setLoading(false);
        
@@ -81,6 +82,7 @@ const ProductProvider = ({ children }) => {
   const getOneProduct = async (id) => {
     const data = await fetchOneProduct(id);
 
+    getMyOffers();
     return data;
   };
 
@@ -94,8 +96,9 @@ const ProductProvider = ({ children }) => {
 
 
     const data = await addOffer();
+    setMyOffers([...myOffers,...data]);
    
-    console.log(data);
+    return data;
   };
   // const offerRemove = async () => {
   //   const data = await fetchMyOffers(user.id);

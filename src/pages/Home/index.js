@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import {   useNavigate, useSearchParams } from 'react-router-dom';
 import Categories from '../../components/Categories';
+import Logo from '../../constants/Logo';
 import { useProduct } from '../../contexts/ProductContext';
 
 
@@ -24,7 +25,7 @@ function Home() {
   },[activeCategory]);
 
   const handleNavigate = (item) => {
-    navigate(`/productDetail/${item.id}`, { state: item ,replace:true});
+    navigate(`/product-detail/${item.id}`, { state: item ,replace:true});
   };
 
 
@@ -56,7 +57,7 @@ function Home() {
                     
                   </div>
                 </div>
-              )):<div className='flex justify-center items-center '>Loading...</div>
+              )):  <div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>
           }
 
         </div>
