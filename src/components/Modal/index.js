@@ -2,28 +2,40 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { useFormik } from 'formik';
-function Modal({state}) {
+import { addOffer } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
+// eslint-disable-next-line no-unused-vars
+let offerSubmit;
+function Modal({state,setShowDetailModal}) {
 
   const [checked,setChecked] = useState(false);
+  const {user } = useAuth();
 
+
+  
   const formik = useFormik({
     initialValues: {
-      desc: '',
-      adress: '',
-      exitDate: '',
-      entryDate: '',
+      offerPrice: '',
+      
     },
 
     onSubmit: async (values) => {
+     
+      offerSubmit = {product:state.id,users_permissions_user:user.id,offerPrice:values.offerPrice};
+      
       
 
-      console.log(values);
+      addOffer(offerSubmit);
+      setShowDetailModal(false);
 
-      formik.resetForm();
+
+ 
     },
   });
+
+  
  
 
   return (
@@ -72,7 +84,7 @@ function Modal({state}) {
 
               </div>
 
-              <form>
+              <form onSubmit={formik.handleSubmit}>
                 <div className={`w-[441px] h-[45px] flex flex-row ${checked ? 'bg-[#F0F8FF] border-[1px] cursor-pointer border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[17px] rounded-[10px]`}>
                   <label onClick={() => setChecked(true)} className='flex items-center ml-[10px] w-full cursor-pointer  peer-checked:bg-red-300 '>
                     <input type={'radio'} defaultChecked={true} value={'20'} name="offer" className="option-input radio peer" />
@@ -112,9 +124,12 @@ function Modal({state}) {
                   
                     <input
                       type="text"
-                      name="price"
+                      name="offerPrice"
+                      value={formik.values.offerPrice}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                       disabled={checked}
-                      id="price"
+                      id="offerPrice"
                       className="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                       placeholder="Teklif Belirle"
                     />
@@ -134,7 +149,7 @@ function Modal({state}) {
                 </div>
 
                 <div className='mt-[20px]'>
-                  <button className='w-[172px] lg:w-[315px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
+                  <button type='submit' className='w-[172px] lg:w-[315px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
 
                 </div>
 

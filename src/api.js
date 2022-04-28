@@ -65,12 +65,38 @@ export const fetchLogin = async ({identifier,password}) => {
 
 export const fetchMyOffers = async (id) => {
   const token = Cookies.get('Auth_Token');
-  const {data} = await axios.get(
-    `${process.env.REACT_APP_BASE_ENDPOINT}/offers?users_permissions_user=${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+  try{
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/offers?users_permissions_user=${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
+export const addOffer = async (input) => {
+  const token = Cookies.get('Auth_Token');
+  const {data} = await axios.post(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/offers`,input,{headers:{'Authorization':`Bearer ${token}`}}
+
   );
 
   return data;
+  
 };
+
+export const fetchOneProduct = async (id) => {
+
+  const {data} = await axios.get(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,
+     
+  );
+  return data;
+  
+    
+};
+
 
 
 

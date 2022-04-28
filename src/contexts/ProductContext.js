@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchAllCategories, fetchAllProducts, fetchMyOffers } from '../api';
+import { fetchAllCategories, fetchAllProducts, fetchMyOffers, fetchOneProduct } from '../api';
 import { useAuth } from './AuthContext';
 // import { getPermRequest, getPermRequests, getUser } from "../api";
 const ProductContext = createContext();
@@ -8,6 +8,7 @@ const ProductContext = createContext();
 // eslint-disable-next-line react/prop-types
 const ProductProvider = ({ children }) => {
   const {user} = useAuth();
+  
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
@@ -17,18 +18,22 @@ const ProductProvider = ({ children }) => {
   useEffect(() => {
     if (searchParams.get('category') !== 'all' && activeCategory) {
       getProductsWithCategory();
+   
     }
     
   },[]);
   useEffect(() => {
     if (searchParams.get('category') !== 'all' ) {
       getProductsWithCategory();
+ 
     }
   }, [searchParams]);
+  
 
   useEffect(() => {
     if (searchParams.get('category') === 'all' ) {
       getProducts();
+      
     }
   }, [searchParams]);
 
@@ -37,6 +42,8 @@ const ProductProvider = ({ children }) => {
       try {
         getMyOffers();
         getCategories();
+
+        setLoading(false);
        
       
       } catch (e) {
@@ -71,9 +78,24 @@ const ProductProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const getOneProduct = async (id) => {
+    const data = await fetchOneProduct(id);
+
+    return data;
+  };
+
+  
+
   const getMyOffers = async () => {
-    const data = await fetchMyOffers(user.id);
+    const data = await fetchMyOffers(user?.id);
     setMyOffers(data);
+  };
+  const addOffer = async () => {
+
+
+    const data = await addOffer();
+   
+    console.log(data);
   };
   // const offerRemove = async () => {
   //   const data = await fetchMyOffers(user.id);
@@ -87,8 +109,10 @@ const ProductProvider = ({ children }) => {
     loading,
     activeCategory,
     setActiveCategory,
+    getOneProduct,
     getProductsWithCategory,
     getProducts,
+    addOffer,
     allProducts,
   };
 
