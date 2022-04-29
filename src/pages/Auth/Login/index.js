@@ -86,7 +86,7 @@ function Login() {
                   
                   placeholder="Email@example.com"
                   // eslint-disable-next-line quotes
-                  className={`px-4 py-2 w-[315px]  lg:w-[389px] lg:h-[45px] rounded-[8px] border  placeholder:font-normal  bg-[#F4F4F4] border-gray-300  focus:outline-none focus:ring-2 focus:ring-gray-200 ${
+                  className={`px-4 py-2 w-[315px]  lg:w-[389px] lg:h-[45px] rounded-[8px] border-[1px]  placeholder:font-normal  bg-[#F4F4F4] border-gray-300  focus:outline-none focus:ring-2 focus:ring-gray-200 ${
                     formik.touched.email && formik.errors.email
                       ? 'border-[#F77474] bg-[#FFF2F2] text-[#F77474] '
                       : ''
@@ -108,7 +108,7 @@ function Login() {
                   type="password"
                   placeholder="•••••"
                   // eslint-disable-next-line quotes
-                  className={`px-4 py-2 w-[315px]  lg:w-[389px] lg:h-[45px] rounded-[8px] bg-[#F4F4F4]  border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 ${
+                  className={`px-4 py-2 w-[315px]  lg:w-[389px] lg:h-[45px] rounded-[8px] bg-[#F4F4F4]  border-[1px] border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 ${
                     formik.touched.password && formik.errors.password
                       ? 'border-[#F77474] bg-[#FFF2F2] text-[#F77474] placeholder:text-[#F77474]'
                       :''

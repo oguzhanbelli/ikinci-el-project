@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchAllCategories, fetchAllProducts, fetchMyOffers, fetchOneProduct } from '../api';
+import { buyProduct, fetchAllCategories, fetchAllProducts, fetchMyOffers, fetchOneProduct,removeOffer } from '../api';
 import { useAuth } from './AuthContext';
 // import { getPermRequest, getPermRequests, getUser } from "../api";
 const ProductContext = createContext();
@@ -85,12 +85,10 @@ const ProductProvider = ({ children }) => {
     getMyOffers();
     return data;
   };
-
-  
-
   const getMyOffers = async () => {
     const data = await fetchMyOffers(user?.id);
     setMyOffers(data);
+   
   };
   const addOffer = async () => {
 
@@ -98,6 +96,15 @@ const ProductProvider = ({ children }) => {
     const data = await addOffer();
     setMyOffers([...myOffers,...data]);
    
+    return data;
+  };
+
+  const removeOfferProduct  =async (id) =>{
+    const data = await removeOffer(id);
+    return data;
+  };
+  const buyProductDetail  =async (id) =>{
+    const data = await buyProduct(id,{isSold:true});
     return data;
   };
   // const offerRemove = async () => {
@@ -108,11 +115,13 @@ const ProductProvider = ({ children }) => {
     allCategories,
     getCategories,
     getMyOffers,
+    removeOfferProduct,
     myOffers,
     loading,
     activeCategory,
     setActiveCategory,
     getOneProduct,
+    buyProductDetail,
     getProductsWithCategory,
     getProducts,
     addOffer,

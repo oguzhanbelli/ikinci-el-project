@@ -37,7 +37,7 @@ function Home() {
         <div className='bg-home-banner bg-no-repeat bg-cover w-[355px] h-[125px] md:w-[700px] md:h-[200px] lg:w-[60em] lg:h-[20em] xl:w-[92.5em]  rounded-[8px] bg-center mt-[20px] p-[20px] xl:h-[20em]'></div>
         <Categories/>
 
-        <div className='flex flex-wrap hide-scrollbar flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  xl:w-[1500px] h-screen xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
+        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  xl:w-[1500px] h-screen xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
           {
             !loading ?   
               allProducts?.map(item => (

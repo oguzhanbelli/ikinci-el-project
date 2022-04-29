@@ -13,13 +13,14 @@ function ProductDetail() {
 
   const productId = location.pathname.split('/')[2];
   const [state, setState] = useState({});
-  const {myOffers,getMyOffers,getOneProduct} = useProduct();
+  const {myOffers,getMyOffers,getOneProduct,removeOfferProduct,buyProductDetail} = useProduct();
   const [showDetailModal, setShowDetailModal] = useState(null);
-
+  const [offerStatus, setOfferStatus] = useState(null);
   let status = myOffers?.findIndex(item => item.product.id === state.id);
   let offer = myOffers?.filter(item => item.product.id === state.id);
-
+  
   const {user} = useAuth();
+  console.log();
 
   const openModal = () => {
     if(!user){
@@ -31,14 +32,31 @@ function ProductDetail() {
   };
   const getProduct = async() => {
     setState(await getOneProduct(productId));
+    setOfferStatus(true);
     console.log(state);
   };
 
+  const removeOffer = async(id) => {
+    console.log(id);
+    
+    await removeOfferProduct(id);
+    setOfferStatus(false);
+  };
+
+  const buyProduct = async(id) => {
+    await buyProductDetail(id);
+    setOfferStatus(false);
+  };
+
   useEffect(() => {
-    getProduct();
     getMyOffers();
+    getProduct();
    
 
+  },[offerStatus]);
+
+  useEffect(() => {
+    getProduct();
   },[showDetailModal]);
 
   return (
@@ -117,12 +135,12 @@ function ProductDetail() {
                     </div>
                   </div> : ''
                 }
-                <div className='fixed bottom-10 opacity-80 lg:opacity-100 bg-[#FFFFFF]  inset-x-0  lg:flex lg:sticky lg:justify-between w-full mt-[30px] h-[45px]'>
-                  <button className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
+                <div className={`${state.isSold === true ? 'hidden  ' : ' lg:sticky'} fixed bottom-10 opacity-80 lg:opacity-100 bg-[#FFFFFF]  inset-x-0  lg:flex lg:sticky lg:justify-between w-full mt-[30px] h-[45px]`}>
+                  <button onClick={() => buyProduct(state.id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
                   {   state?.isOfferable ?  <button onClick={() => openModal()} className={` ${status >= 0 ? 'hidden ' : ''} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
                     :<></>}
                   {
-                    status >= 0 ? <button className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>
+                    status >= 0 ? <button onClick={() => removeOffer(myOffers[status].id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>
                   } 
                 </div>
                 <div className='flex flex-col mt-[15px] text-left '>

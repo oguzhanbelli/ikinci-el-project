@@ -85,6 +85,29 @@ export const addOffer = async (input) => {
   return data;
   
 };
+export const removeOffer = async (id) => {
+  console.log(id);
+  const token = Cookies.get('Auth_Token');
+  const {data} = await axios.delete(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/offers/${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+
+  );
+
+  return data;
+  
+};
+
+export const buyProduct = async (id,input) => {
+  console.log(id);
+  const token = Cookies.get('Auth_Token');
+  const {data} = await axios.put(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,input,{headers:{'Authorization':`Bearer ${token}`}}
+
+  );
+
+  return data;
+  
+};
 
 export const fetchOneProduct = async (id) => {
 

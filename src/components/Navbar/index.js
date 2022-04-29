@@ -8,7 +8,7 @@ function NavBar() {
   // eslint-disable-next-line no-unused-vars
   return (
     <div>
-      <nav className="relative px-[10px] lg:px-[220px] py-4 flex justify-between items-center text-center bg-white dark:bg-slate-700 dark:text-white">
+      <nav className="relative px-[10px] lg:px-[220px] py-4 flex justify-between items-center text-center bg-white ">
         <Link
           to={'/'}
           className="text-2xl  font-medium leading-none text-indigo-400 flex justify-between items-center"
@@ -206,7 +206,7 @@ function NavBar() {
           </>
         )}
       </nav>
-      <hr className="dark:border-slate-600"></hr>
+      <hr className=""></hr>
 
     </div>
   );
