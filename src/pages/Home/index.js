@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import React, { useEffect } from 'react';
+
 import {   useNavigate, useSearchParams } from 'react-router-dom';
+import Banner from '../../components/Banner';
 import Categories from '../../components/Categories';
 import Logo from '../../constants/Logo';
 import { useProduct } from '../../contexts/ProductContext';
@@ -8,21 +10,26 @@ import { useProduct } from '../../contexts/ProductContext';
 
 function Home() {
   const navigate = useNavigate();
-  const {allProducts,setActiveCategory,activeCategory,loading,getProducts} = useProduct();
+  const {allProducts,setActiveCategory,loading} = useProduct();
 
-  const [searchParams] = useSearchParams();
-  console.log(searchParams.get('category'));
-  useEffect(() => {
-    // eslint-disable-next-line react/prop-types
-    setActiveCategory(searchParams.get('category') || 'all');
-    getProducts();
-
-  },[]); 
+  const [searchParams,setSearchParams] = useSearchParams();
+ 
   useEffect(() => {
     // eslint-disable-next-line react/prop-types
     setActiveCategory(searchParams.get('category'));
+    
+  },[]); 
+  
+  useEffect(() => {
+    console.log('render');
+    // eslint-disable-next-line react/prop-types
+ 
+    if(!searchParams.get('category')){
+      setSearchParams('category=all');
+    }
+    setActiveCategory(searchParams.get('category'));
 
-  },[activeCategory]);
+  },[searchParams]);
 
   const handleNavigate = (item) => {
     navigate(`/product-detail/${item.id}`, { state: item ,replace:true});
@@ -34,10 +41,10 @@ function Home() {
     <div>
 
       <div className='w-screen h-full  bg-[#F2F2F2] flex flex-col items-center overflow-x-hidden overflow-y-auto'>
-        <div className='bg-home-banner bg-no-repeat bg-cover w-[355px] h-[125px] md:w-[700px] md:h-[200px] lg:w-[60em] lg:h-[20em] xl:w-[92.5em]  rounded-[8px] bg-center mt-[20px] p-[20px] xl:h-[20em]'></div>
+        <Banner/>
         <Categories/>
 
-        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  xl:w-[1500px] h-screen xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
+        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-screen p-1  xl:w-[1500px] h-screen xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
           {
             !loading ?   
               allProducts?.map(item => (
