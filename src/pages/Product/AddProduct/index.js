@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/Input';
 import { useAuth } from '../../../contexts/AuthContext';
 
 function AddProduct() {
@@ -23,13 +24,10 @@ function AddProduct() {
           </div>
           <div className="mt-[25px] mb-[25px] w-[730px] h-[45px]">
             <label className='text-[0.938em] text-[#525252] mb-[5px]'>Ürün Adı</label>
-            <input
-              type="text"
+            <Input  type="text"
               name="productName"
               id="productName"
-              className="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-              placeholder="Örnek: Iphone 12 Pro Max"
-            />
+              placeholder="Örnek: Iphone 12 Pro Max"/>
           </div>
           <div className="mt-[25px] mb-[25px] w-[730px] h-[100px]">
             <label className='text-[0.938em] text-[#525252] '>Açıklama</label>
@@ -133,35 +131,50 @@ function AddProduct() {
           
         </form>
         <div>
-          <div className='flex flex-col ml-[47.5px]'>
+          <div className='flex flex-col ml-[47.5px] w-full h-full'>
             <div className="mt-[25px]  flex flex-col">
               <h1 className=" text-[1.563em] font-bold text-[#525252]">
               Ürün Görseli
               </h1>
             </div>
-            <div className="flex justify-center mt-8">
-              <div className="max-w-2xl rounded-lg shadow-xl bg-gray-50">
-                <div className="m-4">
-                  <label className="inline-block mb-2 text-gray-500">File Upload</label>
+            <div className="flex mt-8">
+              <div className="w-[595px] h-fit ">
+                <div className="mr-2">
                   <div className="flex items-center justify-center w-full">
                     <label
-                      className="flex flex-col w-full h-32 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                      className="flex flex-col w-full h-[164px] border-[1px] rounded-[10px] border-[#B1B1B1] border-dashed hover:bg-gray-100 hover:border-gray-300">
                       <div className="flex flex-col items-center justify-center pt-7">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-400 group-hover:text-gray-600"
                           fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                             d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
-                        <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                            Attach a file</p>
+                        <p className="pt-1 text-sm tracking-wider text-gray-400  text-center group-hover:text-gray-600">
+                            Sürükleyip bırakarak yükle <br></br>veya</p>
                       </div>
-                      <input type="file" className="opacity-0" />
+                      <input type="file" className="opacity-100" />
+                      <div className='flex text-center w-full justify-center items-center'>
+                        <button className='cursor-pointer bg-[#F4F4F4] rounded-[15px] w-[122px] h-[30px] text-[#B1B1B1] text-[0.938em]'>Görsel Seçin</button>
+                      </div>
+                 
+                      <div className=' text-center w-full  h-full'>
+                        <p className='text-[#B1B1B1] text-[0.75em]  mt-[15px] mb-[5px]'>PNG ve JPEG Dosya boyutu: max. 100kb</p>
+                      </div>
                     </label>
                   </div>
                 </div>
                
               </div>
             </div> 
+
+            <div className='w-[730px] h-full relative  '>
+              
+              <button type='submit' className='w-[315px] md:w-[315px] h-[45px] absolute bottom-5 right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
+ 
+              
+            </div>
+
+
 
 
           </div>

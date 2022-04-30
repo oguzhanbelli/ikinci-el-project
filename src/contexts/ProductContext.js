@@ -1,6 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { buyProduct, fetchAllCategories, fetchAllProducts, fetchMyOffers, fetchOneProduct,removeOffer } from '../api';
+// import Logo from '../constants/Logo';
 import { useAuth } from './AuthContext';
 // import { getPermRequest, getPermRequests, getUser } from "../api";
 const ProductContext = createContext();
@@ -14,9 +16,10 @@ const ProductProvider = ({ children }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [myOffers, setMyOffers] = useState([]);
   let [searchParams] = useSearchParams();
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState(null);
+
   useEffect(() => {
-    if (searchParams.get('category') !== 'all' && activeCategory) {
+    if (searchParams.get('category') !== 'all' ) {
       getProductsWithCategory();
    
     }
@@ -31,22 +34,18 @@ const ProductProvider = ({ children }) => {
   
 
   useEffect(() => {
-    if (searchParams.get('category') === 'all' ) {
+    if (searchParams.get('category') === 'all' || activeCategory === 'all'  ) {
       getProducts();
       
     }
-  }, [searchParams]);
+  }, [activeCategory]);
 
   useEffect(() => {
     (async () => {
       try {
         getCategories();
-     
-      
-
         setLoading(false);
        
-      
       } catch (e) {
         setLoading(false);
       }
@@ -55,7 +54,7 @@ const ProductProvider = ({ children }) => {
 
   const getCategories = async () => {
     const data = await fetchAllCategories();
-    console.log(data);
+  
     setAllCategories(data);
   };
   const getProductsWithCategory = async () => {
@@ -74,20 +73,25 @@ const ProductProvider = ({ children }) => {
     setLoading(true);
     
     const data = await fetchAllProducts();
-    console.log(data);
+
     setAllProducts(data);
     setLoading(false);
   };
 
   const getOneProduct = async (id) => {
-    const data = await fetchOneProduct(id);
+    setLoading(true);
 
+    const data = await fetchOneProduct(id);
+   
     getMyOffers();
+ 
     return data;
+    
   };
   const getMyOffers = async () => {
     const data = await fetchMyOffers(user?.id);
     setMyOffers(data);
+    setLoading(false);
    
   };
   const addOffer = async () => {
@@ -107,10 +111,6 @@ const ProductProvider = ({ children }) => {
     const data = await buyProduct(id,{isSold:true});
     return data;
   };
-  // const offerRemove = async () => {
-  //   const data = await fetchMyOffers(user.id);
-  //   setMyOffers(data);
-  // };
   const values = {
     allCategories,
     getCategories,
@@ -129,6 +129,9 @@ const ProductProvider = ({ children }) => {
   };
 
  
+  
+
+
   return (
     // eslint-disable-next-line react/react-in-jsx-scope
     <ProductContext.Provider value={values}>{children}</ProductContext.Provider>

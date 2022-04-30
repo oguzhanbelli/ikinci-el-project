@@ -6,6 +6,8 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { useProduct } from '../../../contexts/ProductContext';
 import Modal from '../../../components/Modal';
 import { useAuth } from '../../../contexts/AuthContext';
+import BuyModal from '../../../components/Modal/BuyModal';
+import Logo from '../../../constants/Logo';
 
 function ProductDetail() {
   const  location = useLocation();
@@ -13,14 +15,16 @@ function ProductDetail() {
 
   const productId = location.pathname.split('/')[2];
   const [state, setState] = useState({});
-  const {myOffers,getMyOffers,getOneProduct,removeOfferProduct,buyProductDetail} = useProduct();
+  const {myOffers,getMyOffers,getOneProduct,removeOfferProduct,buyProductDetail,loading} = useProduct();
   const [showDetailModal, setShowDetailModal] = useState(null);
+  const [showBuyModal, setShowBuyModal] = useState(null);
   const [offerStatus, setOfferStatus] = useState(null);
-  let status = myOffers?.findIndex(item => item.product.id === state.id);
-  let offer = myOffers?.filter(item => item.product.id === state.id);
+  let status = myOffers?.findIndex(item => item.product.id === state?.id);
+  let offer = myOffers?.filter(item => item.product.id === state?.id);
   
   const {user} = useAuth();
-  console.log();
+
+
 
   const openModal = () => {
     if(!user){
@@ -30,14 +34,23 @@ function ProductDetail() {
 
     setShowDetailModal(true);
   };
+
+  const openBuyModal = () => {
+    if(!user){
+      navigate('/login');
+
+    }
+
+    setShowBuyModal(true);
+  };
   const getProduct = async() => {
     setState(await getOneProduct(productId));
     setOfferStatus(true);
-    console.log(state);
+    console.log(state,"state");
   };
 
   const removeOffer = async(id) => {
-    console.log(id);
+
     
     await removeOfferProduct(id);
     setOfferStatus(false);
@@ -61,23 +74,48 @@ function ProductDetail() {
 
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3 overflow-x-hidden overflow-y-auto">
-      <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-[500px] xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
-        <div className="flex flex-col z-50  lg:items-start lg:flex-row ">
+      {!loading ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
+        <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">
           <img
             alt={state?.name}
-            src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url}`}
+            src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url ? state.image.url : ''}`}
             className="rounded-[8px]   w-[343px] h-[362px] lg:w-[200px] lg:h-[450px]  xl:w-[700px] xl:h-[737px] mx-[6px] xl:ml-[15px]  mt-[6px] xl:mt-[16px] bg-gray-200"
           />
 
           <div className="lg:mt-[30px] lg:ml-[60px] ml-[10px] ">
             <h1 className="text-[1.125em] lg:text-[2.125em] text-[#555555] font-normal mt-[10px]  ">{state?.name}</h1>
-            <div className='mt-[10px] flex lg:hidden'>
-              <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
-                {state?.price},00 TL
-              </p>
-            </div>
-            <div className="flex flex-row justify-between w-[200px]  text-center">
-              <div className="flex flex-col">
+            {
+              status === undefined ?   <div className='mt-[10px] flex lg:hidden'>
+                <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
+                  {state?.price},00 TL
+                </p>
+              </div> : ''
+            }
+            {
+              status === -1 ?   <div className='mt-[10px] flex lg:hidden'>
+                <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
+                  {state?.price},00 TL
+                </p>
+              </div> : ''
+            }
+
+            {
+              status >= 0 ?   <div className='mt-[10px] flex flex-row lg:hidden '>
+                <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
+                  {state?.price},00 TL
+                </p>
+                <div className='bg-[#f2f2f2] rounded-[8px] w-full h-[36px] flex items-center  overflow-hidden text-ellipsis mr-[10px]'>
+                  <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
+                       Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice},00 TL</strong>
+
+
+                  </p>
+                </div>
+              </div> : ''
+            }
+           
+            <div className="flex flex-row justify-between w-[200px] h-full text-center">
+              <div className="flex flex-col ">
                 <div className="flex justify-between w-[250px] mt-[25px] ">
                   <p className="text-[#525252] text-[0.938em] font-bold flex ">
                     Marka :
@@ -94,11 +132,11 @@ function ProductDetail() {
                     {state?.color}
                   </p>
                 </div>
-                <div className="flex justify-between w-[250px] mt-[20px]">
-                  <p className="text-[#525252] text-[0.938em] font-bold flex ">
+                <div className="flex justify-between w-[255px] mt-[20px]">
+                  <p className="text-[#525252] text-[0.938em] font-bold  flex ">
                     Kullanım Durumu :
                   </p>
-                  <p className="text-[#525252] text-[0.938em] font-normal  w-fulltext-left ">
+                  <p className="text-[#525252] text-[0.938em] font-normal   w-[100px] text-left ">
                     {state?.status}
                   </p>
                 </div>
@@ -135,31 +173,37 @@ function ProductDetail() {
                     </div>
                   </div> : ''
                 }
-                <div className={`${state.isSold === true ? 'hidden  ' : ' lg:sticky'} fixed bottom-10 opacity-80 lg:opacity-100 bg-[#FFFFFF]  inset-x-0  lg:flex lg:sticky lg:justify-between w-full mt-[30px] h-[45px]`}>
-                  <button onClick={() => buyProduct(state.id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
+                {
+                  state.isSold === true ? <div className='bg-[#FFF0E2] w-[235px] h-[45px] text-center flex flex-nowrap justify-center items-center mt-[30px] rounded-[8px]  '>
+                    <p className='font-bold text-[#FAAD60] text-[1.125em]'>Bu Ürün Satışta Değil</p>
+
+                  </div>:""
+                }
+                <div className={`${state.isSold === true ? 'hidden ' : 'fixed lg:flex lg:sticky lg:justify-between '}  bottom-10 opacity-[80%] lg:opacity-100   inset-x-0   w-full mt-[30px] h-[45px]`}>
+                  <button onClick={() => openBuyModal(true)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
                   {   state?.isOfferable ?  <button onClick={() => openModal()} className={` ${status >= 0 ? 'hidden ' : ''} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
                     :<></>}
                   {
                     status >= 0 ? <button onClick={() => removeOffer(myOffers[status].id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>
                   } 
                 </div>
-                <div className='flex flex-col mt-[15px] text-left '>
+                <div className='flex flex-col mt-[15px] text-left flex-wrap w-full mb-[20px] lg:mb-0 '>
                   <h2 className='text-[0.938em] text-[#525252] font-bold'>Açıklama</h2>
 
                   <p className='mt-[10px] text-[0.938em] text-[#555555]'>{state?.description}</p>
 
                 </div>
               </div>
-              {showDetailModal ? <div className="opacity-[0.7] fixed inset-0 z-40 bg-[#4B9CE2]">
+              {showDetailModal || showBuyModal ? <div className="opacity-[0.7] fixed inset-0 z-40 bg-[#4B9CE2]">
              
               </div> : null}
               
               {showDetailModal ? <Modal setShowDetailModal={setShowDetailModal} state={state}  /> : null}
-
+              {showBuyModal ? <BuyModal setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
             </div>
           </div>
         </div>
-      </div>
+      </div> :  <div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>}
     </div>
   );
 }
