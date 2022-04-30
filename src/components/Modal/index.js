@@ -1,21 +1,31 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable quotes */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { addOffer } from '../../api';
+import { useOffer } from '../../contexts/OfferContext';
 import { useAuth } from '../../contexts/AuthContext';
-// eslint-disable-next-line no-unused-vars
-let offerSubmit;
-function Modal({state,setShowDetailModal}) {
+import validationSchema from './validations';
 
-  const [checked,setChecked] = useState(false);
+
+function Modal({state,setShowDetailModal,setOfferStatus}) {
+
+  
+ 
+  const [selectedOffer,setSelectedOffer] = useState(null);
+ 
   const {user } = useAuth();
+  const {addOfferProduct} = useOffer();
+  const [offerSubmit,setOfferSubmit] = useState({product:state.id,users_permissions_user:user.id});
+ 
 
   const modalClose = ( ) => {
     setShowDetailModal(false);
   };
+
+
 
 
   
@@ -24,21 +34,36 @@ function Modal({state,setShowDetailModal}) {
       offerPrice: '',
       
     },
-
-    onSubmit: async (values) => {
-     
-      offerSubmit = {product:state.id,users_permissions_user:user.id,offerPrice:values.offerPrice};
-      
-      
-
-      addOffer(offerSubmit);
+    validationSchema,
+    onSubmit: async () => {
+      addOfferProduct(offerSubmit);
       modalClose();
 
-
- 
     },
   });
 
+  
+  const handleChange = async(e) => {
+  
+    if(e.target.value == 20){
+      setOfferSubmit({product:state.id,users_permissions_user:user.id,offerPrice:Math.floor((state.price/100)*20)});
+      formik.values.offerPrice = Math.floor((state.price/100)*20);
+      setSelectedOffer(e.target.value);   
+    }
+    if(e.target.value == 30){
+      setOfferSubmit({product:state.id,users_permissions_user:user.id,offerPrice:Math.floor((state.price/100)*30)});
+      formik.values.offerPrice = Math.floor((state.price/100)*30);
+      setSelectedOffer(e.target.value);
+ 
+    }
+    if(e.target.value == 40){
+      setOfferSubmit({product:state.id,users_permissions_user:user.id,offerPrice:Math.floor((state.price/100)*40)});
+      formik.values.offerPrice = Math.floor((state.price/100)*40);
+      setSelectedOffer(e.target.value);
+   
+    }
+
+  };
   
  
 
@@ -90,10 +115,10 @@ function Modal({state,setShowDetailModal}) {
               </div>
 
               <form onSubmit={formik.handleSubmit}>
-                <div className={` w-[315px] h-[45px] md:w-[441px] md:h-[45px] flex flex-row ${checked ? 'bg-[#F0F8FF] border-[1px] cursor-pointer border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
-                  <label onClick={() => setChecked(true)} className='flex items-center ml-[10px] w-full cursor-pointer  peer-checked:bg-red-300 '>
-                    <input type={'radio'} defaultChecked={true} value={'20'} name="offer" className="option-input radio peer" />
-                    <p className={`${checked ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
+                <div className={` w-[315px] h-[45px] md:w-[441px] md:h-[45px] flex flex-row ${selectedOffer == 20  ? 'bg-[#F0F8FF] border-[1px] cursor-pointer border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
+                  <label onClick={(e) => handleChange(e)} className='flex items-center ml-[10px] w-full cursor-pointer  peer-checked:bg-red-300 '>
+                    <input type={'radio'}  value={20} name="offer" className="option-input radio peer" />
+                    <p className={`${selectedOffer === 20 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
                       %20'si Kadar Teklif Ver
                     </p>
 
@@ -101,10 +126,10 @@ function Modal({state,setShowDetailModal}) {
 
 
                 </div>
-                <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px]  cursor-pointer  flex flex-row ${checked ? 'bg-[#F0F8FF] border-[1px]  border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
-                  <label onClick={() => setChecked(true)} className='flex items-center w-full cursor-pointer  ml-[10px] peer-checked:bg-red-300 '>
-                    <input type={'radio'}  value={'20'} name="offer" className="option-input radio peer" />
-                    <p className={`${checked ? ' text-[#4B9CE2]':'text-[#525252]'}  text-[0.938em] font-normal ml-[5px]`}>
+                <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px]  cursor-pointer  flex flex-row ${selectedOffer ==30 ? 'bg-[#F0F8FF] border-[1px]  border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
+                  <label onClick={(e) => handleChange(e)} className='flex items-center w-full cursor-pointer  ml-[10px] peer-checked:bg-red-300 '>
+                    <input type={'radio'}  value={30} name="offer" className="option-input radio peer" />
+                    <p className={`${selectedOffer === 30 ? ' text-[#4B9CE2]':'text-[#525252]'}  text-[0.938em] font-normal ml-[5px]`}>
                       %30'si Kadar Teklif Ver
                     </p>
 
@@ -112,10 +137,10 @@ function Modal({state,setShowDetailModal}) {
 
 
                 </div>
-                <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px] cursor-pointer flex flex-row ${checked ? 'bg-[#F0F8FF] border-[1px] border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
-                  <label onClick={() => setChecked(true)} className='flex items-center ml-[10px] w-full cursor-pointer peer-checked:bg-red-300 '>
-                    <input type={'radio'}  value={'20'} name="offer" className="option-input radio peer" />
-                    <p className={`${checked ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
+                <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px] cursor-pointer flex flex-row ${selectedOffer == 40 ? 'bg-[#F0F8FF] border-[1px] border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
+                  <label onClick={(e) => handleChange(e)} className='flex items-center ml-[10px] w-full cursor-pointer peer-checked:bg-red-300 '>
+                    <input type={'radio'}  value={40} name="offer" className="option-input radio peer" />
+                    <p className={`${selectedOffer === 40 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
                       %40'si Kadar Teklif Ver
                     </p>
 
@@ -133,7 +158,8 @@ function Modal({state,setShowDetailModal}) {
                       value={formik.values.offerPrice}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      disabled={checked}
+                      disabled={selectedOffer}
+                  
                       id="offerPrice"
                       className="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                       placeholder="Teklif Belirle"

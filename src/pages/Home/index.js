@@ -49,7 +49,7 @@ function Home() {
             !loading ?   
               allProducts?.map(item => (
                 <div onClick={()=> handleNavigate(item)} key={item.id} className="flex flex-col  cursor-pointer   w-[173px] h-[266px] md:w-[200px] xl:w-[280px] xl:h-[392px]  xl:px-[10px]   bg-white rounded-[8px]">
-                  <img alt={item.id} src={`${process.env.REACT_APP_BASE_ENDPOINT}${item.image.url}`} className="flex rounded-[8px] flex-col w-[161px] h-[184px] md:w-[187px]  xl:w-[260px] xl:h-[297px] mx-[6px] xl:mx-auto  mt-[6px] xl:mt-[10px] bg-gray-200">
+                  <img alt={item.id} src={`${process.env.REACT_APP_BASE_ENDPOINT}${item?.image?.url}`} className="flex rounded-[8px] flex-col w-[161px] h-[184px] md:w-[187px]  xl:w-[260px] xl:h-[297px] mx-[6px] xl:mx-auto  mt-[6px] xl:mt-[10px] bg-gray-200">
             
             
                   </img>

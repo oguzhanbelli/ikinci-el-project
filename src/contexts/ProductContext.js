@@ -1,20 +1,17 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { buyProduct, fetchAllCategories, fetchAllProducts, fetchMyOffers, fetchOneProduct,removeOffer } from '../api';
+import {  buyProduct, fetchAllCategories, fetchAllProducts, fetchOneProduct } from '../api';
 // import Logo from '../constants/Logo';
-import { useAuth } from './AuthContext';
+
 // import { getPermRequest, getPermRequests, getUser } from "../api";
 const ProductContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const ProductProvider = ({ children }) => {
-  const {user} = useAuth();
-  
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [myOffers, setMyOffers] = useState([]);
   let [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -44,13 +41,14 @@ const ProductProvider = ({ children }) => {
     (async () => {
       try {
         getCategories();
+        
         setLoading(false);
        
       } catch (e) {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [loading]);
 
   const getCategories = async () => {
     const data = await fetchAllCategories();
@@ -80,51 +78,29 @@ const ProductProvider = ({ children }) => {
 
   const getOneProduct = async (id) => {
     setLoading(true);
-
     const data = await fetchOneProduct(id);
-   
-    getMyOffers();
- 
+    setLoading(false);
     return data;
     
   };
-  const getMyOffers = async () => {
-    const data = await fetchMyOffers(user?.id);
-    setMyOffers(data);
+  const buyProductDetail = async (id) => {
+    setLoading(true);
+    const data = await buyProduct(id, { isSold: true });
     setLoading(false);
-   
-  };
-  const addOffer = async () => {
-
-
-    const data = await addOffer();
-    setMyOffers([...myOffers,...data]);
-   
     return data;
   };
 
-  const removeOfferProduct  =async (id) =>{
-    const data = await removeOffer(id);
-    return data;
-  };
-  const buyProductDetail  =async (id) =>{
-    const data = await buyProduct(id,{isSold:true});
-    return data;
-  };
   const values = {
     allCategories,
     getCategories,
-    getMyOffers,
-    removeOfferProduct,
-    myOffers,
     loading,
+    setLoading,
     activeCategory,
     setActiveCategory,
     getOneProduct,
     buyProductDetail,
     getProductsWithCategory,
     getProducts,
-    addOffer,
     allProducts,
   };
 

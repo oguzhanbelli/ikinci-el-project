@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import { ProductProvider } from './contexts/ProductContext';
+import { OfferProvider } from './contexts/OfferContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <ProductProvider>
-          <App />
+          <OfferProvider>
+            <App />
+          </OfferProvider>
         </ProductProvider>
       </AuthProvider>
     </BrowserRouter>

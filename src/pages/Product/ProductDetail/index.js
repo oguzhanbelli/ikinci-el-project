@@ -1,6 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+
 import React, { useEffect, useState } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { useProduct } from '../../../contexts/ProductContext';
@@ -8,6 +9,8 @@ import Modal from '../../../components/Modal';
 import { useAuth } from '../../../contexts/AuthContext';
 import BuyModal from '../../../components/Modal/BuyModal';
 import Logo from '../../../constants/Logo';
+import { useOffer } from '../../../contexts/OfferContext';
+import { addOffer } from '../../../api';
 
 function ProductDetail() {
   const  location = useLocation();
@@ -15,24 +18,23 @@ function ProductDetail() {
 
   const productId = location.pathname.split('/')[2];
   const [state, setState] = useState({});
-  const {myOffers,getMyOffers,getOneProduct,removeOfferProduct,buyProductDetail,loading} = useProduct();
+  const {getOneProduct,loading,buyProductDetail} = useProduct();
+  const {removeOfferProduct,getMyOffers,myOffers,loading:offerLoading} = useOffer();
   const [showDetailModal, setShowDetailModal] = useState(null);
   const [showBuyModal, setShowBuyModal] = useState(null);
-  const [offerStatus, setOfferStatus] = useState(null);
   let status = myOffers?.findIndex(item => item.product.id === state?.id);
   let offer = myOffers?.filter(item => item.product.id === state?.id);
-  
+  const [offerStatus, setOfferStatus] = useState(null);
   const {user} = useAuth();
-
-
 
   const openModal = () => {
     if(!user){
       navigate('/login');
 
     }
-
     setShowDetailModal(true);
+   
+    setOfferStatus(true);
   };
 
   const openBuyModal = () => {
@@ -42,43 +44,37 @@ function ProductDetail() {
     }
 
     setShowBuyModal(true);
+    setOfferStatus(true);
   };
   const getProduct = async() => {
-    setState(await getOneProduct(productId));
-    setOfferStatus(true);
-    console.log(state,"state");
+    const data = await getOneProduct(productId);
+    setState(data);
+    setOfferStatus(false);
   };
-
   const removeOffer = async(id) => {
-
-    
     await removeOfferProduct(id);
-    setOfferStatus(false);
+    setOfferStatus(true);
   };
-
   const buyProduct = async(id) => {
-    await buyProductDetail(id);
-    setOfferStatus(false);
+    const data = await buyProductDetail(id);
+    console.log(data,"Product Data");
+    setState(data);
+    
   };
 
   useEffect(() => {
-    getMyOffers();
     getProduct();
-   
+  },[]);
 
-  },[offerStatus]);
-
-  useEffect(() => {
-    getProduct();
-  },[showDetailModal]);
 
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3 overflow-x-hidden overflow-y-auto">
       {!loading ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
         <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">
+        
           <img
             alt={state?.name}
-            src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url ? state.image.url : ''}`}
+            src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url ? state?.image?.url : ''}`}
             className="rounded-[8px]   w-[343px] h-[362px] lg:w-[200px] lg:h-[450px]  xl:w-[700px] xl:h-[737px] mx-[6px] xl:ml-[15px]  mt-[6px] xl:mt-[16px] bg-gray-200"
           />
 
@@ -140,6 +136,7 @@ function ProductDetail() {
                     {state?.status}
                   </p>
                 </div>
+              
                 {
                   status === undefined ?   <div className='mt-[30px] hidden lg:flex'>
                     <p className="text-[#525252] text-[1.563em] font-bold flex w-[200px] text-left ">
@@ -157,8 +154,11 @@ function ProductDetail() {
                   </div> : ''
                 }
 
+            
                 {
-                  status >= 0 ?   <div className='mt-[30px] hidden lg:flex lg:flex-col'>
+                  
+                  
+                  status >= 0 ?   <div className={`${offerLoading === true ? 'hidden ' : ''}mt-[30px] hidden lg:flex lg:flex-col`}>
                     <p className="text-[#525252] text-[1.563em] font-bold flex w-[200px] text-left ">
                       {state?.price},00 TL
 
@@ -177,14 +177,14 @@ function ProductDetail() {
                   state.isSold === true ? <div className='bg-[#FFF0E2] w-[235px] h-[45px] text-center flex flex-nowrap justify-center items-center mt-[30px] rounded-[8px]  '>
                     <p className='font-bold text-[#FAAD60] text-[1.125em]'>Bu Ürün Satışta Değil</p>
 
-                  </div>:""
+                  </div>:''
                 }
                 <div className={`${state.isSold === true ? 'hidden ' : 'fixed lg:flex lg:sticky lg:justify-between '}  bottom-10 opacity-[80%] lg:opacity-100   inset-x-0   w-full mt-[30px] h-[45px]`}>
-                  <button onClick={() => openBuyModal(true)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
-                  {   state?.isOfferable ?  <button onClick={() => openModal()} className={` ${status >= 0 ? 'hidden ' : ''} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
+                  <button  onClick={() => openBuyModal(true)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Satın Al</button>
+                  {   state?.isOfferable ?  <button  onClick={() => openModal()} className={` ${status >= 0 ? 'hidden ' : ''} w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]`}>Teklif Ver</button>
                     :<></>}
                   {
-                    status >= 0 ? <button onClick={() => removeOffer(myOffers[status].id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>
+                    status >= 0 ? <button  onClick={() => removeOffer(myOffers[status].id)} className='w-[172px] lg:w-[235px] h-[45px] cursor-pointer bg-[#F0F8FF] ml-[10px] text-[#4b9ce2] rounded-[8px]'>Teklifi Geri Çek</button> : <div></div>
                   } 
                 </div>
                 <div className='flex flex-col mt-[15px] text-left flex-wrap w-full mb-[20px] lg:mb-0 '>
@@ -198,7 +198,7 @@ function ProductDetail() {
              
               </div> : null}
               
-              {showDetailModal ? <Modal setShowDetailModal={setShowDetailModal} state={state}  /> : null}
+              {showDetailModal ? <Modal setShowDetailModal={setShowDetailModal} setOfferStatus={setOfferStatus} state={state}  /> : null}
               {showBuyModal ? <BuyModal setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
             </div>
           </div>
