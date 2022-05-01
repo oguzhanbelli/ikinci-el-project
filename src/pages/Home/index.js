@@ -40,11 +40,11 @@ function Home() {
   return (
     <div>
 
-      <div className='w-screen h-full  bg-[#F2F2F2] flex flex-col items-center overflow-x-hidden overflow-y-auto'>
+      <div className='w-screen min-h-screen  bg-[#F2F2F2] flex flex-col items-center overflow-x-hidden overflow-y-auto'>
         <Banner/>
         <Categories/>
 
-        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-screen p-1  xl:w-[1500px] h-screen xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
+        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-screen p-1  xl:w-[1500px] h-auto  xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
           {
             !loading ?   
               allProducts?.map(item => (

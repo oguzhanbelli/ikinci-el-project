@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {  buyProduct, fetchAllCategories, fetchAllProducts, fetchOneProduct } from '../api';
+import {  buyProduct, fetchAddProduct, fetchAllCategories, fetchAllProducts, fetchBrands, fetchColors, fetchOneProduct, fetchUsingStatuses } from '../api';
 // import Logo from '../constants/Logo';
 
 // import { getPermRequest, getPermRequests, getUser } from "../api";
@@ -11,6 +11,9 @@ const ProductContext = createContext();
 const ProductProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
+  const [allStatuses, setAllStatuses] = useState([]);
+  const [allColors, setAllColors] = useState([]);
+  const [allBrands, setAllBrands] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   let [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(null);
@@ -41,7 +44,7 @@ const ProductProvider = ({ children }) => {
     (async () => {
       try {
         getCategories();
-        
+       
         setLoading(false);
        
       } catch (e) {
@@ -69,16 +72,61 @@ const ProductProvider = ({ children }) => {
   };
   const getProducts = async () => {
     setLoading(true);
-    
+   
     const data = await fetchAllProducts();
-
+    console.log(data);
     setAllProducts(data);
     setLoading(false);
   };
+  
+  const getColors = async () => {
+    setLoading(true);
+   
+    const data = await fetchColors();
+    const filteredData= data.map(item => {return {label:item.name,value:item.name};});
+    setAllColors(filteredData);
+    setLoading(false);
+  };
+  const getBrands = async () => {
+    setLoading(true);
+   
+    const data = await fetchBrands();
+    const filteredData= data.map(item => {return {label:item.name,value:item.name};});
+    setAllBrands(filteredData);
+    setLoading(false);
+  };
+  const getUsingStatuses = async () => {
+    setLoading(true);
+   
+    const data = await fetchUsingStatuses();
+  
+    const filteredData= data.map(item => {return {label:item.name,value:item.name};});
+    console.log(filteredData,'dataaa');
+    setAllStatuses(filteredData);
+    setLoading(false);
+  };
+
+
+  const addProduct = async (formData) => {
+    setLoading(true);
+   
+    const data =  fetchAddProduct(formData);
+    
+    console.log(data);
+  
+    setLoading(false);
+
+  };
+
+
+
+
+
 
   const getOneProduct = async (id) => {
     setLoading(true);
     const data = await fetchOneProduct(id);
+    console.log(data);
     setLoading(false);
     return data;
     
@@ -93,11 +141,18 @@ const ProductProvider = ({ children }) => {
   const values = {
     allCategories,
     getCategories,
+    allColors,
     loading,
     setLoading,
+    allBrands,
+    getBrands,
+    addProduct,
     activeCategory,
     setActiveCategory,
     getOneProduct,
+    allStatuses,
+    getUsingStatuses,
+    getColors,
     buyProductDetail,
     getProductsWithCategory,
     getProducts,

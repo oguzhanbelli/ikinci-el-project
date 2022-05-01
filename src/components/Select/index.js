@@ -1,13 +1,58 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+import ReactSelect from 'react-select';
+function Select(props) {
+  console.log(props);
+  //   const value = props.options.map(item => ({ label: item.name, value: item.id }));
+  const defaultValue = (options, value) => {
+    return options ? options.find((option) => option.value=== value ) : '';
+  };
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      width: '100%',
+      
+     
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      width: props.controlWidth || '100%',
+      height:props.controlHeight || '50px',
+      display:'flex',
+      background:'#F4F4F4',
+      fontSize:'0.938em',
+      border:'none',
+      borderRadius:'8px',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+  
+      return { ...provided, opacity, transition };
+    }
+  };
 
-function Select() {
+
+  //   let list =  props.options.map((item, index) => (
+  //     <option name={props.name} onChange={props.onChange} key={index}>
+  //       {item.name}
+  //     </option>
+  //   ));
   return (
-    <select
-      className="focus:ring-indigo-500 focus:border-indigo-500 block w-[353px] h-[45px] placeholder:text-[#99A0A7] text-gray-500 font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-    >
-      <option selected>Kategori Seç</option>
-      {/* {data} */}
-    </select>
+    <ReactSelect
+      components={{
+        IndicatorSeparator: () => null
+      }}
+      name={props.name}
+      options={props.options}
+      onChange={value => props.onChange(value)}
+      value={defaultValue(props.options,props.value)}
+      styles={customStyles}
+      placeholder={`${props.area} Seç`}
+    />
+      
+     
+  
   );
 }
 

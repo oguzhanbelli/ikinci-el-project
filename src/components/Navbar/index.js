@@ -24,7 +24,7 @@ function NavBar() {
           onClick={() => handleHome()}
           className="text-2xl  font-medium leading-none text-indigo-400 flex justify-between items-center"
         >
-          <div className="w-[120px] ">
+          <div className="w-[120px] cursor-pointer ">
             <Logo />
           </div>
         </span>

@@ -1,96 +1,138 @@
-import React, { useEffect } from 'react';
+import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+import SelectImage from '../../../components/SelectImage';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useProduct } from '../../../contexts/ProductContext';
+import validationSchema from './validations';
 
 function AddProduct() {
   const navigate = useNavigate();
-  const { loggedIn } = useAuth();
+  const { loggedIn,user } = useAuth();
+  const {allCategories} = useProduct();
+  const [picturePreview, setPicturePreview] = useState([]);
+  const [pictureAsFile, setPictureAsFile] = useState([]);
+  // eslint-disable-next-line no-unused-vars
 
+  const{getColors,allColors,getBrands,allBrands,getUsingStatuses,allStatuses,addProduct} = useProduct();
+ 
+  const allCategoriesOptions = allCategories.map(item => {return {id:item.id,label:item.name,value:item.name};});
+
+
+
+  const uploadPicture = (e) => {
+    setPicturePreview(URL.createObjectURL(e.target.files[0]));
+    setPictureAsFile(picturePreview[0]);
+
+  };
+  console.log(pictureAsFile);
+  console.log(picturePreview);
+
+  const setImageAction = () => {
+    let newObject = {...formik.values,isSold:false,users_permissions_user:user.id};
+    
+    const formData = new FormData();
+    formData.append(
+      'files.image',
+      pictureAsFile
+    );
+    formData.append(
+      'data',
+      JSON.stringify(newObject)
+    );
+
+    addProduct(formData);
+
+  };
+
+  
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      description:'',  
+      category: '',
+      status:'',
+      color:'',
+      brand:'',
+      price:'',
+      isOfferable:false,
+      
+    },
+    validationSchema,
+
+    onSubmit: async (values) => {
+      console.log(values);
+      setImageAction();
+
+    
+    },
+  });
   useEffect(() => {
+
     if (!loggedIn) {
       return navigate('/');
     }
+    getColors();
+    getBrands();
+    getUsingStatuses();
+    
   }, [loggedIn]);
 
   return (
-    <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3 overflow-scroll">
-      <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-full lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
-        <form className="flex flex-col ml-[30px]">
+    <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-row md:flex-col items-center pb-3 overflow-scroll justify-center md:justify-start">
+      <div className="flex flex-col  lg:flex-row mt-[50px] w-[355px] h-auto lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
+        <form onSubmit={formik.handleSubmit} className="flex flex-col md:ml-[30px]  mx-auto h-auto">
           <div className="mt-[25px]  flex flex-col">
             <h1 className=" text-[1.563em] font-bold text-[#525252]">
               Ürün Detayları
             </h1>
           </div>
-          <div className="mt-[25px] mb-[25px] w-[730px] h-[45px]">
+          <div className="mt-[25px] mb-[25px] md:w-[730px] h-[45px]">
             <label className='text-[0.938em] text-[#525252] mb-[5px]'>Ürün Adı</label>
             <Input  type="text"
-              name="productName"
-              id="productName"
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               placeholder="Örnek: Iphone 12 Pro Max"/>
           </div>
-          <div className="mt-[25px] mb-[25px] w-[730px] h-[100px]">
+          <div className="mt-[25px] mb-[25px] md:w-[730px] h-[100px]">
             <label className='text-[0.938em] text-[#525252] '>Açıklama</label>
             <textarea
-              id="message"
+              id="description"
+              name='description'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
               rows="4"
-              className="block p-2.5 w-full mt-[5px]  text-[1em] font-normal placeholder:text-[#99A0A7] text-gray-500 pl-7 pr-12 bg-[#F4F4F4]  border border-gray-300 rounded-[8px]"
+              className="block p-2.5 w-full mt-[5px] resize-none  text-[1em] font-normal placeholder:text-[#99A0A7] text-gray-500 pl-7 pr-12 bg-[#F4F4F4]  border-[1px] border-gray-300 rounded-[8px] focus:ring-[#4B9CE2] focus:bg-[#F0F8FF] focus:border-[#4B9CE2] focus:border-[1px] focus:text-[#3E3E3E]"
               placeholder="Ürün açıklaması girin."
             ></textarea>
           </div>
 
-          <div className="mt-[30px]  w-[730px] flex flex-row">
-            <div>
+          <div className="mt-[40px] w-full  md:w-[730px] flex flex-col md:flex-row">
+            <div className='md:w-[353px]'>
               <label className='text-[0.938em] text-[#525252] mb-[5px]'>Kategori</label>
-              <select
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-[353px] h-[45px] placeholder:text-[#99A0A7] text-gray-500 font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-              >
-                <option selected>Kategori Seç</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+              <Select area={'Kategori'}  name="category" options={allCategoriesOptions} onChange={value => formik.setFieldValue('category',value.id)} value={formik.values.category} onBlur={formik.handleBlur}  />
             </div>
-            <div className="ml-[24px]">
+            <div className="md:ml-[24px] md:w-[353px]">
               <label className='text-[0.938em] text-[#525252] mb-[5px]'>Marka</label>
-              <select
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-[353px] h-[45px] placeholder:text-[#99A0A7] text-gray-500 font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-              >
-                <option selected>Marka Seç</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+              <Select area={'Marka'}   name="brand" options={allBrands} onChange={value => formik.setFieldValue('brand',value.value)} value={formik.values.brand} onBlur={formik.handleBlur}   />
+
             </div>
           </div>
-          <div className="mt-[25px] mb-[25px] w-[730px]  flex flex-row">
-            <div>
+          <div className="mt-[25px] mb-[25px] md:w-[720px]  flex flex-col md:flex-row">
+            <div className='md:w-[353px]'>
               <label className='text-[0.938em] text-[#525252] mb-[5px]'>Renk</label>
-              <select
-                id="countries_disabled"
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-[353px] h-[45px] placeholder:text-[#99A0A7] text-gray-500 font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-              >
-                <option selected>Renk Seç</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+              <Select area={'Renk'}  id="color" name="color" options={allColors} onChange={value => formik.setFieldValue('color',value.value)} value={formik.values.color}    />
+          
             </div>
-            <div className="ml-[24px]">
+            <div className="md:ml-[24px] md:w-[353px]">
               <label className='text-[0.938em] text-[#525252] mb-[5px]'>Kullanım Durumu</label>
-              <select
-                id="countries_disabled"
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-[353px] h-[45px] placeholder:text-[#99A0A7] text-gray-500 font-normal pl-7 pr-12 mt-[5px] text-[1em] border-gray-300 bg-[#F4F4F4] rounded-[8px]"
-              >
-                <option selected>Kullanım Durumu Seç</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
+              <Select area={'Kullanım Durumu'}  name="status" options={allStatuses} onChange={value => formik.setFieldValue('status',value.value)} value={formik.values.status} onBlur={formik.handleBlur} />
+
             </div>
           </div>
 
@@ -99,8 +141,10 @@ function AddProduct() {
             <div className="mt-1 w-full  relative rounded-[8px] shadow-sm ">
               <input
                 type="number"
-                name="offerPrice"
-                id="offerPrice"
+                name="price"
+                id="price"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-[315px] h-[45px] pl-7 pr-12 placeholder:text-[#99A0A7] text-gray-500 border-gray-300 bg-[#F4F4F4] rounded-md"
                 placeholder="Bir fiyat girin"
               />
@@ -116,13 +160,10 @@ function AddProduct() {
             </div>
             <div className='flex flex-row w-[315px] mt-[15px] justify-between'>
               <p className='text-[#99A0A7] text-[0.938em] mt-[11px] ml-[2px] '>Teklif Opsiyonu</p>
-              <label htmlFor="unchecked" className=" inline-flex items-center cursor-pointer mt-[11px]">
-                <span className="relative">
-                  <span className="block w-10 h-6 bg-[#EBEBEB] rounded-full shadow-inner"></span>
-                  <span className="absolute block w-4 h-4 mt-1 ml-1 bg-white rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out">
-                    <input id="unchecked" type="checkbox" className="absolute opacity-0 w-0 h-0" />
-                  </span>
-                </span>
+              <label htmlFor="toggle-example" className="flex mt-[11px] cursor-pointer relative mb-4">
+                <input type="checkbox" id="toggle-example" name='isOfferable' value={formik.values.isOfferable} onChange={formik.handleChange} onBlur={formik.handleBlur} className="sr-only"/>
+                <div className="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
+                
               </label>
 
             </div>
@@ -131,56 +172,41 @@ function AddProduct() {
           
         </form>
         <div>
-          <div className='flex flex-col ml-[47.5px] w-full h-full'>
-            <div className="mt-[25px]  flex flex-col">
+          <div className='flex flex-col ml-[20px]  md:ml-[47.5px] mt-[30px] md:mt-0 w-full h-full'>
+            <div className="mt-[35px]  flex flex-col">
               <h1 className=" text-[1.563em] font-bold text-[#525252]">
               Ürün Görseli
               </h1>
             </div>
             <div className="flex mt-8">
-              <div className="w-[595px] h-fit ">
+              <div className="w-fit mb-[50px] md:w-[595px] h-fit ">
                 <div className="mr-2">
                   <div className="flex items-center justify-center w-full">
-                    <label
-                      className="flex flex-col w-full h-[164px] border-[1px] rounded-[10px] border-[#B1B1B1] border-dashed hover:bg-gray-100 hover:border-gray-300">
-                      <div className="flex flex-col items-center justify-center pt-7">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-400 group-hover:text-gray-600"
-                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        <p className="pt-1 text-sm tracking-wider text-gray-400  text-center group-hover:text-gray-600">
-                            Sürükleyip bırakarak yükle <br></br>veya</p>
-                      </div>
-                      <input type="file" className="opacity-100" />
-                      <div className='flex text-center w-full justify-center items-center'>
-                        <button className='cursor-pointer bg-[#F4F4F4] rounded-[15px] w-[122px] h-[30px] text-[#B1B1B1] text-[0.938em]'>Görsel Seçin</button>
-                      </div>
-                 
-                      <div className=' text-center w-full  h-full'>
-                        <p className='text-[#B1B1B1] text-[0.75em]  mt-[15px] mb-[5px]'>PNG ve JPEG Dosya boyutu: max. 100kb</p>
-                      </div>
-                    </label>
+                    
+                    <SelectImage   file={picturePreview} setFile={setPicturePreview} onChange={uploadPicture} setPictureAsFile={setPictureAsFile}/>
+                   
                   </div>
                 </div>
-               
               </div>
-            </div> 
-
-            <div className='w-[730px] h-full relative  '>
+               
+            </div>
+            <div className='w-[730px] h-full relative  mt-[20px] '>
               
-              <button type='submit' className='w-[315px] md:w-[315px] h-[45px] absolute bottom-5 right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
+              <button type='submit' onClick={formik.handleSubmit}  className='w-[315px] md:w-[315px] h-[45px] md:absolute md:bottom-5 absolute bottom-3 md:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
  
               
             </div>
+          </div> 
+
+        
 
 
 
 
-          </div>
         </div>
       </div>
     </div>
+ 
   );
 }
 

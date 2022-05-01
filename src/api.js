@@ -42,7 +42,6 @@ export const fetchMe = async () => {
 
 
 export const fetchLogin = async ({identifier,password}) => {
-
   const {data} = await axios.post(
     `${process.env.REACT_APP_BASE_ENDPOINT}/auth/local`,
     {
@@ -51,23 +50,64 @@ export const fetchLogin = async ({identifier,password}) => {
   );
   return data;
 
- 
-  
-
-
- 
-  // login();
-    
-  
-
 
 };
+export const fetchUsingStatuses = async () => {
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/using-statuses`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
+export const fetchBrands = async () => {
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/brands`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
 
+export const fetchColors = async () => {
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/colors`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
 export const fetchMyOffers = async (id) => {
   const token = Cookies.get('Auth_Token');
   try{
     const {data,status} = await axios.get(
       `${process.env.REACT_APP_BASE_ENDPOINT}/offers?users_permissions_user=${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
+
+export const fetchAddProduct = async (formData) => {
+  console.log(formData);
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.post(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/products`,formData,{headers:{'Authorization':`Bearer ${token}`}}
     );
   
     return status === 200 ? data : data.message;

@@ -10,7 +10,6 @@ import { useAuth } from '../../../contexts/AuthContext';
 import BuyModal from '../../../components/Modal/BuyModal';
 import Logo from '../../../constants/Logo';
 import { useOffer } from '../../../contexts/OfferContext';
-import { addOffer } from '../../../api';
 
 function ProductDetail() {
   const  location = useLocation();
@@ -22,8 +21,8 @@ function ProductDetail() {
   const {removeOfferProduct,getMyOffers,myOffers,loading:offerLoading} = useOffer();
   const [showDetailModal, setShowDetailModal] = useState(null);
   const [showBuyModal, setShowBuyModal] = useState(null);
-  let status = myOffers?.findIndex(item => item.product.id === state?.id);
-  let offer = myOffers?.filter(item => item.product.id === state?.id);
+  let status = myOffers?.findIndex(item => item.product?.id === state?.id);
+  let offer = myOffers?.filter(item => item.product?.id === state?.id);
   const [offerStatus, setOfferStatus] = useState(null);
   const {user} = useAuth();
 

@@ -8,6 +8,9 @@ body {
 }
 @layer components {
 
+
+   
+     
     
     .option-input {
         -webkit-appearance: none;
@@ -81,6 +84,17 @@ body {
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  .toggle-bg:after {
+    content: '';
+    @apply absolute top-0.5 left-0.5 bg-white border border-[#EBEBEB] rounded-full h-5 w-5 z-50 transition shadow-sm;
+}
+input:checked + .toggle-bg:after {
+    transform: translateX(100%);
+    @apply border-white;
+}
+input:checked + .toggle-bg {
+    @apply bg-[#4B9CE2] ;
+}
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .hide-scrollbar {
