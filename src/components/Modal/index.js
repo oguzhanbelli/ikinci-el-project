@@ -72,7 +72,7 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
       <div className="absolute top-[10px] md:justify-center md:items-center flex flex-col overflow-x-hidden  overflow-y-auto md:fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="relative  md:my-6 mx-auto w-[355px] h-[407px] md:w-[480px] md:h-[461px] ">
           {/*content*/}
-          <div className="border-0 rounded-lg shadow-lg relative  dark:bg-gray-700  flex flex-col w-full  bg-white outline-none focus:outline-none">
+          <div className="border-0 rounded-lg shadow-lg relative    flex flex-col w-full  bg-white outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between  rounded-t ">
               <h3 className="text-[1.125em] md:text-[1.563em] mt-[13px] md:mt-[20px] ml-[20px] text-[#525252] font-bold dark:text-white">

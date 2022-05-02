@@ -10,6 +10,8 @@ import { useAuth } from '../../../contexts/AuthContext';
 import BuyModal from '../../../components/Modal/BuyModal';
 import Logo from '../../../constants/Logo';
 import { useOffer } from '../../../contexts/OfferContext';
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ProductDetail() {
   const  location = useLocation();
@@ -60,6 +62,14 @@ function ProductDetail() {
     setState(data);
     
   };
+  const contextClass = {
+    success: "bg-blue-600",
+    error: "bg-red-600",
+    info: "bg-gray-600",
+    warning: "bg-orange-400",
+    default: "bg-[#F1FFF0]",
+    dark: "bg-white-600 font-gray-300",
+  };
 
   useEffect(() => {
     getProduct();
@@ -67,13 +77,20 @@ function ProductDetail() {
 
 
   return (
-    <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3 overflow-x-hidden overflow-y-auto">
+    <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3  overflow-x-hidden overflow-y-auto">
+      <ToastContainer hideProgressBar={true} closeButton={false} toastClassName={({ type }) => contextClass[type || "default"] + 
+        " relative flex p-1 min-h-10 h-[60px] w-[321px] rounded-md justify-between overflow-hidden cursor-pointer"
+      } bodyClassName={'bg-[#F1FFF0] text-[#46AF32]'}/>
       {!loading ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
         <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">
         
           <img
             alt={state?.name}
             src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url ? state?.image?.url : ''}`}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src='/images/notfoundimage.jpg';
+            }}
             className="rounded-[8px]   w-[343px] h-[362px] lg:w-[200px] lg:h-[450px]  xl:w-[700px] xl:h-[737px] mx-[6px] xl:ml-[15px]  mt-[6px] xl:mt-[16px] bg-gray-200"
           />
 
@@ -99,7 +116,7 @@ function ProductDetail() {
                 <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
                   {state?.price},00 TL
                 </p>
-                <div className='bg-[#f2f2f2] rounded-[8px] w-full h-[36px] flex items-center  overflow-hidden text-ellipsis mr-[10px]'>
+                <div className={`bg-[#f2f2f2] rounded-[8px] w-full h-[36px] ${state.isSold === true ? 'hidden ' : 'flex'} items-center  overflow-hidden text-ellipsis mr-[10px]`}>
                   <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
                        Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice},00 TL</strong>
 
@@ -163,7 +180,7 @@ function ProductDetail() {
 
 
                     </p>
-                    <div className='bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] flex items-center max-w-lg overflow-hidden text-ellipsis'>
+                    <div className={`bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] ${state.isSold === true ? 'hidden ' : 'flex'} items-center max-w-lg overflow-hidden text-ellipsis`}>
                       <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
                        Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice},00 TL</strong>
 
@@ -198,7 +215,7 @@ function ProductDetail() {
               </div> : null}
               
               {showDetailModal ? <Modal setShowDetailModal={setShowDetailModal} setOfferStatus={setOfferStatus} state={state}  /> : null}
-              {showBuyModal ? <BuyModal setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
+              {showBuyModal ? <BuyModal toast={toast} setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
             </div>
           </div>
         </div>

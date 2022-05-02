@@ -43,8 +43,10 @@ function Select(props) {
       components={{
         IndicatorSeparator: () => null
       }}
+    
       name={props.name}
       options={props.options}
+      onBlur={props.onBlur}
       onChange={value => props.onChange(value)}
       value={defaultValue(props.options,props.value)}
       styles={customStyles}
