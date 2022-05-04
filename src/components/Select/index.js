@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactSelect from 'react-select';
 function Select(props) {
-  console.log(props);
+
   //   const value = props.options.map(item => ({ label: item.name, value: item.id }));
   const defaultValue = (options, value) => {
     return options ? options.find((option) => option.value=== value ) : '';

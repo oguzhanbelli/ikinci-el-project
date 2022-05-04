@@ -63,7 +63,7 @@ function NavBar() {
                 </svg>
               </Link> 
               <Link
-                to="/login"
+                to="/account"
                 className=" flex  gap-1 items-center justify-center w-[116px]  lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
               >
                 <svg
@@ -157,7 +157,7 @@ function NavBar() {
               <p className="mt-0.5 "> Ürün Ekle</p>
             </Link>
             <Link
-              to="/login"
+              to="/account"
               className="hidden lg:flex  gap-1 items-center justify-center w-[125px]  lg:mr-3 h-[40px] bg-[#F0F8FF] hover:bg-gray-100 text-[15px] text-[#4B9CE2] font-bold  rounded-xl transition duration-200"
             >
               <svg

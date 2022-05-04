@@ -12,9 +12,11 @@ const ProductProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [allStatuses, setAllStatuses] = useState([]);
+  
   const [allColors, setAllColors] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+
   let [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -71,12 +73,16 @@ const ProductProvider = ({ children }) => {
 
   };
   const getProducts = async () => {
-    setLoading(true);
-   
-    const data = await fetchAllProducts();
-    console.log(data);
-    setAllProducts(data);
-    setLoading(false);
+    try {
+      const data = await fetchAllProducts();
+      setAllProducts(data);
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
   };
   
   const getColors = async () => {
@@ -101,7 +107,7 @@ const ProductProvider = ({ children }) => {
     const data = await fetchUsingStatuses();
   
     const filteredData= data.map(item => {return {label:item.name,value:item.name};});
-    console.log(filteredData,'dataaa');
+    
     setAllStatuses(filteredData);
     setLoading(false);
   };
@@ -110,9 +116,9 @@ const ProductProvider = ({ children }) => {
   const addProduct = async (formData) => {
     setLoading(true);
    
-    const data =  fetchAddProduct(formData);
+    await fetchAddProduct(formData);
     
-    console.log(data);
+ 
   
     setLoading(false);
 
@@ -124,11 +130,18 @@ const ProductProvider = ({ children }) => {
 
 
   const getOneProduct = async (id) => {
-    setLoading(true);
-    const data = await fetchOneProduct(id);
-    console.log(data);
-    setLoading(false);
-    return data;
+  
+    try {
+      const data = await fetchOneProduct(id);
+      setAllProducts(data);
+      console.log(data);
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
     
   };
   const buyProductDetail = async (id) => {

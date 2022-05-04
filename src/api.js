@@ -125,6 +125,19 @@ export const addOffer = async (input) => {
   return data;
   
 };
+export const confirmMyProductsOffer = async (id,statusOffer) => {
+ 
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.put(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/offers/${id}`,statusOffer,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+  }catch(e){
+    console.log(e.message);
+  }
+};
 export const removeOffer = async (id) => {
   console.log(id);
   const token = Cookies.get('Auth_Token');
@@ -136,6 +149,22 @@ export const removeOffer = async (id) => {
   return data;
   
 };
+
+export const fetchMyProductOffers = async (id) => {
+  const token = Cookies.get('Auth_Token');
+  try{
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/products?users_permissions_user=${id}`,{headers:{'Authorization':`Bearer ${token}`}}
+    );
+  
+    return status === 200 ? data : data.message;
+
+    
+  }catch(e){
+    console.log(e.message);
+  }
+};
+
 
 export const buyProduct = async (id,input) => {
   console.log(id);

@@ -79,7 +79,7 @@ function ProductDetail() {
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3  overflow-x-hidden overflow-y-auto">
       <ToastContainer hideProgressBar={true} closeButton={false} toastClassName={({ type }) => contextClass[type || "default"] + 
-        " relative flex p-1 min-h-10 h-[60px] w-[321px] rounded-md justify-between overflow-hidden cursor-pointer"
+        " relative flex p-1 min-h-10 h-[60px] w-[321px] rounded-md justify-between overflow-hidden cursor-pointer shadow-lg"
       } bodyClassName={'bg-[#F1FFF0] text-[#46AF32]'}/>
       {!loading ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
         <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">

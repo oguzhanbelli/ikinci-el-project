@@ -15,12 +15,12 @@ function Home() {
   const [searchParams,setSearchParams] = useSearchParams();
  
   useEffect(() => {
-    navigate('/');
+   
     // eslint-disable-next-line react/prop-types
     if(!searchParams.get('category')){
-      console.log('Deneme');
       setSearchParams('category=all');
       setActiveCategory('all');
+      navigate('/');
       
    
     }
@@ -42,6 +42,7 @@ function Home() {
 
   const handleNavigate = (item) => {
     navigate(`/product-detail/${item.id}`, { state: item ,replace:true});
+    setActiveCategory('all');
   };
 
 

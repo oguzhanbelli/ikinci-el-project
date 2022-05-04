@@ -27,8 +27,7 @@ function AddProduct() {
     setPicturePreview(URL.createObjectURL(e.target.files[0]));
 
   };
-  console.log(pictureAsFile);
-  console.log(picturePreview);
+
 
   const setImageAction = async() => {
     let newObject = {...formik.values,isSold:false,users_permissions_user:user.id};
@@ -68,15 +67,14 @@ function AddProduct() {
     },
     validationSchema,
 
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit: async () => {
+
       setImageAction();
 
     
     },
   });
 
-  console.log(formik.values.category,'Category');
   useEffect(() => {
 
     if (!loggedIn) {
@@ -90,7 +88,7 @@ function AddProduct() {
 
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-row lg:flex-col items-center pb-3 overflow-x-hidden lg:overflow-x-scroll justify-center lg:justify-start">
-      <div className="flex flex-col  lg:flex-row mt-[50px] w-[355px] h-auto my-auto lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
+      <div className="flex flex-col  xl:flex-row mt-[50px] w-[355px] h-auto my-auto lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
         <form onSubmit={formik.handleSubmit} className="flex flex-col lg:ml-[30px]  mx-auto h-fit">
           <div className="mt-[25px]  flex flex-col">
             <h1 className=" text-[1.563em] font-bold text-[#525252]">
@@ -105,6 +103,7 @@ function AddProduct() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder="Örnek: Iphone 12 Pro Max"/>
+            <p className='text-red-400'>{formik.touched.name && formik.errors.name}</p>
           </div>
           <div className="mt-[25px] mb-[25px] lg:w-[730px] h-[100px]">
             <label className='text-[0.938em] text-[#525252] '>Açıklama</label>
@@ -112,12 +111,14 @@ function AddProduct() {
               id="description"
               name='description'
               onChange={formik.handleChange}
+              maxLength={501}
               onBlur={formik.handleBlur}
               value={formik.values.description}
               rows="4"
               className="block p-2.5 w-full mt-[5px] resize-none  text-[1em] font-normal placeholder:text-[#99A0A7] text-gray-500 pl-7 pr-12 bg-[#F4F4F4]  border-[1px] border-gray-300 rounded-[8px] focus:ring-[#4B9CE2] focus:bg-[#F0F8FF] focus:border-[#4B9CE2] focus:border-[1px] focus:text-[#3E3E3E]"
               placeholder="Ürün açıklaması girin."
             ></textarea>
+            <p className='text-red-400'>{formik.touched.description && formik.errors.description}</p>
           </div>
 
           <div className="mt-[40px] w-full  lg:w-[730px] flex flex-col lg:flex-row">
@@ -190,13 +191,13 @@ function AddProduct() {
           
         </form>
         <div>
-          <div className='flex flex-col ml-[20px]  lg:ml-[47.5px] mt-[30px] lg:mt-0 w-full h-full'>
+          <div className='flex flex-col ml-[20px]  xl:ml-[47.5px] mt-[30px] xl:mt-0 w-full h-full'>
             <div className="mt-[35px]  flex flex-col">
               <h1 className=" text-[1.563em] font-bold text-[#525252]">
               Ürün Görseli
               </h1>
             </div>
-            <div className="flex mt-8">
+            <div className="flex mt-8 lg:justify-center xl:justify-start">
               <div className="w-fit mb-[50px] lg:w-[595px] h-fit ">
                 <div className="mr-2">
                   <div className="flex items-center justify-center w-full">
@@ -208,9 +209,9 @@ function AddProduct() {
               </div>
                
             </div>
-            <div className='w-[730px] h-full relative  mt-[20px] '>
+            <div className='w-[730px] h-full relative  mt-[20px] lg:flex justify-center'>
               
-              <button type='submit' onClick={formik.handleSubmit}  className='w-[315px] lg:w-[315px] h-[45px] lg:absolute lg:bottom-5 absolute bottom-3 lg:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Onayla</button>
+              <button type='submit' onClick={formik.handleSubmit}  className='w-[315px] lg:w-[315px] h-[45px]   xl:absolute xl:bottom-5 absolute bottom-3 xl:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]'>Kaydet</button>
  
               
             </div>

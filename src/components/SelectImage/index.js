@@ -3,7 +3,6 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
 function SelectImage({onChange,file,setFile,setPictureAsFile,setFileError,fileError}) {
-  console.log(file);
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     maxSize:400000,
@@ -27,7 +26,7 @@ function SelectImage({onChange,file,setFile,setPictureAsFile,setFileError,fileEr
       ));
     },
   });
-  console.log(file);
+  
   return (
     <>
       {

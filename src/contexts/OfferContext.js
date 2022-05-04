@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createContext, useState, useEffect, useContext } from 'react';
-import {  fetchMyOffers, removeOffer, addOffer } from '../api';
+import {  fetchMyOffers, removeOffer, addOffer, fetchMyProductOffers, confirmMyProductsOffer } from '../api';
 // import Logo from '../constants/Logo';
 import { useAuth } from './AuthContext';
 // import { getPermRequest, getPermRequests, getUser } from "../api";
@@ -10,7 +10,7 @@ const OfferContext = createContext();
 const OfferProvider = ({ children }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-
+  const [myProductsOffers, setMyProductsOffers] = useState([]);
   const [myOffers, setMyOffers] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,8 @@ const OfferProvider = ({ children }) => {
     
        
         getMyOffers();
+        getMyProductsOffers();
+        setLoading(false);
         
       } catch (e) {
         setLoading(false);
@@ -26,9 +28,17 @@ const OfferProvider = ({ children }) => {
     })();
   }, [loading]);
   const getMyOffers = async () => {
-    const data = await fetchMyOffers(user?.id);
-    setMyOffers(data);
-    setLoading(false);
+    
+    try {
+      const data = await fetchMyOffers(user?.id);
+      setMyOffers(data);
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
   };
 
   const addOfferProduct = async (input) => {
@@ -39,6 +49,24 @@ const OfferProvider = ({ children }) => {
     return data;
   };
 
+  const getMyProductsOffers = async() =>{
+ 
+    setLoading(true);
+    try {
+     
+      const data = await fetchMyProductOffers(user?.id);
+      const filteredData = data.filter(item => item.offers.length > 0);
+      setMyProductsOffers(filteredData);
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
+
+
+  };
   const removeOfferProduct = async (id) => {
     setLoading(true);
     try {
@@ -52,11 +80,28 @@ const OfferProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const confirmOffer = async (id,statusOffer) => {
+    setLoading(true);
+    try {
+      const data = await confirmMyProductsOffer(id,statusOffer);
+    
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
+  };
+ 
  
   const values = {
     addOfferProduct,
     getMyOffers,
     removeOfferProduct,
+    getMyProductsOffers,
+    myProductsOffers,
+    confirmOffer,
     myOffers,
     loading,
     setLoading,
