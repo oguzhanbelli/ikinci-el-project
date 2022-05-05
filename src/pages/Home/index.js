@@ -16,6 +16,7 @@ function Home() {
  
   useEffect(() => {
    
+    console.log(allProducts);
     // eslint-disable-next-line react/prop-types
     if(!searchParams.get('category')){
       setSearchParams('category=all');
@@ -49,11 +50,11 @@ function Home() {
   return (
     <div>
 
-      <div className='w-screen min-h-screen  bg-[#F2F2F2] flex flex-col items-center overflow-x-hidden overflow-y-auto'>
+      <div className={`${loading === true ? 'hidden ' : 'flex '}w-screen min-h-screen  bg-[#F2F2F2] flex flex-col items-center overflow-x-hidden overflow-y-auto`}>
         <Banner/>
         <Categories/>
 
-        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-screen p-1  xl:w-[1500px] h-auto  xl:h-screen xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
+        <div className='flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  xl:w-[1500px] h-auto  xl:h-auto xl:pb-[171px] gap-[15px] xl:gap-[20px] rounded-[8px]  mt-[20px] pb-[20px] xl:mt-[20px] '>
           {
             !loading ?   
               allProducts?.map(item => (
@@ -71,7 +72,7 @@ function Home() {
                       <p className='ml-[6px] text-[10px] xl:text-[0.938em] xl:mt-[5px] xl:mr-[10px]'><strong>Renk:</strong> {item.color}</p>
                     </div>
                    
-                    <p className='mt-[12px] w-full  h-[20px]  relative bottom-[6px]  xl:mt-[26px] ml-[6px] font-bold text-[1.125em] text-[#3E3E3E]'>{item.price}.00 TL</p>
+                    <p className='mt-[12px] w-full  h-[20px]  relative bottom-[6px]  xl:mt-[26px] ml-[6px] font-bold text-[1.125em] text-[#3E3E3E]'>{item.price.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL</p>
                    
                     
                   </div>

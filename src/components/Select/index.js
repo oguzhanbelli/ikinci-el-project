@@ -11,6 +11,7 @@ function Select(props) {
     option: (provided) => ({
       ...provided,
       width: '100%',
+      zIndex:10,
       
      
     }),
@@ -19,6 +20,7 @@ function Select(props) {
       width: props.controlWidth || '100%',
       height:props.controlHeight || '50px',
       display:'flex',
+      zIndex:10,
       background:'#F4F4F4',
       fontSize:'0.938em',
       border:'none',

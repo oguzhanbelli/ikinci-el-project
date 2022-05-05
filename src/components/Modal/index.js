@@ -8,9 +8,10 @@ import { useFormik } from 'formik';
 import { useOffer } from '../../contexts/OfferContext';
 import { useAuth } from '../../contexts/AuthContext';
 import validationSchema from './validations';
+import { CloseIcon } from '../../constants/Icon';
 
 
-function Modal({state,setShowDetailModal,setOfferStatus}) {
+const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) => {
 
   
  
@@ -35,7 +36,10 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
       
     },
     validationSchema,
-    onSubmit: async () => {
+    onSubmit: async (values) => {
+      if(selectedOffer === null){
+        offerSubmit.offerPrice = values.offerPrice;
+      }
       addOfferProduct(offerSubmit);
       modalClose();
 
@@ -44,7 +48,6 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
 
   
   const handleChange = async(e) => {
-  
     if(e.target.value == 20){
       setOfferSubmit({product:state.id,users_permissions_user:user.id,offerPrice:Math.floor((state.price/100)*20)});
       formik.values.offerPrice = Math.floor((state.price/100)*20);
@@ -62,6 +65,7 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
       setSelectedOffer(e.target.value);
    
     }
+  
 
   };
   
@@ -69,8 +73,8 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
 
   return (
     <>
-      <div className="absolute top-[10px] md:justify-center md:items-center flex flex-col overflow-x-hidden  overflow-y-auto md:fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative  md:my-6 mx-auto w-[355px] h-[407px] md:w-[480px] md:h-[461px] ">
+      <div  className="absolute top-[10px] md:justify-center md:items-center flex flex-col overflow-x-hidden  overflow-y-auto md:fixed inset-0 z-50 outline-none focus:outline-none">
+        <div ref={ref} className="relative  md:my-6 mx-auto w-[355px] h-[407px] md:w-[480px] md:h-[461px] ">
           {/*content*/}
           <div className="border-0 rounded-lg shadow-lg relative    flex flex-col w-full  bg-white outline-none focus:outline-none">
             {/*header*/}
@@ -83,17 +87,8 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
                 className=" bg-transparent border-0 mt-[16.39px] md:mt-[30px] mr-[19px] text-black opacity-100 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
               
               >
-                <svg className='w-[11.83px] h-[11.83px]  md:w-[18px] md:h-[18px]' viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                  <path d="M0.706591 16.9703C0.519054 16.7828 0.413697 16.5285 0.413697 16.2632C0.413697 15.998 0.519054 15.7437 0.706591 15.5561L15.5558 0.706893C15.7434 0.519357 15.9977 0.414 16.2629 0.414C16.5282 0.414 16.7825 0.519357 16.97 0.706893C17.1576 0.89443 17.2629 1.14878 17.2629 1.414C17.2629 1.67922 17.1576 1.93357 16.97 2.12111L2.1208 16.9703C1.93327 17.1579 1.67891 17.2632 1.4137 17.2632C1.14848 17.2632 0.894127 17.1579 0.706591 16.9703V16.9703Z" fill="#525252"/>
-                  <path d="M0.706562 0.707659C0.894098 0.520122 1.14845 0.414765 1.41367 0.414765C1.67888 0.414765 1.93324 0.520122 2.12078 0.707659L16.97 15.5569C17.1576 15.7444 17.2629 15.9988 17.2629 16.264C17.2629 16.5292 17.1576 16.7836 16.97 16.9711C16.7825 17.1587 16.5281 17.264 16.2629 17.264C15.9977 17.264 15.7433 17.1587 15.5558 16.9711L0.706562 2.12187C0.519025 1.93434 0.413668 1.67998 0.413668 1.41476C0.413668 1.14955 0.519025 0.895195 0.706562 0.707659V0.707659Z" fill="#525252"/>
-
-                  <defs>
-                    <clipPath id="clip0_1_2">
-                      <rect width="17.678" height="17.678" fill="white"/>
-                    </clipPath>
-                  </defs>
-                </svg>
+                <CloseIcon/>
+                
 
               </button>
             </div>
@@ -108,7 +103,7 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
                 </div>
                 <div className=' flex  items-center     w-full relative'>
                   <p className="text-[#525252] text-[0.938em] md:text-[1.125em]  font-bold  absolute  right-[11px]  ">
-                    {state?.price},00 TL
+                    {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL
                   </p>
                 </div>
 
@@ -161,7 +156,11 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
                       disabled={selectedOffer}
                   
                       id="offerPrice"
-                      className="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                      className={`focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full pl-7 pr-12  rounded-md ${
+                        selectedOffer === null && formik.touched.offerPrice && formik.errors.offerPrice
+                          ? 'border-[1px] border-[#F77474] bg-[#FFF2F2] text-[#F77474] placeholder:text-[#F77474]'
+                          : ' text-gray-500 border-gray-300 bg-[#F4F4F4] placeholder:text-[#99A0A7] '
+                      }`}
                       placeholder="Teklif Belirle"
                     />
                     <div className="absolute inset-y-3 right-0 flex items-center">
@@ -171,7 +170,11 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
                       <span
                         id="currency"
                         name="currency"
-                        className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md"
+                        className={`focus:ring-indigo-500 ${
+                          selectedOffer === null && formik.touched.offerPrice && formik.errors.offerPrice
+                            ? ' text-[#F77474] placeholder:text-[#F77474]'
+                            : ' text-gray-500  bg-[#F4F4F4] placeholder:text-[#99A0A7] '
+                        } focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md`}
                       >
                         TL
                       </span>
@@ -194,6 +197,8 @@ function Modal({state,setShowDetailModal,setOfferStatus}) {
      
     </>
   );
-}
+});
+
+Modal.displayName = 'Modal';
 
 export default Modal;

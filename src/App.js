@@ -6,6 +6,8 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import NavBar from './components/Navbar';
 import Logo from './constants/Logo';
 
+import RequireAuth from './pages/RequireAuth';
+
 const ProductDetail = React.lazy (() => import('./pages/Product/ProductDetail'));
 const Login = React.lazy (() => import('./pages/Auth/Login'));
 const Register = React.lazy (() => import('./pages/Auth/Register'));
@@ -20,9 +22,9 @@ function App() {
       }
       <Routes>
         <Route index path="/" element={<Home />} />
-        <Route  path="/account" element={<React.Suspense><Account /> </React.Suspense> } />
+        <Route  path="/account" element={<React.Suspense><RequireAuth redirectTo={'/'}><Account /></RequireAuth> </React.Suspense> } />
         <Route  path="/product-detail/:id" element={<React.Suspense><ProductDetail /> </React.Suspense> } />
-        <Route path="/add-product" element={<React.Suspense fallback={<div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>}><AddProduct /></React.Suspense>} />
+        <Route path="/add-product" element={<React.Suspense fallback={<div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>}><RequireAuth redirectTo={'/'}><AddProduct /></RequireAuth></React.Suspense>} />
         <Route path="/login" element={<React.Suspense fallback={<div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>}><ProtectedRoute><Login /></ProtectedRoute></React.Suspense>} />
         <Route path="/register" element={<React.Suspense fallback={<div className='w-screen h-screen justify-center flex items-center'> <div className='w-[100px] h-[50px]'> <Logo/> </div></div>}><ProtectedRoute><Register /></ProtectedRoute></React.Suspense>} />
       </Routes>

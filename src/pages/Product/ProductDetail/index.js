@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { useProduct } from '../../../contexts/ProductContext';
 import Modal from '../../../components/Modal';
@@ -12,6 +12,7 @@ import Logo from '../../../constants/Logo';
 import { useOffer } from '../../../contexts/OfferContext';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useOnClickOutside } from '../../../utils/hooks/handleClickOutside';
 
 function ProductDetail() {
   const  location = useLocation();
@@ -27,8 +28,12 @@ function ProductDetail() {
   let offer = myOffers?.filter(item => item.product?.id === state?.id);
   const [offerStatus, setOfferStatus] = useState(null);
   const {user} = useAuth();
-
+  const offerModalRef = useRef();
+  const buyModalRef = useRef();
+  useOnClickOutside(offerModalRef, () => setShowDetailModal(false));
+  useOnClickOutside(buyModalRef, () => setShowBuyModal(false));
   const openModal = () => {
+
     if(!user){
       navigate('/login');
 
@@ -77,11 +82,11 @@ function ProductDetail() {
 
 
   return (
-    <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3  overflow-x-hidden overflow-y-auto">
+    <div className={`${offerLoading ? 'hidden' : ''}w-screen h-screen   bg-[#F2F2F2] flex flex-col items-center pb-3  overflow-x-hidden overflow-y-auto`}>
       <ToastContainer hideProgressBar={true} closeButton={false} toastClassName={({ type }) => contextClass[type || "default"] + 
         " relative flex p-1 min-h-10 h-[60px] w-[321px] rounded-md justify-between overflow-hidden cursor-pointer shadow-lg"
       } bodyClassName={'bg-[#F1FFF0] text-[#46AF32]'}/>
-      {!loading ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
+      {loading === false ? <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
         <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">
         
           <img
@@ -99,14 +104,14 @@ function ProductDetail() {
             {
               status === undefined ?   <div className='mt-[10px] flex lg:hidden'>
                 <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
-                  {state?.price},00 TL
+                  {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
                 </p>
               </div> : ''
             }
             {
               status === -1 ?   <div className='mt-[10px] flex lg:hidden'>
                 <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
-                  {state?.price},00 TL
+                  {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
                 </p>
               </div> : ''
             }
@@ -114,11 +119,11 @@ function ProductDetail() {
             {
               status >= 0 ?   <div className='mt-[10px] flex flex-row lg:hidden '>
                 <p className="text-[#525252]  text-[1.25em] lg:text-[1.563em] font-bold flex w-[200px] text-left ">
-                  {state?.price},00 TL
+                  {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
                 </p>
                 <div className={`bg-[#f2f2f2] rounded-[8px] w-full h-[36px] ${state.isSold === true ? 'hidden ' : 'flex'} items-center  overflow-hidden text-ellipsis mr-[10px]`}>
                   <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
-                       Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice},00 TL</strong>
+                       Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL</strong>
 
 
                   </p>
@@ -156,7 +161,7 @@ function ProductDetail() {
                 {
                   status === undefined ?   <div className='mt-[30px] hidden lg:flex'>
                     <p className="text-[#525252] text-[1.563em] font-bold flex w-[200px] text-left ">
-                      {state?.price},00 TL
+                      {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
 
                     </p>
                   </div> : ''
@@ -164,7 +169,7 @@ function ProductDetail() {
                 {
                   status === -1 ?   <div className='mt-[30px] hidden lg:flex'>
                     <p className="text-[#525252] text-[1.563em] font-bold flex w-[200px] text-left ">
-                      {state?.price},00 TL
+                      {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
 
                     </p>
                   </div> : ''
@@ -176,13 +181,13 @@ function ProductDetail() {
                   
                   status >= 0 ?   <div className={`${offerLoading === true ? 'hidden ' : ''}mt-[30px] hidden lg:flex lg:flex-col`}>
                     <p className="text-[#525252] text-[1.563em] font-bold flex w-[200px] text-left ">
-                      {state?.price},00 TL
+                      {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
 
 
                     </p>
                     <div className={`bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] ${state.isSold === true ? 'hidden ' : 'flex'} items-center max-w-lg overflow-hidden text-ellipsis`}>
                       <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
-                       Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice},00 TL</strong>
+                       Verilen Teklif: <strong className='ml-[4px]'>{offer[0]?.offerPrice.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL</strong>
 
 
                       </p>
@@ -210,12 +215,12 @@ function ProductDetail() {
 
                 </div>
               </div>
-              {showDetailModal || showBuyModal ? <div className="opacity-[0.7] fixed inset-0 z-40 bg-[#4B9CE2]">
+              {showDetailModal || showBuyModal ? <div onClick={() => console.log(1)} className="opacity-[0.7] fixed inset-0 z-40 bg-[#4B9CE2]">
              
               </div> : null}
               
-              {showDetailModal ? <Modal setShowDetailModal={setShowDetailModal} setOfferStatus={setOfferStatus} state={state}  /> : null}
-              {showBuyModal ? <BuyModal toast={toast} setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
+              {showDetailModal ? <Modal ref={offerModalRef} setShowDetailModal={setShowDetailModal} setOfferStatus={setOfferStatus} state={state}  /> : null}
+              {showBuyModal ? <BuyModal ref={buyModalRef} toast={toast} setShowBuyModal={setShowBuyModal} title={'Satın Al'} content={'Satın Almak İstiyor musunuz?'} method={buyProduct} parameter={state.id} /> : null}
             </div>
           </div>
         </div>
