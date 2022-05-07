@@ -167,15 +167,19 @@ export const fetchMyProductOffers = async (id) => {
 
 
 export const buyProduct = async (id,input) => {
-  console.log(id);
   const token = Cookies.get('Auth_Token');
-  const {data} = await axios.put(
-    `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,input,{headers:{'Authorization':`Bearer ${token}`}}
-
-  );
-
-  return data;
+ 
+  try{
+    const {data,status} = await axios.put(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,input,{headers:{'Authorization':`Bearer ${token}`}}
   
+    );
+    return status === 200 ? data : data.message;
+
+    
+  }catch(e){
+    console.log(e.message);
+  }
 };
 
 export const fetchOneProduct = async (id) => {

@@ -9,9 +9,9 @@ const  BuyModal = React.forwardRef(({title,content,setShowBuyModal,method,parame
   const closeModal = () => {
     setShowBuyModal(false);
   };
-  const sendData = () => {
-    
-    method(parameter);
+  const sendData = async() => {
+   
+    await method(parameter);
     setShowBuyModal(false);
     toast(<div className='flex justify-between items-center h-full  '>
       <ConfirmIcon/>

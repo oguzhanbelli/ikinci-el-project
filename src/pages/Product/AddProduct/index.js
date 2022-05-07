@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
 import SelectImage from '../../../components/SelectImage';
+import Spinner from '../../../components/Spinner';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useProduct } from '../../../contexts/ProductContext';
 import validationSchema from './validations';
@@ -11,14 +12,14 @@ import validationSchema from './validations';
 function AddProduct() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { allCategories, setActiveCategory } = useProduct();
-  const [picturePreview, setPicturePreview] = useState([]);
   const [pictureAsFile, setPictureAsFile] = useState([]);
   const [fileError, setFileError] = useState(false);
   // eslint-disable-next-line no-unused-vars
 
   const {
     getColors,
+    loading,
+    allCategories, setActiveCategory,
     allColors,
     getBrands,
     allBrands,
@@ -68,7 +69,6 @@ function AddProduct() {
     validationSchema,
 
     onSubmit: async () => {
-      console.log(pictureAsFile);
       if(pictureAsFile.length === 0){
 
         setFileError(true);
@@ -79,11 +79,7 @@ function AddProduct() {
       setImageAction();
     },
   });
-  const uploadPicture = (e) => {
-   
-    setPicturePreview(URL.createObjectURL(e.target.files[0]));
-  };
-
+ 
   useEffect(() => {
     getColors();
     getBrands();
@@ -112,11 +108,16 @@ function AddProduct() {
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              className={`focus:ring-[#4B9CE2] focus:bg-[#F0F8FF] focus:border-[#4B9CE2] focus:border-[1px] block w-full h-full font-normal pl-7 pr-12 mt-[5px] text-[1em] border-[1px] border-gray-300 bg-[#F4F4F4] rounded-[8px] ${
+                formik.touched.name && formik.errors.name
+                  ? 'border-[1px] border-[#F77474] bg-[#FFF2F2] text-[#F77474] placeholder:text-[#F77474]'
+                  : ' text-gray-500 border-gray-300 bg-[#F4F4F4] placeholder:text-[#99A0A7] '
+              } `}
               placeholder="Örnek: Iphone 12 Pro Max"
             />
-            <p className="text-red-400">
+            {/* <p className="text-red-400">
               {formik.touched.name && formik.errors.name}
-            </p>
+            </p> */}
           </div>
           <div className="mt-[25px] mb-[25px] lg:w-[730px] h-[100px]">
             <label className="text-[0.938em] text-[#525252] ">Açıklama</label>
@@ -128,12 +129,16 @@ function AddProduct() {
               onBlur={formik.handleBlur}
               value={formik.values.description}
               rows="4"
-              className="block p-2.5 w-full mt-[5px] resize-none  text-[1em] font-normal placeholder:text-[#99A0A7] text-gray-500 pl-7 pr-12 bg-[#F4F4F4]  border-[1px] border-gray-300 rounded-[8px] focus:ring-[#4B9CE2] focus:bg-[#F0F8FF] focus:border-[#4B9CE2] focus:border-[1px] focus:text-[#3E3E3E]"
+              className={`block p-2.5 w-full mt-[5px] resize-none  text-[1em] font-normal text-gray-500 pl-7 pr-12 bg-[#F4F4F4]  border-[1px] border-gray-300 rounded-[8px] focus:ring-[#4B9CE2] focus:bg-[#F0F8FF] focus:border-[#4B9CE2] focus:border-[1px] focus:text-[#3E3E3E] ${
+                formik.touched.description && formik.errors.description
+                  ? 'border-[1px] border-[#F77474] bg-[#FFF2F2] text-[#F77474] placeholder:text-[#F77474]'
+                  : ' text-gray-500 border-gray-300 bg-[#F4F4F4] placeholder:text-[#99A0A7] '
+              }`}
               placeholder="Ürün açıklaması girin."
             ></textarea>
-            <p className="text-red-400">
+            {/* <p className="text-red-400">
               {formik.touched.description && formik.errors.description}
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-[40px] w-full  lg:w-[730px] flex flex-col lg:flex-row">
@@ -262,12 +267,10 @@ function AddProduct() {
             <div className="flex mt-8 lg:justify-center xl:justify-start">
               <div className="w-fit mb-[50px] lg:w-[595px] h-fit ">
                 <div className="md:mr-5">
-                  <div className="flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center w-full  ">
                     <SelectImage
-                      file={picturePreview}
-                      setFile={setPicturePreview}
-                      onChange={uploadPicture}
                       setPictureAsFile={setPictureAsFile}
+                      pictureAsFile={pictureAsFile}
                       setFileError={setFileError}
                       fileError={fileError}
                     />
@@ -281,7 +284,7 @@ function AddProduct() {
                 onClick={formik.handleSubmit}
                 className="w-[315px] lg:w-[315px] h-[45px]   xl:absolute xl:bottom-5 absolute bottom-3 xl:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]"
               >
-                Kaydet
+                {loading ? <Spinner/> : 'Kaydet'}
               </button>
             </div>
           </div>

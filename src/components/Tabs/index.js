@@ -6,6 +6,7 @@ import { useOffer } from '../../contexts/OfferContext';
 import { useProduct } from '../../contexts/ProductContext';
 import { useOnClickOutside } from '../../utils/hooks/handleClickOutside';
 import BuyModal from '../Modal/BuyModal';
+import Spinner from '../Spinner';
 
 const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
   const [openTab, setOpenTab] = React.useState(1);
@@ -17,14 +18,18 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
     myOffers,
     getMyProductsOffers,
     getMyOffers,
+    loading
   } = useOffer();
   const { buyProductDetail } = useProduct();
   console.log(myOffers);
   console.log(myProductsOffers);
   const buyProduct = async (id) => {
     const data = await buyProductDetail(id);
+    window.location.reload(false);
     console.log(data, 'Product Data');
   };
+
+
 
   useEffect(() => {
     if (openTab === 1) {
@@ -34,6 +39,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
       getMyOffers();
     }
   }, [openTab]);
+
 
   return (
     <div className="w-full   mt-[20px]  ">
@@ -64,31 +70,33 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
       <hr className="text-[#F2F2F2] opacity-70" />
 
       {openTab === 1 ? (
-        <div className="xl:mt-[20px] h-screen flex flex-col items-center w-full   ">
+        <div className="  flex flex-col items-center w-fit mx-auto h-screen  ">
           {Object.keys(myProductsOffers).map((key) => {
             return (
-              <div key={key}>
+              <div className='first:mt-[10px] ' key={key}>
                 {myProductsOffers[key].offers.map((dataItem) => {
                   return (
                     <div
                       key={dataItem.id}
-                      className="border-[1px] border-[#F2F2F2] rounded-[8px] w-[355px]  lg:w-[1413px] lg:h-[104px] h-[134px]  flex first:mt-[10px] mb-[10px]"
+                      className="border-[1px]  border-[#F2F2F2] rounded-[8px] w-[355px] mt-[10px]  lg:w-[1413px] lg:h-[104px] h-[134px]   flex"
                     >
-                      <div className=" md:ml-[6px] flex flex-col lg:flex-row w-[353px] md:w-full ">
-                        <div className="md:ml-[6px] flex flex-row lg:flex-row w-[353px] md:w-full">
+                      <div className=" md:ml-[6px] flex flex-col lg:flex-row w-[355px] md:w-full  ">
+                        <div className="md:ml-[6px] flex flex-row lg:flex-row w-[330px] md:w-full ">
                           <img
-                            className="w-[36px]   mt-[10px] h-[37px] md:w-[78px] md:h-[84px] rounded-[8px] "
-                            src={`${process.env.REACT_APP_BASE_ENDPOINT}${myProductsOffers[key]?.image?.url}`}
+                            className="w-[78px] ml-[10px] lg:ml-0  mt-[10px] h-[84px] md:w-[78px] md:h-[84px] rounded-[8px]  "
+                
+                            src={`${myProductsOffers[key]?.image?.url === null ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${myProductsOffers[key]?.image?.url}`}`}
                           />
 
-                          <div>
-                            <p className="mt-[14px] ml-[10px] text-[1.125em] text-[#555555] font-normal">
+                          <div className='truncate '>
+                        
+                            <p className="mt-[14px] ml-[10px] lg:ml-[10px] w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
                               {' '}
                               {myProductsOffers[key].name}
                             </p>
                             <div
                               className={
-                                'bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] items-center flex overflow-hidden text-ellipsis ml-[10px]'
+                                'bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] items-center flex overflow-hidden  text-ellipsis ml-[10px]'
                               }
                             >
                               <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
@@ -106,14 +114,14 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                         </div>
 
                         {dataItem.isStatus === null ? (
-                          <div className="flex justify-end w-full gap-[10px]  items-center text-white font-normal text-[0.938em]  mt-[15px]">
+                          <div className="flex justify-end w-full gap-[10px]   items-center text-white font-normal text-[0.938em]  lg:mt-[15px]">
                             <button
                               onClick={() =>
                                 confirmOffer(dataItem.id, { isStatus: true })
                               }
                               className="bg-[#4B9CE2] w-[86px] h-[30px] rounded-[8px]"
                             >
-                              Onayla
+                              {loading ? <Spinner/> : 'Onayla'}
                             </button>
                             <button
                               onClick={() =>
@@ -121,17 +129,17 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                               }
                               className="bg-[#F77474] w-[86px] h-[30px] mr-[30px] rounded-[8px]"
                             >
-                              Reddet
+                              {loading ? <Spinner/> : 'Reddet'}
                             </button>
                           </div>
                         ) : (
                           <div className="flex justify-end w-full gap-[10px] mr-[30px] items-center  mt-[15px] text-white font-normal text-[0.938em]">
                             {dataItem.isStatus === true ? (
-                              <div className="text-[green] mr-[30px]">
+                              <div className="text-[#4B9CE2] mr-[30px] relative bottom-5 lg:bottom-0 text-[0.938em] font-normal">
                                 Onaylandı
                               </div>
                             ) : (
-                              <div className="text-[red] mr-[30px]">
+                              <div className="text-[red] mr-[30px] relative bottom-5 lg:bottom-0 text-[0.938em] font-normal">
                                 Reddedildi
                               </div>
                             )}
@@ -146,9 +154,9 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
           })}
         </div>
       ) : (
-        <div className="xl:mt-[20px] h-screen flex flex-col  xl:ml-[30px] mt-[10px]">
+        <div className="xl:mt-[20px] h-screen flex flex-col  xl:ml-[30px] mt-[20px]">
           <div className="flex flex-col gap-[20px] items-center lg:items-baseline">
-            {myOffers.map((dataItem) => {
+            {myOffers?.filter(item => item?.product !== null).map((dataItem) => {
               return (
                 <div
                   key={dataItem.id}
@@ -170,21 +178,19 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                   <div className=" md:ml-[6px] flex flex-row ">
                     <img
                       className="w-[78px]   ml-[10px] mt-[10px] h-[84px] md:w-[78px] md:h-[84px] rounded-[8px] "
-                      onError={({ currentTarget }) => {
-                        currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = '/images/notfoundimage.jpg';
-                      }}
-                      src={`${process.env.REACT_APP_BASE_ENDPOINT}${dataItem?.product?.image?.url}`}
+                    
+                      src={`${dataItem?.product?.image?.url === undefined ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${dataItem?.product?.image?.url}`}`}
+
                     />
 
-                    <div className="w-[300px] flex flex-col flex-nowrap truncate items-center text-center lg:text-left ">
+                    <div className="w-[300px] flex flex-col ml-[10px] flex-nowrap truncate   lg:text-left ">
                       <p className="mt-[14px] lg:ml-[10px] w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
                         {' '}
-                        {dataItem.product?.name}
+                        {dataItem?.product?.name}
                       </p>
                       <div
                         className={
-                          'bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] items-center flex overflow-hidden text-ellipsis ml-[10px]'
+                          'bg-[#f2f2f2] rounded-[8px] w-[230px] h-[36px] items-center flex overflow-hidden text-ellipsis'
                         }
                       >
                         <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
@@ -192,49 +198,54 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                           <strong className="ml-[4px]">
                             {dataItem?.offerPrice?.toLocaleString('tr-TR', {
                               minimumFractionDigits: 2,
+                              maximumFractionDigits:4
                             })}{' '}
                             TL
                           </strong>
                         </p>
+                        
                       </div>
-                      {dataItem.product?.isSold !== true ? (
-                        <div
-                          className={
-                            'lg:hidden flex   relative left-0  w-full  md:gap-[10px]  justify-center  mt-[10px] items-center text-white font-normal text-[0.938em]'
-                          }
-                        >
-                          {dataItem.isStatus === true ? (
-                            <div className="lg:hidden text-[white] flex justify-between gap-[5px] ml-[10px] text-center items-center">
-                              <button
-                                onClick={() => setShowBuyModal(true)}
-                                className="bg-[#4B9CE2] w-[86px] h-[30px] rounded-[8px]"
-                              >
-                                Satın Al
-                              </button>
-                              <p className="text-[green]">Onaylandı</p>
-                            </div>
-                          ) : null}
-                          {dataItem?.isStatus === false ? (
-                            <div className="text-[red]">Reddedildi</div>
-                          ) : null}
-                          {dataItem?.isStatus === null ? (
-                            <div className="lg:hidden w-[240px] h-[5px]    flex justify-end   md:w-full mt-[15px]  mr-[20px] items-center text-white font-normal text-[0.938em]">
-                              <p className={'text-[gray] mt-[10px] '}>
-                                {' '}
-                                Bekliyor
-                              </p>
-                            </div>
-                          ) : null}
-                          {console.log(dataItem?.product?.id, 'Product')}
-                        </div>
-                      ) : (
-                        <div className="lg:hidden w-[240px] h-[30px]   flex justify-end    md:w-full mt-[15px]  items-center text-white font-normal text-[0.938em]">
-                          <p className={'text-[green] mt-[10px] '}>
-                            Satın Alındı
-                          </p>
-                        </div>
-                      )}
+                      
+                      <div
+                        className={
+                          ' lg:flex   relative left-0  w-full  md:gap-[10px] mr-[30px] justify-center items-center text-white font-normal text-[0.938em]'
+                        }
+                      >
+                        {dataItem?.product?.isSold === true && (
+                          <div className="flex lg:hidden  w-[240px] h-full text-center items-center justify-end   md:w-full  text-white font-normal text-[0.938em]">
+                            <p className={'text-[green] mt-[10px] text-[0.938em]'}>
+                          Satın Alındı
+                            </p>
+                          </div>
+                        )}
+                        {dataItem?.product?.isSold === false && (
+                          <div className="flex lg:hidden text-[white] w-[240px]  justify-end mt-[10px]    text-center items-center">
+                            <button
+                              onClick={() => setShowBuyModal(true)}
+                              className={`${dataItem.isStatus === true ?   ' '  : 'hidden '}bg-[#4B9CE2] w-[86px] h-[30px] rounded-[8px]`}
+                            >
+                          Satın Al
+                            </button>
+                            {dataItem?.isStatus === false && (
+                              <div className="text-[red] lg:hidden mt-[10px]">Reddedildi</div>
+                            )}
+                            {dataItem?.isStatus === true && (
+                              <div className="text-[#4b9ce2] lg:hidden ml-[10px] ">Onaylandı</div>
+                            )}
+                            {dataItem?.isStatus === null && (
+                              <div className="text-[gray] lg:hidden mt-[10px]">Bekliyor</div>
+                            )}
+                      
+                          </div>
+                      
+                    
+                        )}
+
+            
+                      </div>
+                        
                     </div>
+                   
                   </div>
 
                   <div
@@ -243,14 +254,14 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                     }
                   >
                     {dataItem.product?.isSold === true && (
-                      <div className="hidden lg:flex  w-[240px] h-full text-center items-center justify-end   md:w-full mr-[20px] text-white font-normal text-[0.938em]">
+                      <div className="hidden lg:flex  w-[240px] h-full text-center items-center justify-end   md:w-full mr-[30px] text-white font-normal text-[0.938em]">
                         <p className={'text-[green] mt-[10px] '}>
                           Satın Alındı
                         </p>
                       </div>
                     )}
                     {dataItem.product?.isSold === false && (
-                      <div className="hidden lg:flex  text-[white]  justify-end w-full gap-[5px] ml-[10px] text-center items-center">
+                      <div className="hidden lg:flex  text-[white]  justify-end w-full gap-[5px] mr-[30px] text-center items-center">
                         <button
                           onClick={() => setShowBuyModal(true)}
                           className={`${dataItem.isStatus === true ?   ' '  : 'hidden '}bg-[#4B9CE2] w-[86px] h-[30px] rounded-[8px]`}
@@ -261,10 +272,10 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                           <div className="text-[red]">Reddedildi</div>
                         )}
                         {dataItem?.isStatus === true && (
-                          <div className="text-[red]">Onaylandı</div>
+                          <div className="text-[#4b9ce2]">Onaylandı</div>
                         )}
                         {dataItem?.isStatus === null && (
-                          <div className="text-[red]">Bekliyor</div>
+                          <div className="text-[gray]">Bekliyor</div>
                         )}
                       
                       </div>
@@ -272,7 +283,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                     
                     )}
 
-                    {console.log(dataItem.product?.id, 'Product')}
+                 
                   </div>
                 </div>
               );

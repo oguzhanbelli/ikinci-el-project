@@ -10,7 +10,7 @@ import { UserIcon } from '../../constants/Icon';
 
 function Account() {
   const buyModalRef = useRef();
-  const { user } = useAuth();
+  const { user,logout } = useAuth();
   const [showBuyModal, setShowBuyModal] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const { allCategories, setActiveCategory } = useProduct();
@@ -47,8 +47,12 @@ function Account() {
             {user.email}
           </p>
         </div>
+        <div className='flex justify-end items-center w-full mr-[10px] text-[0.938em] font-normal'>
+          <button onClick={() => logout()} className='bg-[#4B9CE2] w-[86px] h-[30px] rounded-[8px] text-white'>Çıkış Yap</button>
+
+        </div>
       </div>
-      <div  className="flex flex-col  xl:flex-col mt-[10px] w-[360px] items-center h-auto my-auto lg:w-[800px] md:w-[430px] lg:h-full xl:w-[1480px] xl:h-[850px] overflow-scroll bg-white rounded-[8px] ">
+      <div  className="flex flex-col  xl:flex-col mt-[10px] hide-scrollbar w-[360px] items-center h-auto my-auto lg:w-[800px] md:w-[430px] lg:h-full xl:w-[1480px] xl:h-[850px] overflow-scroll bg-white rounded-[8px] ">
         <Tabs
           ref={buyModalRef}
           

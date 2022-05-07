@@ -1,72 +1,116 @@
 # İkinci El Project
 
-# Getting Started with Create React App
+# Project Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Screenshots
 
-In the project directory, you can run:
+ 
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+##### Desktop Pages
+<div>
+<img src="https://im5.ezgif.com/tmp/ezgif-5-6eb549f2f1.gif" width="300"/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<img src="https://im5.ezgif.com/tmp/ezgif-5-4e5dcb3b3f.gif" width="300"/>
+</div>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Install
+```
+Download and unzip repo
+Go to unzipped folder
+-> Using npm Install packages with $ npm install
+-> Using yarn Install packages with $ yarn install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Note: Windows users should have Bash shell installed (instructions).
+```
+# Folder Structure and Informations
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+.
+├── App.css
+├── App.js This is the root of your app. Contains static HTML right now.
+├── App.test.js
+├── api.js
+├── assets
+│   └── images # Static image files
+│       ├── Banner1.png
+│       ├── banner1mobile.png
+│       ├── checked.svg
+│       └── loginbanner.png
+├── components
+│   ├── Banner
+│   │   └── index.js
+│   ├── Categories
+│   │   └── index.js
+│   ├── Input
+│   │   └── index.js
+│   ├── Modal
+│   │   ├── BuyModal
+│   │   │   └── index.js
+│   │   ├── index.js
+│   │   └── validations.js
+│   ├── Navbar
+│   │   └── index.js
+│   ├── PreviewImage
+│   ├── Select
+│   │   └── index.js
+│   ├── SelectImage
+│   │   └── index.js
+│   ├── Spinner
+│   │   └── index.js
+│   └── Tabs
+│       └── index.js
+├── constants
+│   ├── Icon
+│   │   ├── accountIcon.js
+│   │   ├── addIcon.js
+│   │   ├── closeIcon.js
+│   │   ├── confirmIcon.js
+│   │   ├── dragUploadIcon.js
+│   │   ├── errorIcon.js
+│   │   ├── index.js
+│   │   └── userIcon.js
+│   └── Logo
+│       └── index.js
+├── contexts
+│   ├── AuthContext.js
+│   ├── OfferContext.js
+│   └── ProductContext.js
+├── index.css # Styles for project. Feel free to customize this as you desire
+├── index.js
+├── logo.svg
+├── pages
+│   ├── Account
+│   │   └── index.js
+│   ├── Auth
+│   │   ├── Login
+│   │   │   ├── index.js
+│   │   │   └── validations.js
+│   │   └── Register
+│   │       ├── index.js
+│   │       └── validations.js
+│   ├── Home
+│   │   └── index.js
+│   ├── Product
+│   │   ├── AddProduct
+│   │   │   ├── index.js
+│   │   │   └── validations.js
+│   │   └── ProductDetail
+│   │       └── index.js
+│   ├── ProtectedRoute.js
+│   └── RequireAuth.js
+├── reportWebVitals.js
+├── setupTests.js
+└── utils
+    └── hooks
+        └── handleClickOutside.js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```

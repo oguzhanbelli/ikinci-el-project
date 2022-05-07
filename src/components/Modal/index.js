@@ -11,7 +11,7 @@ import validationSchema from './validations';
 import { CloseIcon } from '../../constants/Icon';
 
 
-const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) => {
+const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
 
   
  
@@ -96,14 +96,14 @@ const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) =
             <div className='w-full h-[407px] md:h-[461px] flex flex-col bg-white rounded-[10px]  '>
               <div className='w-[315px] h-[45px] md:w-[441px] md:h-[60px] flex flex-row bg-[#F0F8FF] mx-auto mt-[17px] rounded-[10px] '>
                 <div className='w-[50px] h-[50px] mt-[4px] ml-[4px] md:mt-[6px] md:ml-[6px] '>
-                  <img className='w-[36px] h-[37px] md:w-[50px] md:h-[50px] rounded-[8px]'  src={`${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url}`}/>
+                  <img className='w-[36px] h-[37px] md:w-[50px] md:h-[50px] rounded-[8px]'   src={`${state?.image?.url === undefined ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url}`}`}/>
                 </div>
                 <div className='mt-[6px] mb-[5px] ml-[5px]  md:mt-[8px] md:ml-[7px] w-[136px] h-[34px] md:mb-[18px] flex flex-wrap text-ellipsis overflow-hidden  '>
                   <p className='font-normal  text-[#555555] text-[0.813em] md:text-[0.813em]  '>{state?.name}</p>
                 </div>
                 <div className=' flex  items-center     w-full relative'>
                   <p className="text-[#525252] text-[0.938em] md:text-[1.125em]  font-bold  absolute  right-[11px]  ">
-                    {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL
+                    {state?.price?.toLocaleString('tr-TR', {minimumFractionDigits: 2,maximumFractionDigits:4})} TL
                   </p>
                 </div>
 
@@ -113,7 +113,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) =
                 <div className={` w-[315px] h-[45px] md:w-[441px] md:h-[45px] flex flex-row ${selectedOffer == 20  ? 'bg-[#F0F8FF] border-[1px] cursor-pointer border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
                   <label onClick={(e) => handleChange(e)} className='flex items-center ml-[10px] w-full cursor-pointer  peer-checked:bg-red-300 '>
                     <input type={'radio'}  value={20} name="offer" className="option-input radio peer" />
-                    <p className={`${selectedOffer === 20 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
+                    <p className={`${selectedOffer == 20 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
                       %20'si Kadar Teklif Ver
                     </p>
 
@@ -124,7 +124,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) =
                 <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px]  cursor-pointer  flex flex-row ${selectedOffer ==30 ? 'bg-[#F0F8FF] border-[1px]  border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
                   <label onClick={(e) => handleChange(e)} className='flex items-center w-full cursor-pointer  ml-[10px] peer-checked:bg-red-300 '>
                     <input type={'radio'}  value={30} name="offer" className="option-input radio peer" />
-                    <p className={`${selectedOffer === 30 ? ' text-[#4B9CE2]':'text-[#525252]'}  text-[0.938em] font-normal ml-[5px]`}>
+                    <p className={`${selectedOffer == 30 ? ' text-[#4B9CE2]':'text-[#525252]'}  text-[0.938em] font-normal ml-[5px]`}>
                       %30'si Kadar Teklif Ver
                     </p>
 
@@ -135,7 +135,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal,setOfferStatus},ref) =
                 <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px] cursor-pointer flex flex-row ${selectedOffer == 40 ? 'bg-[#F0F8FF] border-[1px] border-[#4B9CE2]' : 'bg-[#F0F8FF]'} mx-auto mt-[10px] md:mt-[17px] rounded-[10px]`}>
                   <label onClick={(e) => handleChange(e)} className='flex items-center ml-[10px] w-full cursor-pointer peer-checked:bg-red-300 '>
                     <input type={'radio'}  value={40} name="offer" className="option-input radio peer" />
-                    <p className={`${selectedOffer === 40 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
+                    <p className={`${selectedOffer == 40 ? ' text-[#4B9CE2]':'text-[#525252]'} text-[0.938em]  font-normal ml-[5px]`}>
                       %40'si Kadar Teklif Ver
                     </p>
 

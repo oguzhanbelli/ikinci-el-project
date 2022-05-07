@@ -14,20 +14,26 @@ const OfferProvider = ({ children }) => {
   const [myOffers, setMyOffers] = useState([]);
 
   useEffect(() => {
+  
     (async () => {
       try {
-    
-       
+
+
         getMyOffers();
         getMyProductsOffers();
+
+
+        
         setLoading(false);
         
       } catch (e) {
         setLoading(false);
       }
     })();
-  }, [loading]);
+  }, []);
+
   const getMyOffers = async () => {
+    setLoading(true);
     
     try {
       const data = await fetchMyOffers(user?.id);
@@ -43,12 +49,20 @@ const OfferProvider = ({ children }) => {
 
   const addOfferProduct = async (input) => {
     setLoading(true);
-    const data = await addOffer(input);
-    setLoading(false);
-    setMyOffers([data,...myOffers]);
-    return data;
+    try {
+      const data = await addOffer(input);
+      
+      setMyOffers([data,...myOffers]);
+      setLoading(false);
+      return data;
+     
+     
+    } catch (e) {
+      setLoading(false);
+    }
+    
+   
   };
-
   const getMyProductsOffers = async() =>{
  
     setLoading(true);
@@ -81,11 +95,16 @@ const OfferProvider = ({ children }) => {
     }
   };
   const confirmOffer = async (id,statusOffer) => {
+
+
     setLoading(true);
     try {
       const data = await confirmMyProductsOffer(id,statusOffer);
     
       setLoading(false);
+      
+      setMyOffers(prevState =>[...prevState,data]);
+      window.location.reload(false);
       return data;
      
      

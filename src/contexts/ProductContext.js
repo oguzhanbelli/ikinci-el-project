@@ -21,28 +21,30 @@ const ProductProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [allStatuses, setAllStatuses] = useState([]);
-
   const [allColors, setAllColors] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-
-  let [searchParams] = useSearchParams();
+  let [searchParams,setSearchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
     if (searchParams.get('category') !== 'all') {
       getProductsWithCategory();
+      
     }
   });
   useEffect(() => {
-    if (searchParams.get('category') !== 'all') {
-      getProductsWithCategory();
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (searchParams.get('category') === 'all' || activeCategory === 'all') {
+  
+    if (activeCategory === 'all') {
       getProducts();
+      
+    }
+    if(!searchParams.get('category')){
+      if(location.pathname === '/'){
+
+        setSearchParams('category=all');
+        setActiveCategory('all');
+      }
     }
   }, [activeCategory]);
 
@@ -50,39 +52,52 @@ const ProductProvider = ({ children }) => {
     (async () => {
       try {
         getCategories();
-
-        setLoading(false);
       } catch (e) {
         setLoading(false);
       }
     })();
-  }, [loading]);
-
+  }, []);
   const getCategories = async () => {
-    const data = await fetchAllCategories();
+    setLoading(true);
+    try {
+      const data = await fetchAllCategories();
 
-    setAllCategories(data);
-  };
-  const getProductsWithCategory = async () => {
-    const data = allCategories.filter(
-      (item) => item.name === searchParams.get('category')
-    );
+      setAllCategories(data);
 
-    setAllProducts(data[0]?.products);
-
-    setLoading(false);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+    
   };
   const getProducts = async () => {
+   
     setLoading(true);
     try {
       const data = await fetchAllProducts();
-      setAllProducts(data);
       setLoading(false);
+      setAllProducts(data);
+      
       return data;
     } catch (e) {
       setLoading(false);
     }
   };
+  const getProductsWithCategory = async () => {
+    setLoading(true);
+    try {
+      const data = allCategories.filter(
+        (item) => item.name === searchParams.get('category')
+      );
+      setAllProducts(data[0]?.products);
+
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+    }
+   
+  };
+  
 
   const getColors = async () => {
     setLoading(true);
@@ -105,8 +120,9 @@ const ProductProvider = ({ children }) => {
       const filteredData = data.map((item) => {
         return { label: item.name, value: item.name };
       });
-      setAllBrands(filteredData);
       setLoading(false);
+      setAllBrands(filteredData);
+      
     } catch (e) {
       setLoading(false);
     }
@@ -119,9 +135,9 @@ const ProductProvider = ({ children }) => {
       const filteredData = data.map((item) => {
         return { label: item.name, value: item.name };
       });
-
-      setAllStatuses(filteredData);
       setLoading(false);
+      setAllStatuses(filteredData);
+   
     } catch (e) {
       setLoading(false);
     }
@@ -130,20 +146,22 @@ const ProductProvider = ({ children }) => {
   const addProduct = async (formData) => {
     setLoading(true);
     try {
-      await fetchAddProduct(formData);
+      const data =  await fetchAddProduct(formData);
+      setAllProducts([...allProducts,data]);
       setLoading(false);
+      
     } catch (e) {
       setLoading(false);
     }
   };
 
   const getOneProduct = async (id) => {
+
     setLoading(true);
     try {
       const data = await fetchOneProduct(id);
-      setAllProducts(data);
-      console.log(data);
       setLoading(false);
+      setAllProducts(data);
       return data;
     } catch (e) {
       setLoading(false);
@@ -151,9 +169,13 @@ const ProductProvider = ({ children }) => {
   };
   const buyProductDetail = async (id) => {
     setLoading(true);
-    const data = await buyProduct(id, { isSold: true });
-    setLoading(false);
-    return data;
+    try {
+      const data = await buyProduct(id, { isSold: true });
+      setLoading(false);
+      return data;
+    } catch (e) {
+      setLoading(false);
+    }
   };
 
   const values = {
