@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import { ProductProvider } from './contexts/ProductContext';
 import { OfferProvider } from './contexts/OfferContext';
+import 'react-toastify/dist/ReactToastify.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

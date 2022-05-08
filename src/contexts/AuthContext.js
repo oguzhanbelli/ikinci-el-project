@@ -31,13 +31,13 @@ const AuthProvider = ({ children }) => {
     Cookies.set('Auth_Token', data.jwt);
     
   };
-  const logout = async (callback) => {
+  const logout = async () => {
     setLoggedIn(false);
     setUser(null);
     // await fetchLogout();
 
     Cookies.remove('Auth_Token');
-    callback();
+
   };
 
   const values = {

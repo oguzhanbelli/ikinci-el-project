@@ -12,7 +12,7 @@ module.exports = {
        
       },
       backgroundColor:{
-        'theme-bg-white':'#FBFBFB',
+        'theme-bg-white':'#F2F2F2',
 
       }
     }

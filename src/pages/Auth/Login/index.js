@@ -4,13 +4,23 @@ import { Link ,useNavigate} from 'react-router-dom';
 import { fetchLogin } from '../../../api';
 import { ErrorIcon } from '../../../constants/Icon';
 import Logo from '../../../constants/Logo';
-
+import { ToastContainer,toast } from 'react-toastify';
 import { useAuth } from '../../../contexts/AuthContext';
+
 import validationSchema from './validations';
-// const { login } = useAuth();
+import Spinner from '../../../components/Spinner';
 function Login() {
+  const contextClass = {
+    success: 'bg-blue-600',
+    error: 'bg-red-600',
+    info: 'bg-gray-600',
+    warning: 'bg-orange-400',
+    default: 'bg-[#FFE5E5]',
+    dark: 'bg-white-600 font-gray-300',
+  };
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const {login,loading} = useAuth();
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,10 +34,18 @@ function Login() {
       
         // login();
         login(response);
-        navigate('/');
+       
+        navigate('/?category=all');
+        
 
       } catch (e) {
         bag.setErrors({general:e.response.data.data[0].messages[0].message});
+        toast(<div className='flex  items-center h-full w-full '>
+          <div className='flex justify-center items-center'><ErrorIcon/></div>
+      
+
+          <p className='w-full mr-[50px] font-normal'>{e.response.data.data[0].messages[0].message}</p>
+        </div>);
       }
     },
   });
@@ -36,21 +54,10 @@ function Login() {
       <div className="bannerLogin" />
       <div className="loginMain">
         {formik.errors.general && (
-          <div
-            className="bg-[#FFE5E5] rounded-[8px] shadow-sm shadow-[#1E36482E] text-[#F77474]  fixed md:top-[10px] md:relative xl:fixed  lg:top-[90px] top-[10px] mx-auto  inset-x-0 lg:inset-auto  w-[321px] h-[60px] lg:right-[11px]  "
-            role="alert"
-          >
-            <div className="flex h-full items-center ml-3 text-center">
-              <div className='flex  items-center text-center'>
-                <ErrorIcon/>
-               
-
-              </div>
-              <div className='flex justify-center items-center'>
-                <p className="text-[1em] text-red-500 ml-[10px]  ">{formik.errors.general}</p>
-              </div>
-            </div>
-          </div>
+          <ToastContainer hideProgressBar={true} closeButton={false} toastClassName={({ type }) => contextClass[type || 'default'] + 
+ ' relative flex p-1 min-h-10 h-[60px] mx-auto w-[321px] lg:mx-0 rounded-md justify-between overflow-hidden cursor-pointer shadow-lg'
+          } bodyClassName={'bg-[#FFE5E5] text-[#F77474]'}/>
+          
         )}
         <div className="loginLogoContainer">
           <Logo />
@@ -86,7 +93,7 @@ function Login() {
                   // eslint-disable-next-line quotes
                   className={`px-4 py-2 w-[315px]  lg:w-[389px] lg:h-[45px] rounded-[8px] border-[1px]  placeholder:font-normal  bg-[#F4F4F4] border-gray-300  focus:outline-none focus:ring-2 focus:ring-gray-200 ${
                     formik.touched.email && formik.errors.email
-                      ? 'border-[#F77474] bg-[#FFF2F2] text-[#F77474] '
+                      ? 'border-[#F77474] bg-[#FFF2F2] text-[#F77474] placeholder:text-[#F77474]'
                       : ''
                   }`}
                 />
@@ -118,7 +125,13 @@ function Login() {
                   Şifremi unuttum
                 </p>
               </div>
-              <button className="loginContainerButton" type='submit'>Giriş</button>
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <Spinner />
+                </div>
+              ) : (
+                <button className="loginContainerButton" type='submit'>Giriş</button>
+              )}
               <div className="">
                 <p className="text-[0.938em] font-normal leading-5">
                   Hesabın yok mu ?{' '}

@@ -184,11 +184,19 @@ export const buyProduct = async (id,input) => {
 
 export const fetchOneProduct = async (id) => {
 
-  const {data} = await axios.get(
-    `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,
+  try{
+    
+    const {data,status} = await axios.get(
+      `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,
      
-  );
-  return data;
+    );
+    console.log(data,status);
+    return status === 200 ? data : null;
+
+    
+  }catch(e){
+    return e.response.status;
+  }
   
     
 };

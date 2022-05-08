@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { createContext, useState, useEffect, useContext } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   buyProduct,
   fetchAddProduct,
@@ -18,6 +18,8 @@ const ProductContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const ProductProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const [state, setState] = useState({});
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [allStatuses, setAllStatuses] = useState([]);
@@ -33,6 +35,14 @@ const ProductProvider = ({ children }) => {
       
     }
   });
+
+  useEffect(() => {
+    if(location.pathname === '/'){
+
+      setSearchParams('category=all');
+      setActiveCategory('all');
+    }
+  },[]);
   useEffect(() => {
   
     if (activeCategory === 'all') {
@@ -154,18 +164,23 @@ const ProductProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
+  console.log(state,loading,'data loading');
   const getOneProduct = async (id) => {
 
     setLoading(true);
     try {
       const data = await fetchOneProduct(id);
-      setLoading(false);
-      setAllProducts(data);
-      return data;
+      if(data == 404){
+        navigate('/?category=all');
+
+      }else{
+        setState(data);
+        setLoading(false);
+      }
     } catch (e) {
       setLoading(false);
     }
+     
   };
   const buyProductDetail = async (id) => {
     setLoading(true);
@@ -186,6 +201,7 @@ const ProductProvider = ({ children }) => {
     setLoading,
     allBrands,
     getBrands,
+    state,setState,
     addProduct,
     activeCategory,
     setActiveCategory,

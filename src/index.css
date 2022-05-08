@@ -5,6 +5,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap");
 body {
   font-family: "Nunito", sans-serif;
+  background:#F2F2F2;
+  
 }
 @layer components {
 
@@ -134,7 +136,7 @@ input:checked + .toggle-bg {
   }
   /* login */
   .loginContainer {
-    @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen;
+    @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen bg-[#F2F2F2];
   }
   .loginMain {
     @apply lg:w-[67.813em] xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
@@ -143,10 +145,10 @@ input:checked + .toggle-bg {
     @apply mt-[28.54px] w-[148.63px] h-[48.46px] mx-auto inset-x-0 lg:mt-[133px] lg:w-[225px] lg:h-[74px];
   }
   .bannerLogin {
-    @apply hidden md:flex md:w-[52.1879em] lg:w-[52.1879em] min-h-screen  xl:w-[52.1879em]   bg-login-banner bg-cover bg-center;
+    @apply hidden md:flex md:w-[52.1879em] lg:w-[52em] min-h-screen  xl:w-[52.1879em]   bg-login-banner bg-cover bg-center;
   }
   .formLoginContainer {
-    @apply bg-[#FBFBFB] rounded-[8px] w-[355px] h-[435px] lg:w-[35.563em] lg:h-[34.625em] items-center   text-black  shadow-lg shadow-[#1E36480A] lg:mt-14 mt-7;
+    @apply bg-[#FFFFFF] rounded-[8px] w-[355px] h-[435px] lg:w-[35.563em] lg:h-[34.625em] items-center   text-black  shadow-lg shadow-[#1E36480A] lg:mt-14 mt-7;
   }
 
   .formLoginInputs {
