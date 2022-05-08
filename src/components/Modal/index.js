@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable quotes */
+
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
-import React, {  useEffect, useState } from 'react';
+import React,{ useState } from 'react';
 import { useFormik } from 'formik';
 import { useOffer } from '../../contexts/OfferContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -78,7 +77,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
           {/*content*/}
           <div className="border-0 rounded-lg shadow-lg relative    flex flex-col w-full  bg-white outline-none focus:outline-none">
             {/*header*/}
-            <div className="flex items-start justify-between  rounded-t ">
+            <div data-test-id='offer-modal-text' className="flex items-start justify-between  rounded-t ">
               <h3 className="text-[1.125em] md:text-[1.563em] mt-[13px] md:mt-[20px] ml-[20px] text-[#525252] font-bold dark:text-white">
                     Teklif Ver
               </h3>
@@ -144,7 +143,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
 
                 </div>
 
-                <div className={`w-[315px] h-[45px] md:w-[441px] md:h-[45px] flex flex-row mx-auto mt-[15px] rounded-[10px]`}>
+                <div className={'w-[315px] h-[45px] md:w-[441px] md:h-[45px] flex flex-row mx-auto mt-[15px] rounded-[10px]'}>
                   <div className="mt-1 w-full  relative rounded-[8px] shadow-sm bg-[#F4F4F4]">
                   
                     <input

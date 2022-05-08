@@ -81,6 +81,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                       <div className=" md:ml-[6px] flex flex-col lg:flex-row w-[355px] md:w-full  ">
                         <div className="md:ml-[6px] flex flex-row lg:flex-row w-[330px] md:w-full ">
                           <img
+                            alt={myProductsOffers[key]?.name}
                             className="w-[78px] ml-[10px] lg:ml-0  mt-[10px] h-[84px] md:w-[78px] md:h-[84px] rounded-[8px]  "
                 
                             src={`${myProductsOffers[key]?.image?.url === null ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${myProductsOffers[key]?.image?.url}`}`}
@@ -90,7 +91,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                         
                             <p className="mt-[14px] ml-[10px] lg:ml-[10px] w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
 
-                              {myProductsOffers[key].name}
+                              {myProductsOffers[key]?.name}
                             </p>
                             <div
                               className={
@@ -100,7 +101,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                               <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
                                 Alınan Teklif:
                                 <strong className="ml-[4px]">
-                                  {dataItem.offerPrice?.toLocaleString(
+                                  {dataItem?.offerPrice?.toLocaleString(
                                     'tr-TR',
                                     { minimumFractionDigits: 2 }
                                   )}
@@ -132,7 +133,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                           </div>
                         ) : (
                           <div className="flex justify-end w-full gap-[10px] mr-[30px] items-center  mt-[15px] text-white font-normal text-[0.938em]">
-                            {dataItem.isStatus === true ? (
+                            {dataItem?.isStatus === true ? (
                               <div className="text-[#4B9CE2] mr-[30px] relative bottom-5 lg:bottom-0 text-[0.938em] font-normal">
                                 Onaylandı
                               </div>
@@ -174,7 +175,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                     ) : null}
                   </div>
                   <div className=" md:ml-[6px] flex flex-row ">
-                    <img
+                    <img alt={dataItem?.product?.name}
                       className="w-[78px]   ml-[10px] mt-[10px] h-[84px] md:w-[78px] md:h-[84px] rounded-[8px] "
                     
                       src={`${dataItem?.product?.image?.url === undefined ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${dataItem?.product?.image?.url}`}`}

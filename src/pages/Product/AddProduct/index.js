@@ -88,7 +88,7 @@ function AddProduct() {
 
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-row lg:flex-col items-center pb-3 overflow-x-hidden lg:overflow-x-scroll justify-center lg:justify-start">
-      <div className="flex flex-col  xl:flex-row mt-[50px] w-[355px] h-auto my-auto lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
+      <div className="flex flex-col  xl:flex-row  w-[355px] h-auto my-auto mt-[16px] lg:mt-[20px] lg:w-[800px] lg:h-full xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
         <form
           onSubmit={formik.handleSubmit}
           className="flex flex-col lg:ml-[30px]  mx-auto h-fit"

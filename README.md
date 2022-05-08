@@ -1,5 +1,11 @@
 # İkinci El Project
 
+``` 
+Hello everyone, Welcome to Second Hand Project.
+The aim of the project is to bring together the products doesn't used by the user 
+with the bidders and to accept and sell the highest bid. 
+
+```
 
 
 <div>
@@ -61,8 +67,10 @@ Create .env File Project Main Directory
 Open .env File
 -> Write REACT_APP_BASE_ENDPOINT = https://api.example.com (API BASE ENDPOINT)
 -> Save .env File
--> Open terminal and Cd project folder 
--> 
+-> Open terminal
+-> Cd project folder 
+-> If you have completed the installation steps now you are ready.
+-> Using npm - npm start , Using yarn yarn start
 
 Note: Windows users should have Bash shell installed (instructions).
 
@@ -73,9 +81,9 @@ Note: Windows users should have Bash shell installed (instructions).
 
 .
 ├── App.css
-├── App.js This is the root of your app. Contains static HTML right now.
+├── App.js  # This is the root of your app. Contains static HTML right now.
 ├── App.test.js
-├── api.js
+├── api.js # API Requests
 ├── assets
 │   └── images # Static image files
 │       ├── Banner1.png

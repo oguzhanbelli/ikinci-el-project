@@ -17,9 +17,10 @@ function Categories() {
 
 
   return (
-    <div className="mt-[19.83px]  py-2 mx-3 xl:w-[92.5em] lg:w-[60em] w-[365px] md:w-[690px]  overflow-x-scroll h-auto   flex items-center hide-scrollbar   scroll-hidden lg:overflow-y-hidden ">
+    <div className="mt-[19.83px]  py-2 mx-3 xl:w-[92.5em] lg:w-[60em] w-[347px] md:w-[690px]  overflow-x-scroll h-auto   flex items-center hide-scrollbar   scroll-hidden lg:overflow-y-hidden ">
+      
       <span   onClick={() => handleCategory({name:'all'})} className={`text-[18px] ${activeCategory === 'all'  ? 'border  ' : 'text-gray-700 pb-2'}   cursor-pointer font-semibold  leading-5 mr-[27.35px] mb-2  lg:mr-[53px]  md:my-0`} href="#">Hepsi</span>
-
+  
       {
           
         allCategories.map(item => (
@@ -28,6 +29,7 @@ function Categories() {
 
 
       }
+    
     </div>
   );
 }
