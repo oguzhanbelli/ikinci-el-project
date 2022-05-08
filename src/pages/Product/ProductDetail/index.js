@@ -247,7 +247,7 @@ function ProductDetail() {
                   )}
                   {state?.isSold === true ? (
                     <div className="bg-[#FFF0E2] w-[235px] h-[45px] text-center fixed lg:flex lg:sticky lg:justify-between flex-nowrap justify-center items-center mt-[30px] mx-auto lg:mt-[10px] lg:mx-0 rounded-[8px] bottom-10 opacity-[80%] lg:opacity-100   inset-x-0 ">
-                      <p className="font-bold text-[#FAAD60] text-[1.125em] flex justify-center items-center text-center  w-full">
+                      <p className="font-bold text-[#FAAD60] text-[1.125em] flex justify-center items-center text-center  w-full h-full">
                         Bu Ürün Satışta Değil
                       </p>
                     </div>

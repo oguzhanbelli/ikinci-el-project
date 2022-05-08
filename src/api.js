@@ -139,7 +139,6 @@ export const confirmMyProductsOffer = async (id,statusOffer) => {
   }
 };
 export const removeOffer = async (id) => {
-  console.log(id);
   const token = Cookies.get('Auth_Token');
   const {data} = await axios.delete(
     `${process.env.REACT_APP_BASE_ENDPOINT}/offers/${id}`,{headers:{'Authorization':`Bearer ${token}`}}
@@ -190,7 +189,6 @@ export const fetchOneProduct = async (id) => {
       `${process.env.REACT_APP_BASE_ENDPOINT}/products/${id}`,
      
     );
-    console.log(data,status);
     return status === 200 ? data : null;
 
     
