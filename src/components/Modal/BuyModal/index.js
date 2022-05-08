@@ -4,7 +4,6 @@ import React from 'react';
 import { ConfirmIcon } from '../../../constants/Icon';
 
 const  BuyModal = React.forwardRef(({title,content,setShowBuyModal,method,parameter,toast},ref) => {
-  console.log(parameter);
 
   const closeModal = () => {
     setShowBuyModal(false);

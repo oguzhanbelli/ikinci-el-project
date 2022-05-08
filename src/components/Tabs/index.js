@@ -21,12 +21,10 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
     loading
   } = useOffer();
   const { buyProductDetail } = useProduct();
-  console.log(myOffers);
-  console.log(myProductsOffers);
+
   const buyProduct = async (id) => {
-    const data = await buyProductDetail(id);
+    await buyProductDetail(id);
     window.location.reload(false);
-    console.log(data, 'Product Data');
   };
 
 
@@ -78,7 +76,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                   return (
                     <div
                       key={dataItem.id}
-                      className="border-[1px]  border-[#F2F2F2] rounded-[8px] w-[355px] mt-[10px]  lg:w-[1413px] lg:h-[104px] h-[134px]   flex"
+                      className="border-[1px]  border-[#F2F2F2] rounded-[8px] w-[355px] mt-[10px] md:w-[430px]  lg:w-[1413px] lg:h-[104px] h-[134px]   flex"
                     >
                       <div className=" md:ml-[6px] flex flex-col lg:flex-row w-[355px] md:w-full  ">
                         <div className="md:ml-[6px] flex flex-row lg:flex-row w-[330px] md:w-full ">
@@ -91,7 +89,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                           <div className='truncate '>
                         
                             <p className="mt-[14px] ml-[10px] lg:ml-[10px] w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
-                              {' '}
+
                               {myProductsOffers[key].name}
                             </p>
                             <div
@@ -100,12 +98,12 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                               }
                             >
                               <p className="text-[#525252] ml-[10px] text-[0.938em] font-normal  w-full text-left ">
-                                Alınan Teklif:{' '}
+                                Alınan Teklif:
                                 <strong className="ml-[4px]">
                                   {dataItem.offerPrice?.toLocaleString(
                                     'tr-TR',
                                     { minimumFractionDigits: 2 }
-                                  )}{' '}
+                                  )}
                                   TL
                                 </strong>
                               </p>
@@ -154,7 +152,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
           })}
         </div>
       ) : (
-        <div className="xl:mt-[20px] h-screen flex flex-col  xl:ml-[30px] mt-[20px]">
+        <div className="xl:mt-[20px] h-screen flex flex-col mx-auto  xl:ml-[30px] mt-[20px]">
           <div className="flex flex-col gap-[20px] items-center lg:items-baseline">
             {myOffers?.filter(item => item?.product !== null).map((dataItem) => {
               return (
@@ -183,9 +181,9 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
 
                     />
 
-                    <div className="w-[300px] flex flex-col ml-[10px] flex-nowrap truncate   lg:text-left ">
-                      <p className="mt-[14px] lg:ml-[10px] w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
-                        {' '}
+                    <div className="w-[235px] lg:w-[400px] flex flex-col ml-[10px] flex-nowrap    lg:text-left ">
+                      <p className="mt-[14px]  w-full h-[30px] text-[1.125em] text-[#555555] font-normal truncate">
+                      
                         {dataItem?.product?.name}
                       </p>
                       <div
@@ -227,13 +225,13 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                           Satın Al
                             </button>
                             {dataItem?.isStatus === false && (
-                              <div className="text-[red] lg:hidden mt-[10px]">Reddedildi</div>
+                              <div className="text-[red] lg:hidden mt-[10px] text-[0.938em] relative bottom-[6px] right-[30px] ">Reddedildi</div>
                             )}
                             {dataItem?.isStatus === true && (
-                              <div className="text-[#4b9ce2] lg:hidden ml-[10px] ">Onaylandı</div>
+                              <div className="text-[#4b9ce2] lg:hidden ml-[10px]  ">Onaylandı</div>
                             )}
                             {dataItem?.isStatus === null && (
-                              <div className="text-[gray] lg:hidden mt-[10px]">Bekliyor</div>
+                              <div className="text-[gray] lg:hidden mt-[10px] relative bottom-[6px] right-[30px] ">Bekliyor</div>
                             )}
                       
                           </div>

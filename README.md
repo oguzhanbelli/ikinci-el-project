@@ -1,18 +1,41 @@
 # İkinci El Project
 
-# Project Description
 
 
-## Screenshots
-
+<div>
  
+ - #### Contents
+  -  [Screenshots](#screenshots)
+  -  [Install](#install)
+  -  [Start](#start)
+  -  [Folder Structure](#folder-structure-and-informations)
+
+</div>
+
+---
+
+
+
+
+### Screenshots
+
+ ## [Live](https://protein-ikinciel-project.netlify.app/)
 
 
 ##### Desktop Pages
 <div>
-<img src="https://im5.ezgif.com/tmp/ezgif-5-6eb549f2f1.gif" width="300"/>
+  <img src="https://imgur.com/KvqLcb2.gif" width="200" height="250"/>
+   
+  <img src="https://imgur.com/3ACNAna.gif" width="200" height="250"/>
+  <img src="https://imgur.com/1O9ZkhH.png" width="200" height="250"/>
+</div>
 
-<img src="https://im5.ezgif.com/tmp/ezgif-5-4e5dcb3b3f.gif" width="300"/>
+##### Mobile Pages
+<div>
+  <img src="https://imgur.com/iF1IJqd.gif" width="200" height="250"/>
+   
+  <img src="https://imgur.com/Vsnp0ec.png" width="200" height="250"/>
+  <img src="https://imgur.com/9vwJhLy.png" width="200" height="250"/>
 </div>
 
 
@@ -29,6 +52,21 @@ Go to unzipped folder
 -> Using yarn Install packages with $ yarn install
 
 Note: Windows users should have Bash shell installed (instructions).
+
+
+```
+## Start
+```
+Create .env File Project Main Directory
+Open .env File
+-> Write REACT_APP_BASE_ENDPOINT = https://api.example.com (API BASE ENDPOINT)
+-> Save .env File
+-> Open terminal and Cd project folder 
+-> 
+
+Note: Windows users should have Bash shell installed (instructions).
+
+
 ```
 # Folder Structure and Informations
 ```

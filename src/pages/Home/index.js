@@ -17,11 +17,8 @@ function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (!searchParams) {
-      setSearchParams('category=all');
 
-      navigate('/');
-    }
+   
     if (!searchParams.get('category')) {
       setSearchParams('category=all');
 

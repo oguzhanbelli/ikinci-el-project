@@ -37,7 +37,7 @@ const ProductProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if(location.pathname === '/'){
+    if(location.pathname === '/' && !searchParams.get('category')){
 
       setSearchParams('category=all');
       setActiveCategory('all');
@@ -157,6 +157,7 @@ const ProductProvider = ({ children }) => {
     setLoading(true);
     try {
       const data =  await fetchAddProduct(formData);
+     
       setAllProducts([...allProducts,data]);
       setLoading(false);
       
@@ -164,7 +165,7 @@ const ProductProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  console.log(state,loading,'data loading');
+
   const getOneProduct = async (id) => {
 
     setLoading(true);

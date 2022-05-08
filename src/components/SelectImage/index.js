@@ -22,7 +22,7 @@ function SelectImage({onChange,setPictureAsFile,pictureAsFile,setFileError,fileE
     
     
     onDrop: (acceptedFiles) => {
-      console.log(acceptedFiles);
+
       setFile(
         acceptedFiles.map((file) =>
           Object.assign(file,{preview: URL.createObjectURL(file)})
@@ -34,9 +34,6 @@ function SelectImage({onChange,setPictureAsFile,pictureAsFile,setFileError,fileE
       ));
     },
   });
-
-  {console.log(file);}
-  console.log(file);
   return (
     <>
       {
