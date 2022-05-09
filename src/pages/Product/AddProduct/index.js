@@ -227,7 +227,7 @@ function AddProduct() {
                   name="currency"
                   className={`focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md ${
                     formik.touched.price && formik.errors.price
-                      ? ' text-[#F77474] placeholder:text-[#F77474]'
+                      ? ' text-red-400 placeholder:text-[#F77474]'
                       : ' text-gray-500 '
                   }`}
                 >

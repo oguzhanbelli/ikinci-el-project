@@ -78,7 +78,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
           <div className="border-0 rounded-lg shadow-lg relative    flex flex-col w-full  bg-white outline-none focus:outline-none">
             {/*header*/}
             <div data-test-id='offer-modal-text' className="flex items-start justify-between  rounded-t ">
-              <h3 className="text-[1.125em] md:text-[1.563em] mt-[13px] md:mt-[20px] ml-[20px] text-[#525252] font-bold dark:text-white">
+              <h3 className="text-[1.125em] md:text-[1.563em] mt-[13px] md:mt-[20px] ml-[20px] text-[#525252] font-bold">
                     Teklif Ver
               </h3>
               <button
