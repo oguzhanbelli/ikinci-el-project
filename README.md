@@ -63,14 +63,15 @@ Note: Windows users should have Bash shell installed (instructions).
 ```
 ## Start
 ```
-Create .env File Project Main Directory
-Open .env File
+Open Project Directory.
+Create .env File Project Directory
+Open .env 
 -> Write REACT_APP_BASE_ENDPOINT = https://api.example.com (API BASE ENDPOINT)
--> Save .env File
--> Open terminal
--> Cd project folder 
+-> Save .env File.
+-> Open terminal.
+-> Cd project folder.
 -> If you have completed the installation steps now you are ready.
--> Using npm - npm start , Using yarn yarn start
+-> Using npm - npm start , Using yarn - yarn start.
 
 Note: Windows users should have Bash shell installed (instructions).
 
@@ -113,8 +114,8 @@ Note: Windows users should have Bash shell installed (instructions).
 │   │   └── index.js
 │   └── Tabs
 │       └── index.js
-├── constants
-│   ├── Icon
+├── constants 
+│   ├── Icon  # Constants Icons
 │   │   ├── accountIcon.js
 │   │   ├── addIcon.js
 │   │   ├── closeIcon.js

@@ -94,7 +94,7 @@ const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
             {/*body*/}
             <div className='w-full h-[407px] md:h-[461px] flex flex-col bg-white rounded-[10px]  '>
               <div className='w-[315px] h-[45px] md:w-[441px] md:h-[60px] flex flex-row bg-[#F0F8FF] mx-auto mt-[17px] rounded-[10px] '>
-                <div className='w-[50px] h-[50px] mt-[4px] ml-[4px] md:mt-[6px] md:ml-[6px] '>
+                <div className='w-[77px] h-[50px] mt-[4px] ml-[4px] md:mt-[6px] md:ml-[6px] '>
                   <img className='w-[36px] h-[37px] md:w-[50px] md:h-[50px] rounded-[8px]'   src={`${state?.image?.url === undefined ? '/images/notfoundimage.jpg': `${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url}`}`}/>
                 </div>
                 <div className='mt-[6px] mb-[5px] ml-[5px]  md:mt-[8px] md:ml-[7px] w-[136px] h-[34px] md:mb-[18px] flex flex-wrap text-ellipsis overflow-hidden  '>
@@ -162,20 +162,20 @@ const Modal = React.forwardRef(({state,setShowDetailModal},ref) => {
                       }`}
                       placeholder="Teklif Belirle"
                     />
-                    <div className="absolute inset-y-3 right-0 flex items-center">
+                    <div className="absolute inset-y-3 right-0 flex items-center ">
                       <label htmlFor="currency" className="sr-only">
             Currency
                       </label>
                       <span
                         id="currency"
                         name="currency"
-                        className={`focus:ring-indigo-500 ${
+                        className={`focus:ring-indigo-500  flex  h-full justify-center items-center${
                           selectedOffer === null && formik.touched.offerPrice && formik.errors.offerPrice
-                            ? ' text-[#F77474] placeholder:text-[#F77474]'
+                            ? ' text-red-400 placeholder:text-[#F77474] ' 
                             : ' text-gray-500  bg-[#F4F4F4] placeholder:text-[#99A0A7] '
                         } focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm rounded-md`}
                       >
-                        TL
+                        <p>TL</p>
                       </span>
                     </div>
                   </div>
