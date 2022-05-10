@@ -48,7 +48,7 @@ function Home() {
         <Banner />
         <Categories />
         
-        <div className="flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:justify-center lg:justify-start md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  xl:w-[1500px] h-auto  xl:h-auto xl:pb-[171px] gap-[10px]  mx-auto xl:gap-[20px] rounded-[8px]  mt-[10px] pb-[20px] xl:mt-[20px] ">
+        <div className="flex flex-wrap hide-scrollbar  flex-row overflow-scroll w-[375px] md:justify-center lg:justify-center  xl:justify-start md:w-[690px] lg:w-[1000px]  lg:h-auto p-1  2xl:w-[1500px] xl:w-[1300px] h-auto  xl:h-auto xl:pb-[171px] gap-[10px]  mx-auto xl:gap-[20px] rounded-[8px]  mt-[10px] pb-[20px] xl:mt-[20px] ">
           {!loading ? (
             allProducts?.map((item) => (
               <div

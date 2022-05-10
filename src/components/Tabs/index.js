@@ -76,7 +76,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
                   return (
                     <div
                       key={dataItem.id}
-                      className="border-[1px]  border-[#F2F2F2] rounded-[8px] w-[355px] mt-[10px] md:w-[430px]  lg:w-[1413px] lg:h-[104px] h-[134px]   flex"
+                      className="border-[1px]  border-[#F2F2F2] rounded-[8px] w-[355px] mt-[10px] md:w-[430px] xl:w-[960px]  2xl:w-[1413px] lg:h-[104px] h-[134px]   flex"
                     >
                       <div className=" md:ml-[6px] flex flex-col lg:flex-row w-[355px] md:w-full  ">
                         <div className="md:ml-[6px] flex flex-row lg:flex-row w-[330px] md:w-full ">
@@ -159,7 +159,7 @@ const Tabs = React.forwardRef(({ showBuyModal, setShowBuyModal },ref) => {
               return (
                 <div
                   key={dataItem.id}
-                  className="border-[1px] border-[#F2F2F2] rounded-[8px] lg:w-[1413px] lg:h-[104px] w-[355px] md:w-[400px]   h-[134px]  flex first:mt-[0px] "
+                  className="border-[1px] border-[#F2F2F2] rounded-[8px] 2xl:w-[1413px] xl:w-[960px] lg:h-[104px] w-[355px] md:w-[400px]   h-[134px]  flex first:mt-[0px] "
                 >
                   <div>
                     {showBuyModal ? (

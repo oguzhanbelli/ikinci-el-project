@@ -18,7 +18,7 @@ function NavBar() {
 
   return (
     <div>
-      <nav className="relative px-[10px] md:px-[190px] lg:px-[200px] xl:px-[220px] py-4 flex justify-between items-center text-center bg-white ">
+      <nav className="relative px-[10px] md:px-[60px] lg:px-[60px] 2xl:px-[90px] xl:px-[50px] py-4 flex justify-between items-center text-center bg-white ">
         <span
           name="logo"
           onClick={() => handleHome()}

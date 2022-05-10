@@ -88,8 +88,8 @@ function ProductDetail() {
           <Spinner />
         </div>
       ) : (
-        <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit xl:w-[1480px] xl:h-[769px] bg-white rounded-[8px] ">
-          <div className="flex flex-col z-50 h-f  lg:items-start lg:flex-row ">
+        <div className="flex flex-col  lg:flex-row mt-[20px] w-[355px] h-auto lg:w-[800px] lg:h-fit 2xl:w-[1480px] xl:w-[1000px] xl:h-[600px] 2xl:h-[769px] bg-white rounded-[8px] ">
+          <div className="flex flex-col z-50 h-full  lg:items-start lg:flex-row ">
             <img
               alt={state?.name}
               src={`${
@@ -97,7 +97,7 @@ function ProductDetail() {
                   ? '/images/notfoundimage.jpg'
                   : `${process.env.REACT_APP_BASE_ENDPOINT}${state?.image?.url}`
               }`}
-              className="rounded-[8px]   w-[343px] h-[362px] lg:w-[200px] lg:h-[450px]  xl:w-[700px] xl:h-[737px] mx-[6px] xl:ml-[15px]  mt-[6px] xl:mt-[16px] bg-gray-200"
+              className="rounded-[8px]   w-[343px] h-[362px] lg:w-[200px] lg:h-[450px] xl:w-[400px]  2xl:w-[700px] 2xl:h-[737px] mx-[6px] xl:ml-[15px]  mt-[6px] xl:mt-[16px] bg-gray-200"
             />
 
          

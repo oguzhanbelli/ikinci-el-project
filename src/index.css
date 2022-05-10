@@ -132,14 +132,14 @@ input:checked + .toggle-bg {
   }
 
   .appContainer {
-    @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll xl:overflow-x-hidden overflow-y-scroll bg-gray-50;
+    @apply overflow-hidden lg:overflow-x-scroll lg:overflow-y-scroll 2xl:overflow-x-hidden overflow-y-scroll bg-gray-50;
   }
   /* login */
   .loginContainer {
-    @apply flex  justify-center md:flex   lg:flex lg:flex-row lg:flex-nowrap  lg:w-[120em] lg:h-[1080px]   lg:min-h-screen bg-[#F2F2F2];
+    @apply flex  justify-center md:flex   2xl:flex 2xl:flex-row 2xl:flex-nowrap  2xl:w-[120em] 2xl:h-[1080px]   2xl:min-h-screen bg-[#F2F2F2];
   }
   .loginMain {
-    @apply lg:w-[67.813em] xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
+    @apply lg:w-[67.813em] 2xl:w-[67.813em] w-[34.813em] overflow-hidden  bg-theme-bg-white h-full flex-col flex items-center text-center;
   }
   .loginLogoContainer {
     @apply mt-[28.54px] w-[148.63px] h-[48.46px] mx-auto inset-x-0 lg:mt-[133px] lg:w-[225px] lg:h-[74px];

@@ -39,7 +39,7 @@ function Account() {
         }
         bodyClassName={'bg-[#F1FFF0] text-[#46AF32]'}
       />
-      <div className="flex flex-row   xl:flex-row mt-[20px] w-[355px] h-[70px]  lg:w-[800px] lg:h-[300px] xl:w-[1480px] xl:h-[70px] bg-white rounded-[8px] ">
+      <div className="flex flex-row   xl:flex-row mt-[20px] w-[355px] h-[70px]  lg:w-[800px] lg:h-[300px] 2xl:w-[1480px]  xl:h-[70px] bg-white rounded-[8px] ">
         <div className="flex justify-center items-center ml-[26px]">
           <UserIcon/>
 
@@ -52,7 +52,7 @@ function Account() {
 
         </div>
       </div>
-      <div  className="flex flex-col  xl:flex-col mt-[10px] hide-scrollbar w-[360px] items-center h-auto my-auto lg:w-[800px] md:w-[430px] lg:h-full xl:w-[1480px] xl:h-[850px] overflow-scroll bg-white rounded-[8px] ">
+      <div  className="flex flex-col  xl:flex-col mt-[10px] hide-scrollbar w-[360px] items-center h-auto my-auto lg:w-[800px] md:w-[430px] lg:h-full xl:w-[1000px] 2xl:w-[1480px] xl:h-[850px] overflow-scroll bg-white rounded-[8px] ">
         <Tabs
           ref={buyModalRef}
           

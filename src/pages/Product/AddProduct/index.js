@@ -88,7 +88,7 @@ function AddProduct() {
 
   return (
     <div className="w-screen h-screen   bg-[#F2F2F2] flex flex-row lg:flex-col items-center pb-3 overflow-x-hidden lg:overflow-x-scroll justify-center lg:justify-start">
-      <div className="flex flex-col  xl:flex-row  w-[355px] h-auto my-auto mt-[16px] lg:mt-[20px] lg:w-[800px] lg:h-auto pb-5 xl:w-[1480px] xl:h-[812px] bg-white rounded-[8px] ">
+      <div className="flex flex-col  2xl:flex-row  w-[355px] h-auto my-auto mt-[16px] lg:mt-[20px] lg:w-[800px] lg:h-auto pb-5 2xl:w-[1480px] 2xl:h-[812px] bg-white rounded-[8px] ">
         <form
           onSubmit={formik.handleSubmit}
           className="flex flex-col lg:ml-[30px]  mx-auto h-fit"
@@ -258,13 +258,13 @@ function AddProduct() {
           </div>
         </form>
         <div>
-          <div className="flex flex-col ml-[20px]  xl:ml-[47.5px] mt-[30px] xl:mt-0 w-full h-full">
+          <div className="flex flex-col ml-[20px]  2xl:ml-[47.5px] mt-[30px] 2xl:mt-0 w-full h-full">
             <div className="mt-[35px]  flex flex-col">
               <h1 className=" text-[1.563em] font-bold text-[#525252]">
                 Ürün Görseli
               </h1>
             </div>
-            <div className="flex mt-8 lg:justify-center xl:justify-start">
+            <div className="flex mt-8 lg:justify-center 2xl:justify-start">
               <div className="w-fit mb-[50px] lg:w-[595px] h-fit ">
                 <div className="md:mr-5">
                   <div className="flex items-center justify-center w-full  ">
@@ -282,7 +282,7 @@ function AddProduct() {
               <button
                 type="submit"
                 onClick={formik.handleSubmit}
-                className="w-[315px] lg:w-[315px] h-[45px]   xl:absolute xl:bottom-5 absolute bottom-3 xl:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]"
+                className="w-[315px] lg:w-[315px] h-[45px]   2xl:absolute 2xl:bottom-5 absolute bottom-3 2xl:right-20 cursor-pointer bg-[#4B9CE2] text-white rounded-[8px]"
               >
                 {loading ? <Spinner/> : 'Kaydet'}
               </button>
